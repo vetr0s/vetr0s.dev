@@ -1,0 +1,64 @@
+.
+├── archetypes
+│   └── default.md
+├── assets
+├── content
+│   ├── blog
+│   │   ├── _index.md
+│   │   ├── first-post.md
+│   │   └── hallow
+│   │       ├── _index.md
+│   │       └── part-1-raycasting-basics.md
+│   └── projects
+│       └── hallow.md
+├── data
+├── hugo.toml
+├── i18n
+├── layouts
+│   ├── _default
+│   │   ├── baseof.html
+│   │   ├── list.html
+│   │   └── single.html
+│   ├── index.html
+│   └── partials
+│       ├── footer.html
+│       ├── head.html
+│       └── header.html
+├── public
+│   ├── about
+│   │   └── index.html
+│   ├── blog
+│   │   ├── first-post
+│   │   │   └── index.html
+│   │   ├── hallow
+│   │   │   ├── index.html
+│   │   │   ├── index.xml
+│   │   │   └── part-1-raycasting-basics
+│   │   ├── index.html
+│   │   └── index.xml
+│   ├── categories
+│   │   ├── index.html
+│   │   └── index.xml
+│   ├── index.html
+│   ├── index.xml
+│   ├── posts
+│   │   ├── first-post
+│   │   │   └── index.html
+│   │   ├── index.html
+│   │   └── index.xml
+│   ├── projects
+│   │   ├── hallow
+│   │   │   └── index.html
+│   │   ├── index.html
+│   │   └── index.xml
+│   ├── sitemap.xml
+│   ├── style.css
+│   └── tags
+│       ├── index.html
+│       └── index.xml
+├── static
+│   └── style.css
+├── themes
+└── tmp
+
+25 directories, 37 files

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>*</title>
+    <link>http://localhost:1313/</link>
+    <description>Recent content on *</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 21 Apr 2026 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>HOLLOW</title>
+      <link>http://localhost:1313/projects/hallow/</link>
+      <pubDate>Tue, 21 Apr 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/projects/hallow/</guid>
+      <description>&lt;p&gt;Short description of the project.&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;Stack:&lt;/strong&gt; Odin, Raylib&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;Status:&lt;/strong&gt; In progress&lt;/p&gt;&#xA;&lt;p&gt;&lt;a href=&#34;#&#34;&gt;Source&lt;/a&gt; · &lt;a href=&#34;#&#34;&gt;Write-up&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Part 1: Raycasting Basics</title>
+      <link>http://localhost:1313/blog/hallow/part-1-raycasting-basics/</link>
+      <pubDate>Tue, 21 Apr 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/blog/hallow/part-1-raycasting-basics/</guid>
+      <description>&lt;p&gt;Content here.&lt;/p&gt;&#xA;&lt;p&gt;Next: &lt;a href=&#34;http://localhost:1313/posts/hollow/part-2-movement&#34;&gt;Part 2: Movement&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Post Title</title>
+      <link>http://localhost:1313/blog/first-post/</link>
+      <pubDate>Tue, 21 Apr 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/blog/first-post/</guid>
+      <description>&lt;p&gt;Opening paragraph here.&lt;/p&gt;&#xA;&lt;h2 id=&#34;section&#34;&gt;Section&lt;/h2&gt;&#xA;&lt;p&gt;Body content here.&lt;/p&gt;&#xA;&lt;h2 id=&#34;another-section&#34;&gt;Another Section&lt;/h2&gt;&#xA;&lt;p&gt;More content.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Colophon</title>
+      <link>http://localhost:1313/colophon/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/colophon/</guid>
+      <description>&lt;p&gt;The tools, themes, and influences behind this site.&lt;/p&gt;&#xA;&lt;h2 id=&#34;built-with&#34;&gt;Built with&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://gohugo.io/&#34;&gt;Hugo&lt;/a&gt;: static site generator&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;typography&#34;&gt;Typography&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://github.com/zenbones-theme/zenbones-mono&#34;&gt;Zenbones Brainy&lt;/a&gt;: a custom Iosevka build by mcchrish, &amp;ldquo;Brainy&amp;rdquo; variant inspired by JetBrains Mono and Berkeley Mono&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;colors&#34;&gt;Colors&lt;/h2&gt;&#xA;&lt;p&gt;The light and dark color schemes are based on the &lt;a href=&#34;https://protesilaos.com/emacs/modus-themes-colors&#34;&gt;Modus themes&lt;/a&gt; by Protesilaos Stavrou:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;code&gt;modus-operandi&lt;/code&gt;: light&lt;/li&gt;&#xA;&lt;li&gt;&lt;code&gt;modus-vivendi&lt;/code&gt;: dark&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;Headings use the &lt;code&gt;yellow-warmer&lt;/code&gt;, &lt;code&gt;magenta&lt;/code&gt;, and &lt;code&gt;cyan&lt;/code&gt; accents from the same palettes.&lt;/p&gt;&#xA;&lt;h2 id=&#34;design-influence&#34;&gt;Design influence&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://www.gingerbill.org/&#34;&gt;gingerbill.org&lt;/a&gt;: the inline-list nav with &lt;code&gt;|&lt;/code&gt; separators is borrowed from Bill&amp;rsquo;s site&lt;/li&gt;&#xA;&lt;/ul&gt;</description>
+    </item>
+  </channel>
+</rss>

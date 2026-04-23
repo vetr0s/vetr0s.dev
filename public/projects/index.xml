@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Projects on *</title>
+    <link>http://localhost:1313/projects/</link>
+    <description>Recent content in Projects on *</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 21 Apr 2026 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/projects/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>HOLLOW</title>
+      <link>http://localhost:1313/projects/hallow/</link>
+      <pubDate>Tue, 21 Apr 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/projects/hallow/</guid>
+      <description>&lt;p&gt;Short description of the project.&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;Stack:&lt;/strong&gt; Odin, Raylib&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;Status:&lt;/strong&gt; In progress&lt;/p&gt;&#xA;&lt;p&gt;&lt;a href=&#34;#&#34;&gt;Source&lt;/a&gt; · &lt;a href=&#34;#&#34;&gt;Write-up&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

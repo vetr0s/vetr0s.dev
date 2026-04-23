@@ -1,0 +1,375 @@
+@font-face {
+    font-family: "Zenbones Brainy";
+    src: url("/fonts/Zenbones-Brainy-Regular.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Zenbones Brainy";
+    src: url("/fonts/Zenbones-Brainy-Bold.woff2") format("woff2");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Modus Operandi (light), default */
+:root {
+    --color-bg: #ffffff;
+    --color-bg-dim: #f2f2f2;
+    --color-text: #000000;
+    --color-muted: #595959;
+    --color-border: #c4c4c4;
+    --color-link: #0031a9;
+    --color-link-hover: #005e8b;
+    --color-heading-1: #884900;
+    --color-heading-2: #721045;
+    --color-heading-3: #005e8b;
+    --magenta: #721045;
+    --magenta-intense: #dd22dd;
+    --color-accent: var(--magenta);
+
+    --font-sans: "Zenbones Brainy", ui-monospace, monospace;
+    --font-mono: "Zenbones Brainy", ui-monospace, monospace;
+    --font-serif: Charter, "Iowan Old Style", "Source Serif Pro", Georgia, serif;
+
+    --space-xs: 0.5rem;
+    --space-sm: 1rem;
+    --space-md: 1.5rem;
+    --space-lg: 2rem;
+    --space-xl: 3rem;
+    --space-xxl: 4rem;
+
+    --max-width: 80ch;
+}
+
+/* Modus Vivendi (dark), applied via system preference OR explicit toggle */
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+        --color-bg: #000000;
+        --color-bg-dim: #1e1e1e;
+        --color-text: #ffffff;
+        --color-muted: #989898;
+        --color-border: #535353;
+        --color-link: #2fafff;
+        --color-link-hover: #00d3d0;
+        --color-heading-1: #fec43f;
+        --color-heading-2: #feacd0;
+        --color-heading-3: #00d3d0;
+        --magenta: #feacd0;
+        --magenta-intense: #ff66ff;
+    }
+}
+
+:root[data-theme="dark"] {
+    --color-bg: #000000;
+    --color-bg-dim: #1e1e1e;
+    --color-text: #ffffff;
+    --color-muted: #989898;
+    --color-border: #535353;
+    --color-link: #2fafff;
+    --color-link-hover: #00d3d0;
+    --color-heading-1: #fec43f;
+    --color-heading-2: #feacd0;
+    --color-heading-3: #00d3d0;
+    --magenta: #feacd0;
+    --magenta-intense: #ff66ff;
+}
+
+body {
+    font-family: var(--font-serif);
+    color: var(--color-text);
+    background: var(--color-bg);
+    margin: 0;
+    padding: 1em;
+    line-height: 1.55;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+nav,
+#logo,
+.menu,
+#theme-toggle,
+code,
+pre {
+    font-family: var(--font-sans);
+}
+
+@media (min-width: 48em) {
+    body {
+        margin: 0 14em;
+        padding: 1em 2em;
+    }
+}
+
+.container {
+    max-width: var(--max-width);
+    margin-inline: auto;
+    padding-inline: var(--space-sm);
+}
+
+/* Typography */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    line-height: 1.2;
+    margin-block: var(--space-md) var(--space-sm);
+}
+
+h1 {
+    font-size: 2rem;
+    color: var(--color-heading-1);
+}
+h2 {
+    font-size: 1.5rem;
+    color: var(--color-heading-2);
+}
+h3 {
+    font-size: 1.25rem;
+    color: var(--color-heading-3);
+}
+
+p {
+    margin-block-end: var(--space-sm);
+    max-width: var(--max-width);
+}
+
+a {
+    color: var(--color-link);
+}
+
+a:hover {
+    color: var(--color-link-hover);
+    text-decoration: dashed underline 1px var(--color-link);
+}
+
+code,
+pre {
+    font-family: var(--font-mono);
+}
+
+/* Layout */
+header,
+main,
+footer {
+    padding-block: var(--space-sm);
+}
+
+header {
+    border-block-end: 1px solid var(--color-border);
+}
+
+footer {
+    border-block-start: 1px solid var(--color-border);
+    color: var(--color-muted);
+    font-size: 0.875rem;
+}
+
+/* Header */
+nav {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+}
+
+#logo {
+    font-size: 2rem;
+    margin: 0;
+}
+
+#logo a {
+    color: var(--color-text);
+    text-decoration: none;
+}
+
+.accent {
+    color: var(--magenta);
+}
+
+.menu {
+    margin: 0 0 0 auto;
+    padding: 0;
+    list-style: none;
+}
+
+.menu li {
+    display: inline;
+    color: var(--color-muted);
+}
+
+.menu li:not(:first-child)::before {
+    padding: 0.5em;
+    content: "|";
+    color: var(--color-muted);
+}
+
+#theme-toggle {
+    background: none;
+    border: none;
+    color: var(--color-link);
+    font: inherit;
+    cursor: pointer;
+    padding: 0;
+}
+
+#theme-toggle:hover {
+    color: var(--color-link-hover);
+}
+
+/* Margin notes: float into the dead space on wide screens, inline callout on narrow */
+.margin-note {
+  display: block;
+  font-size: 0.85em;
+  color: var(--color-muted);
+  line-height: 1.4;
+  border-left: 2px solid var(--color-border);
+  padding-left: 0.75rem;
+  margin: 0.5rem 0;
+}
+
+.margin-note img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin-block-end: 0.25rem;
+}
+
+.margin-note img.avatar {
+  width: 8rem;
+  height: 8rem;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-inline: auto;
+}
+
+.margin-note:has(img.avatar) {
+  display: none;
+}
+
+@media (min-width: 60em) {
+  .margin-note:has(img.avatar) {
+    display: block;
+  }
+}
+
+@media (min-width: 60em) {
+  .margin-note {
+    float: right;
+    clear: right;
+    width: 14rem;
+    margin: 0 0 0.5rem 1.5rem;
+    border-left: none;
+    padding-left: 0;
+  }
+}
+
+/* Foldable sections */
+details {
+    margin-block: var(--space-sm);
+}
+
+details > summary {
+    cursor: pointer;
+    list-style: none;
+    transition: color 0.2s ease;
+}
+
+details > summary::-webkit-details-marker {
+    display: none;
+}
+
+details > summary > h2 {
+    display: inline-block;
+    margin: 0;
+    transition: color 0.2s ease;
+}
+
+details > summary::before {
+    content: "";
+    display: inline-block;
+    width: 0.55em;
+    height: 0.55em;
+    margin-right: 0.6em;
+    vertical-align: middle;
+    background: var(--color-muted);
+    clip-path: polygon(0% 0%, 100% 50%, 0% 100%);
+    transition:
+        background 0.2s ease,
+        clip-path 0.2s ease,
+        transform 0.2s ease;
+}
+
+details[open] > summary::before {
+    transform: rotate(90deg);
+}
+
+details > summary:hover > h2 {
+    color: var(--magenta-intense);
+}
+
+details > summary:hover::before {
+    clip-path: circle(50%);
+    background: var(--magenta-intense);
+}
+
+/* Padding above the revealed details content */
+details[open] > summary + * {
+    margin-block-start: var(--space-md);
+}
+
+/* Contact info: aligned label/value pairs */
+.contact-list {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 0.25em 1em;
+    margin: 0;
+}
+
+.contact-list dt {
+    color: var(--color-muted);
+}
+
+.contact-list dt::after {
+    content: ":";
+}
+
+.contact-list dd {
+    margin: 0;
+}
+
+/* Post listing: table-of-contents leader dots */
+.post-entry {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5em;
+    margin-block-end: 0.4em;
+}
+
+.post-entry > a {
+    order: 1;
+}
+
+.post-entry::after {
+    content: "";
+    order: 2;
+    flex: 1;
+    border-bottom: 2px dotted var(--color-muted);
+    position: relative;
+    top: -0.25em;
+}
+
+.post-entry > time {
+    order: 3;
+    white-space: nowrap;
+    color: var(--color-muted);
+}

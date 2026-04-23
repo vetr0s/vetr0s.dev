@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Building HOLLOW on *</title>
+    <link>http://localhost:1313/blog/hallow/</link>
+    <description>Recent content in Building HOLLOW on *</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 21 Apr 2026 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/blog/hallow/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Part 1: Raycasting Basics</title>
+      <link>http://localhost:1313/blog/hallow/part-1-raycasting-basics/</link>
+      <pubDate>Tue, 21 Apr 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/blog/hallow/part-1-raycasting-basics/</guid>
+      <description>&lt;p&gt;Content here.&lt;/p&gt;&#xA;&lt;p&gt;Next: &lt;a href=&#34;http://localhost:1313/posts/hollow/part-2-movement&#34;&gt;Part 2: Movement&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
