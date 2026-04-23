@@ -158,9 +158,8 @@ footer p {
 
 nav {
     display: flex;
-    align-items: baseline;
-    gap: var(--space-md);
-    flex-wrap: wrap;
+    flex-direction: column;
+    gap: var(--space-xs);
 }
 
 #logo {
@@ -178,7 +177,7 @@ nav {
 }
 
 .menu {
-    margin: 0 0 0 auto;
+    margin: 0;
     padding: 0;
     list-style: none;
 }
