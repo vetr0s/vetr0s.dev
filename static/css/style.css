@@ -28,7 +28,6 @@
     --color-heading-3: #005e8b;
     --magenta: #721045;
     --magenta-intense: #dd22dd;
-    --color-accent: var(--magenta);
 
     --font-sans: "Zenbones Brainy", ui-monospace, monospace;
     --font-mono: "Zenbones Brainy", ui-monospace, monospace;
@@ -44,7 +43,8 @@
     --max-width: 80ch;
 }
 
-/* Modus Vivendi (dark), applied via system preference OR explicit toggle */
+/* Modus Vivendi (dark) — applied via system preference OR explicit toggle.
+   Two separate rules are required: one scoped to the media query, one unconditional. */
 @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
         --color-bg: #000000;
@@ -77,6 +77,8 @@
     --magenta-intense: #ff66ff;
 }
 
+/* ── Base ───────────────────────────────────────────────────── */
+
 body {
     font-family: var(--font-serif);
     color: var(--color-text);
@@ -86,57 +88,42 @@ body {
     line-height: 1.55;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-nav,
-#logo,
-.menu,
-#theme-toggle,
-code,
-pre {
+h1, h2, h3, h4, h5, h6,
+nav, #logo, .menu, #theme-toggle,
+code, pre {
     font-family: var(--font-sans);
 }
 
+/* ── Responsive layout & type scale ────────────────────────── */
+
 @media (min-width: 48em) {
     body {
-        margin: 0 14em;
+        max-width: 72rem;
+        margin-inline: auto;
         padding: 1em 2em;
     }
 }
 
-.container {
-    max-width: var(--max-width);
-    margin-inline: auto;
-    padding-inline: var(--space-sm);
+@media (min-width: 62.5em) {
+    html {
+        font-size: 112.5%; /* 18px */
+    }
+
+    :root {
+        --max-width: 100ch;
+    }
 }
 
-/* Typography */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+/* ── Typography ─────────────────────────────────────────────── */
+
+h1, h2, h3, h4, h5, h6 {
     line-height: 1.2;
     margin-block: var(--space-md) var(--space-sm);
 }
 
-h1 {
-    font-size: 2rem;
-    color: var(--color-heading-1);
-}
-h2 {
-    font-size: 1.5rem;
-    color: var(--color-heading-2);
-}
-h3 {
-    font-size: 1.25rem;
-    color: var(--color-heading-3);
-}
+h1 { font-size: 2rem;    color: var(--color-heading-1); }
+h2 { font-size: 1.5rem;  color: var(--color-heading-2); margin-block-start: var(--space-lg); }
+h3 { font-size: 1.25rem; color: var(--color-heading-3); }
 
 p {
     margin-block-end: var(--space-sm);
@@ -152,16 +139,20 @@ a:hover {
     text-decoration: dashed underline 1px var(--color-link);
 }
 
-code,
-pre {
-    font-family: var(--font-mono);
+/* ── Layout ─────────────────────────────────────────────────── */
+
+.container {
+    max-width: var(--max-width);
+    margin-inline: auto;
+    padding-inline: var(--space-sm);
 }
 
-/* Layout */
-header,
-main,
-footer {
+header, main, footer {
     padding-block: var(--space-sm);
+}
+
+section {
+    clear: right;
 }
 
 header {
@@ -174,7 +165,8 @@ footer {
     font-size: 0.875rem;
 }
 
-/* Header */
+/* ── Navigation ─────────────────────────────────────────────── */
+
 nav {
     display: flex;
     align-items: baseline;
@@ -226,54 +218,55 @@ nav {
     color: var(--color-link-hover);
 }
 
-/* Margin notes: float into the dead space on wide screens, inline callout on narrow */
+/* ── Margin notes ───────────────────────────────────────────── */
+
 .margin-note {
-  display: block;
-  font-size: 0.85em;
-  color: var(--color-muted);
-  line-height: 1.4;
-  border-left: 2px solid var(--color-border);
-  padding-left: 0.75rem;
-  margin: 0.5rem 0;
+    display: block;
+    font-size: 0.85em;
+    color: var(--color-muted);
+    line-height: 1.4;
+    border-left: 2px solid var(--color-border);
+    padding-left: 0.75rem;
+    margin: 0.5rem 0;
 }
 
 .margin-note img {
-  display: block;
-  max-width: 100%;
-  height: auto;
-  margin-block-end: 0.25rem;
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin-block-end: 0.25rem;
 }
 
 .margin-note img.avatar {
-  width: 8rem;
-  height: 8rem;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-inline: auto;
+    width: 8rem;
+    height: 8rem;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-inline: auto;
 }
 
+/* Avatar-bearing notes are hidden on narrow screens */
 .margin-note:has(img.avatar) {
-  display: none;
+    display: none;
 }
 
 @media (min-width: 60em) {
-  .margin-note:has(img.avatar) {
-    display: block;
-  }
+    .margin-note:has(img.avatar) {
+        display: block;
+    }
+
+    .margin-note {
+        float: right;
+        clear: right;
+        width: 14rem;
+        margin: 0 0 0.5rem 1.5rem;
+        border-left: none;
+        padding-left: 0;
+    }
 }
 
-@media (min-width: 60em) {
-  .margin-note {
-    float: right;
-    clear: right;
-    width: 14rem;
-    margin: 0 0 0.5rem 1.5rem;
-    border-left: none;
-    padding-left: 0;
-  }
-}
+/* ── Foldable sections ──────────────────────────────────────── */
 
-/* Foldable sections */
 details {
     margin-block: var(--space-sm);
 }
@@ -281,6 +274,7 @@ details {
 details > summary {
     cursor: pointer;
     list-style: none;
+    padding-block: var(--space-xs);
     transition: color 0.2s ease;
 }
 
@@ -322,12 +316,12 @@ details > summary:hover::before {
     background: var(--magenta-intense);
 }
 
-/* Padding above the revealed details content */
 details[open] > summary + * {
     margin-block-start: var(--space-md);
 }
 
-/* Contact info: aligned label/value pairs */
+/* ── Contact list ───────────────────────────────────────────── */
+
 .contact-list {
     display: grid;
     grid-template-columns: max-content 1fr;
@@ -347,7 +341,8 @@ details[open] > summary + * {
     margin: 0;
 }
 
-/* Post listing: table-of-contents leader dots */
+/* ── Post listing ───────────────────────────────────────────── */
+
 .post-entry {
     display: flex;
     align-items: baseline;
@@ -355,9 +350,8 @@ details[open] > summary + * {
     margin-block-end: 0.4em;
 }
 
-.post-entry > a {
-    order: 1;
-}
+.post-entry > a     { order: 1; }
+.post-entry > time  { order: 3; white-space: nowrap; color: var(--color-muted); }
 
 .post-entry::after {
     content: "";
@@ -366,10 +360,4 @@ details[open] > summary + * {
     border-bottom: 2px dotted var(--color-muted);
     position: relative;
     top: -0.25em;
-}
-
-.post-entry > time {
-    order: 3;
-    white-space: nowrap;
-    color: var(--color-muted);
 }
