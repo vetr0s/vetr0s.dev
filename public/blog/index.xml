@@ -6,8 +6,15 @@
     <description>Recent content in Posts on vetr0s.dev</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 21 Apr 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 23 Apr 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/blog/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Hello, World</title>
+      <link>http://localhost:1313/blog/hello-world/</link>
+      <pubDate>Thu, 23 Apr 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/blog/hello-world/</guid>
+      <description>&lt;p&gt;A placeholder while the rest of the site fills in. Here&amp;rsquo;s what&amp;rsquo;s on the way.&lt;/p&gt;&#xA;&lt;h2 id=&#34;projects&#34;&gt;Projects&lt;/h2&gt;&#xA;&lt;dl class=&#34;entry-list&#34;&gt;&#xA;  &lt;dt&gt;Odin Language Study&lt;/dt&gt;&#xA;  &lt;dd&gt;Notes and exercises while learning &lt;a href=&#34;https://odin-lang.org/&#34;&gt;Odin&lt;/a&gt;&lt;/dd&gt;&#xA;  &lt;dt&gt;HOLLOW&lt;/dt&gt;&#xA;  &lt;dd&gt;DDA raycaster with Quake-style movement (Odin, &lt;a href=&#34;https://www.raylib.com/&#34;&gt;Raylib&lt;/a&gt;)&lt;/dd&gt;&#xA;  &lt;dt&gt;Tucson Crime Analysis&lt;/dt&gt;&#xA;  &lt;dd&gt;Multivariate analysis of Tucson crime data, cross-referenced with income and street lighting. Source at &lt;a href=&#34;https://github.com/vetr0s/tucson-crime-analysis&#34;&gt;github.com/vetr0s&lt;/a&gt;&lt;/dd&gt;&#xA;  &lt;dt&gt;Compiler (working title)&lt;/dt&gt;&#xA;  &lt;dd&gt;From-scratch compiler&lt;/dd&gt;&#xA;&lt;/dl&gt;&#xA;&lt;h2 id=&#34;articles&#34;&gt;Articles&lt;/h2&gt;&#xA;&lt;dl class=&#34;entry-list&#34;&gt;&#xA;  &lt;dt&gt;Learn You Some Odin for Great Good&lt;/dt&gt;&#xA;  &lt;dd&gt;A friendly tour of Odin before any HOLLOW code gets written&lt;/dd&gt;&#xA;  &lt;dt&gt;Walls Considered Harmful&lt;/dt&gt;&#xA;  &lt;dd&gt;Building HOLLOW&#39;s raycaster, one ray at a time&lt;/dd&gt;&#xA;  &lt;dt&gt;The Tao of Strafe Jumping&lt;/dt&gt;&#xA;  &lt;dd&gt;Porting Quake-style movement to a 2.5D world&lt;/dd&gt;&#xA;  &lt;dt&gt;Streetlights, Income, and Crime in Tucson&lt;/dt&gt;&#xA;  &lt;dd&gt;A multivariate look at Tucson PD data, cross-referenced with income and lighting&lt;/dd&gt;&#xA;  &lt;dt&gt;Real Programmers Don&#39;t Use yacc&lt;/dt&gt;&#xA;  &lt;dd&gt;Starting the compiler, one token at a time&lt;/dd&gt;&#xA;&lt;/dl&gt;&#xA;&lt;p&gt;Follow along at &lt;a href=&#34;https://github.com/vetr0s&#34;&gt;github.com/vetr0s&lt;/a&gt;.&lt;/p&gt;</description>
+    </item>
     <item>
       <title>Post Title</title>
       <link>http://localhost:1313/blog/first-post/</link>

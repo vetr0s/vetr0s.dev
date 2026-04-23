@@ -1,7 +1,7 @@
 ---
 title: "HOLLOW"
 date: 2026-04-21
-draft: false
+draft: true
 ---
 
 Short description of the project.

@@ -1,6 +1,6 @@
 ---
 title: "Building HOLLOW"
-draft: false
+draft: true
 date: 2026-04-21
 ---
 

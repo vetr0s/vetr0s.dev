@@ -1,3 +1,6 @@
 baseURL = 'https://vetr0s.dev/'
 locale = 'en-us'
 title = 'vetr0s.dev'
+
+[markup.goldmark.renderer]
+unsafe = true

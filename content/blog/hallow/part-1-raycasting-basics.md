@@ -1,7 +1,7 @@
 ---
 title: "Part 1: Raycasting Basics"
 date: 2026-04-21
-draft: false
+draft: true
 series: "hollow"
 ---
 
