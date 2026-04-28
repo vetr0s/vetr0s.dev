@@ -2,21 +2,34 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://vetr0s.dev/blog/hello-world/</loc>
+    <loc>http://localhost:1313/blog/hello-world/</loc>
     <lastmod>2026-04-23T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://vetr0s.dev/blog/</loc>
+    <loc>http://localhost:1313/blog/</loc>
     <lastmod>2026-04-23T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://vetr0s.dev/</loc>
+    <loc>http://localhost:1313/</loc>
     <lastmod>2026-04-23T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://vetr0s.dev/categories/</loc>
+    <loc>http://localhost:1313/blog/hallow/</loc>
+    <lastmod>2026-04-21T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://vetr0s.dev/colophon/</loc>
+    <loc>http://localhost:1313/projects/hallow/</loc>
+    <lastmod>2026-04-21T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://vetr0s.dev/projects/</loc>
+    <loc>http://localhost:1313/blog/hallow/part-1-raycasting-basics/</loc>
+    <lastmod>2026-04-21T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://vetr0s.dev/tags/</loc>
+    <loc>http://localhost:1313/blog/first-post/</loc>
+    <lastmod>2026-04-21T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/projects/</loc>
+    <lastmod>2026-04-21T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/categories/</loc>
+  </url><url>
+    <loc>http://localhost:1313/colophon/</loc>
+  </url><url>
+    <loc>http://localhost:1313/tags/</loc>
   </url>
 </urlset>

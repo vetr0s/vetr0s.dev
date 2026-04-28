@@ -15,6 +15,10 @@ A placeholder while the rest of the site fills in. Here's what's on the way.
 | Tucson Crime Analysis | Multivariate analysis of Tucson crime data, cross-referenced with income and street lighting. Source at [github.com/vetr0s](https://github.com/vetr0s/tucson-crime-analysis) |
 | Compiler (working title) | From-scratch compiler |
 
+{{< aside >}}
+Things I'm building. Each will get its own page under [/projects](/projects/) once there's something worth showing.
+{{< /aside >}}
+
 ## Articles
 
 | Article | Description |
@@ -25,5 +29,9 @@ A placeholder while the rest of the site fills in. Here's what's on the way.
 | The Tao of Strafe Jumping | Porting Quake-style movement to a 2.5D world |
 | Streetlights, Income, and Crime in Tucson | A multivariate look at Tucson PD data, cross-referenced with income and lighting |
 | Real Programmers Don't Use yacc | Starting the compiler, one token at a time |
+
+{{< aside >}}
+Long-form writeups planned to accompany the projects above — design notes, postmortems, and tangents I find interesting along the way.
+{{< /aside >}}
 
 Follow along at [github.com/vetr0s](https://github.com/vetr0s).
