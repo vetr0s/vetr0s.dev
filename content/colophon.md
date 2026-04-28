@@ -10,7 +10,10 @@ The tools, themes, and influences behind this site.
 
 ## Typography
 
-- [Zenbones Brainy](https://github.com/zenbones-theme/zenbones-mono): a custom Iosevka build by mcchrish, "Brainy" variant inspired by JetBrains Mono and Berkeley Mono
+The site uses the reader's system fonts — no web fonts are loaded.
+
+- Body: the system serif (`serif`)
+- Navigation, code, and headings: the system sans (`system-ui`) and mono (`ui-monospace`)
 
 ## Colors
 
@@ -24,3 +27,4 @@ Headings use the `yellow-warmer`, `magenta`, and `cyan` accents from the same pa
 ## Design influence
 
 - [gingerbill.org](https://www.gingerbill.org/): the inline-list nav with `|` separators is borrowed from Bill's site
+- [Tufte CSS](https://edwardtufte.github.io/tufte-css/): the dedicated right-hand gutter for asides and margin notes is inspired by Tufte's layout
