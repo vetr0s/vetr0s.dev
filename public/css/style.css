@@ -255,6 +255,25 @@ details[open] > summary + * { margin-block-start: var(--space-md); }
     color: var(--color-muted);
 }
 
+/* Tables */
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-block: var(--space-md);
+}
+
+th, td {
+    border: 1px solid var(--color-border);
+    padding: 0.4em 0.7em;
+    text-align: left;
+    vertical-align: top;
+}
+
+th {
+    background: light-dark(#f5f5f5, #1a1a1a);
+}
+
 /* Post listing (table-of-contents leader dots) */
 
 .post-entry {

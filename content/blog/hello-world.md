@@ -19,6 +19,7 @@ A placeholder while the rest of the site fills in. Here's what's on the way.
 
 | Article | Description |
 | --- | --- |
+| Hack Arizona 2026 | A recap of Hack Arizona 2026 and what I built there |
 | Learn You Some Odin for Great Good | A friendly tour of Odin before any HOLLOW code gets written |
 | Walls Considered Harmful | Building HOLLOW's raycaster, one ray at a time |
 | The Tao of Strafe Jumping | Porting Quake-style movement to a 2.5D world |
