@@ -194,9 +194,9 @@ nav {
 
     article {
         display: grid;
-        grid-template-columns: minmax(0, 36rem) 14rem;
-        column-gap: 1.5rem;
-        max-width: 51.5rem;
+        grid-template-columns: minmax(0, 48rem) 16rem;
+        column-gap: 2rem;
+        max-width: 66rem;
     }
 
     article > * { grid-column: 1; min-width: 0; }
