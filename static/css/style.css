@@ -23,6 +23,11 @@
     --space-lg: 2rem;
 
     --max-width: 72ch;
+
+    /* Tufte's proportions: a 55% text column, notes in the gutter beside it. */
+    --main-width:  55%;
+    --note-width:  32%;
+    --note-inset:   3%;
 }
 
 :root[data-theme="light"] { color-scheme: light; }
@@ -93,6 +98,14 @@ main ul, main ol {
 }
 
 main li { margin-block-end: 0.25em; }
+
+/* Dateline under a post title. */
+article > time {
+    display: block;
+    color: var(--color-muted);
+    font-size: 0.875rem;
+    margin-block-end: var(--space-md);
+}
 
 a         { color: var(--color-link); }
 a:hover   { color: var(--color-link-hover); text-decoration: dashed underline 1px var(--color-link); }
@@ -170,75 +183,35 @@ nav {
     margin-block-end: 0.25rem;
 }
 
-.margin-note img.avatar {
-    width: 7.5rem;
-    height: 7.5rem;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-inline: auto;
-}
-
-.margin-note:has(img.avatar) { display: none; }
-
+/* Tufte-style margin column.
+   Prose is held to --main-width so the remaining space on the right is a
+   dedicated gutter; notes float into it, aligned with the passage that
+   introduces them. Below this breakpoint there is no room for a gutter, so
+   notes stay in the flow as the bordered blocks styled above. */
 @media (min-width: 60em) {
-    .margin-note:has(img.avatar) {
-        display: block;
+    /* Float containment: without a BFC the notes escape their <details>. */
+    .details-body,
+    article { display: flow-root; }
+
+    main p,
+    main dl,
+    main ul,
+    main ol,
+    main pre,
+    main table,
+    main blockquote,
+    main h1, main h2, main h3, main h4 {
+        max-width: var(--main-width);
+    }
+
+    .margin-note {
         float: right;
         clear: right;
-        width: 14rem;
-        margin: 0 0 0.5rem 1.5rem;
+        width: var(--note-width);
+        margin-right: var(--note-inset);
+        margin-block: 0.35rem var(--space-sm);
         border-left: none;
         padding-left: 0;
-    }
-
-    .details-layout {
-        display: flex;
-        gap: 1.5rem;
-        align-items: start;
-    }
-
-    .details-body  { flex: 1; }
-
-    .details-notes {
-        width: 14rem;
-        flex-shrink: 0;
-        display: flex;
-        flex-direction: column;
-        gap: var(--space-sm);
-    }
-
-    .details-notes > .margin-note {
-        border-left: none;
-        padding-left: 0;
-        margin: 0;
-    }
-
-    article {
-        display: grid;
-        grid-template-columns: minmax(0, 48rem) 16rem;
-        column-gap: 2rem;
-        max-width: 66rem;
-    }
-
-    article > * { grid-column: 1; min-width: 0; }
-    article > h1,
-    article > time { grid-column: 1 / -1; }
-
-    article > aside.margin-note {
-        grid-column: 2;
-        align-self: start;
-        width: auto;
-        margin: 0;
-        border-left: none;
-        padding-left: 0;
-    }
-
-    article p,
-    article ul,
-    article ol,
-    article blockquote,
-    article table {
-        max-width: none;
     }
 }
 

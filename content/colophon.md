@@ -32,4 +32,4 @@ Headings use the `yellow-warmer`, `magenta`, and `cyan` accents from the same pa
 
 - [protesilaos.com](https://protesilaos.com/): the typography here — large, bold, system-font text on a modular scale, with no web fonts — follows Prot's site, as do the Modus palettes above
 - [gingerbill.org](https://www.gingerbill.org/): the inline-list nav with `|` separators is borrowed from Bill's site
-- [Tufte CSS](https://edwardtufte.github.io/tufte-css/): the dedicated right-hand gutter for asides and margin notes is inspired by Tufte's layout
+- [Tufte CSS](https://edwardtufte.github.io/tufte-css/): the layout follows Tufte's proportions — prose is held to a 55% measure and margin notes float into the gutter beside it, aligned with the passage that introduces them, rather than being collected in a sidebar. On narrow screens the gutter collapses and the notes drop back into the flow
