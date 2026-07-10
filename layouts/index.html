@@ -19,31 +19,12 @@
     little more about me.
   </p>
   <details>
-    <summary><h2>Etymology</h2></summary>
-    <div class="details-layout">
-      <div class="details-body">
-        <p>
-          <strong>vetr0s</strong> (/ˈvɛt.ri/) comes from the
-          <a href="https://en.wikipedia.org/wiki/Italian_language">Italian</a>
-          <a href="https://en.wiktionary.org/wiki/vetri"><em>vetri</em></a>,
-          plural of <em>vetro</em>, meaning "glass" or "windowpane." The <code>0</code>
-          is <a href="https://en.wikipedia.org/wiki/Leet">leet</a>, because hackers
-          have cool nicknames with numbers in them. The plural reflects my appreciation
-          for <a href="https://en.wikipedia.org/wiki/Open-source_software">open
-          source software</a>, which is why I created this site: to offer a few separate
-          views into my work.
-        </p>
-      </div>
-    </div>
-  </details>
-
-  <details>
     <summary><h2>Education</h2></summary>
     <div class="details-layout">
       <div class="details-body">
         <p>
-          I am currently graduating from the
-          <a href="https://www.arizona.edu/">University of Arizona</a> this spring
+          I graduated from the
+          <a href="https://www.arizona.edu/">University of Arizona</a> in May 2026
           with a Bachelor of Science in
           <a href="https://www.cs.arizona.edu/">Computer Science</a>. Before
           Arizona, I grew up in
@@ -140,15 +121,36 @@
       </div>
     </div>
   </details>
+
+  <details>
+    <summary><h2>Etymology</h2></summary>
+    <div class="details-layout">
+      <div class="details-body">
+        <p>
+          <strong>vetr0s</strong> (/ˈvɛt.ri/) comes from the
+          <a href="https://en.wikipedia.org/wiki/Italian_language">Italian</a>
+          <a href="https://en.wiktionary.org/wiki/vetri"><em>vetri</em></a>,
+          plural of <em>vetro</em>, meaning "glass" or "windowpane." The <code>0</code>
+          is <a href="https://en.wikipedia.org/wiki/Leet">leet</a>, because hackers
+          have cool nicknames with numbers in them. The plural reflects my appreciation
+          for <a href="https://en.wikipedia.org/wiki/Open-source_software">open
+          source software</a>, which is why I created this site: to offer a few separate
+          views into my work.
+        </p>
+      </div>
+    </div>
+  </details>
 </section>
 
+{{ with first 5 (where .Site.RegularPages "Section" "blog") }}
 <section id="recent">
   <h1>Recent Posts</h1>
-  {{ range first 5 (where .Site.RegularPages "Section" "blog") }}
+  {{ range . }}
   <article class="post-entry">
     <a href="{{ .Permalink }}">{{ .Title }}</a>
-    <time>{{ .Date.Format "2006-01-02" }}</time>
+    <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time>
   </article>
   {{ end }}
 </section>
+{{ end }}
 {{ end }}

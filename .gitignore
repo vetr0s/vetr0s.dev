@@ -1,1 +1,6 @@
 *.zip
+
+# Hugo build output — rebuilt from source by GitHub Actions on every push.
+public/
+resources/
+.hugo_build.lock
