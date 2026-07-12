@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+# Run the site locally. Drafts are on: this is for looking at the thing, not
+# for checking what the world will see.
+#
+#   ./dev            serve on :1313, live reload, drafts and future posts shown
+#   ./dev --clean    same, but throw away Hugo's caches first
+#   ./dev --build    no server; do the production build the CI does, into public/
+set -euo pipefail
+
+cd "$(dirname "$0")"
+
+if ! command -v hugo > /dev/null; then
+  echo "hugo is not installed. brew install hugo" >&2
+  exit 1
+fi
+
+case "${1:-}" in
+  --build)
+    rm -rf public resources
+    hugo --minify
+    echo
+    echo "Built to public/. This is what GitHub Actions publishes."
+    ;;
+  *)
+    if [ "${1:-}" = "--clean" ]; then
+      rm -rf public resources .hugo_build.lock
+    fi
+
+    # -D drafts, -F future-dated posts, --navigateToChanged jumps the browser to
+    # whatever file you just saved.
+    exec hugo server \
+      --buildDrafts \
+      --buildFuture \
+      --navigateToChanged \
+      --disableFastRender \
+      --printPathWarnings
+    ;;
+esac

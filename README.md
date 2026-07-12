@@ -25,7 +25,7 @@ publishes it to GitHub Pages.
 | Path | What lives there |
 |---|---|
 | `content/` | The markdown. Posts under `blog/`, projects under `projects/`, plus `colophon.md` |
-| `layouts/index.html` | The home page, written out by hand rather than generated from content |
+| `layouts/index.html` | The home page, written out by hand rather than generated from content. The portrait is the `.margin-note.portrait` aside in the About section — swap its `src` to change the picture |
 | `layouts/_default/` | `baseof.html`, `single.html` for a post, `list.html` for a section |
 | `layouts/partials/` | `head.html`, `header.html`, `footer.html` |
 | `layouts/shortcodes/` | `aside.html`, the margin note |
@@ -59,12 +59,20 @@ the flow as a bordered block.
 
 ## The look
 
+Plain HTML, left aligned. The page starts at the left margin and stops at its
+measure — prose is held to `80ch` inside a `100ch` column, and the gap between
+the two is the gutter the margin notes float into. Nothing is centered.
+
 Colors come from Protesilaos Stavrou's [Modus
 themes](https://protesilaos.com/emacs/modus-themes-colors), `modus-operandi`
-for light and `modus-vivendi` for dark. The typography follows
-[protesilaos.com](https://protesilaos.com/): system fonts, set large and bold on
-a modular scale. The layout borrows the margin gutter from [Tufte
-CSS](https://edwardtufte.github.io/tufte-css/), and lets text wrap around it the
-way Wikipedia does.
+for light and `modus-vivendi` for dark, and they carry through to syntax
+highlighting, so code follows the theme rather than shipping one of its own.
+The typography follows [protesilaos.com](https://protesilaos.com/): system
+fonts on a modular scale. The margin note is from [Tufte
+CSS](https://edwardtufte.github.io/tufte-css/).
+
+The home page carries the nav banner. Posts and project pages do not — they get
+a breadcrumb line instead (`vetr0s.dev / blog`) with the theme toggle beside it,
+so the page opens on its own title and still has a way back out.
 
 More of that is written up at [vetr0s.dev/colophon](https://vetr0s.dev/colophon/).

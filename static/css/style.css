@@ -3,6 +3,7 @@
     color-scheme: light dark;
 
     --color-bg:           light-dark(#ffffff, #000000);
+    --color-surface:      light-dark(#f2f2f2, #1e1e1e);
     --color-text:         light-dark(#000000, #ffffff);
     --color-muted:        light-dark(#595959, #989898);
     --color-border:       light-dark(#c4c4c4, #535353);
@@ -17,19 +18,28 @@
     --font-sans:  system-ui, -apple-system, "Segoe UI", "Noto Sans", sans-serif;
     --font-mono:  ui-monospace, "Hack", "DejaVu Sans Mono", monospace;
 
-    --space-xs: 0.5rem;
-    --space-sm: 1rem;
-    --space-md: 1.5rem;
-    --space-lg: 2rem;
+    --space-xs: 0.35rem;
+    --space-sm: 0.7rem;
+    --space-md: 1.1rem;
+    --space-lg: 1.5rem;
 
-    --max-width: 72ch;
+    /* The page hugs the left gutter and simply stops at the measure; nothing
+       is centered. --measure is the reading width of a paragraph on a narrow
+       screen. --content-width is the column that measure sits in, wide enough
+       to also hold a margin note beside it. */
+    --measure:        80ch;
+    --content-width: 100ch;
+    --note-width:      30%;
+    --note-gap:      2rem;
 
-    /* Tufte's proportions: a 55% text column, notes in the gutter beside it. */
-    /* One centered column shared by header, prose, and footer. Margin notes
-       float into it and text wraps around them, as on Wikipedia. */
-    --content-width: 84ch;
-    --note-width:      34%;
-    --note-gap:      1.5rem;
+    /* The page's left inset. The header and footer bands span the whole window,
+       so the rules that bound them run edge to edge; only what is inside them
+       is held to this inset and to --content-width. */
+    --pad: 1.25rem;
+}
+
+@media (min-width: 48em) {
+    :root { --pad: 2rem; }
 }
 
 :root[data-theme="light"] { color-scheme: light; }
@@ -42,57 +52,112 @@ html {
     -webkit-text-size-adjust: 100%;
 }
 
-/* Scale the whole type system up once there's room for it. */
-@media (min-width: 75em) {
-    html { font-size: 125%; }
-}
-
 body {
     font-family: var(--font-sans);
+    font-size: 1.0625rem;
     color: var(--color-text);
     background: var(--color-bg);
     margin: 0;
-    padding: 1em;
-    line-height: 1.44;
+    padding: 0;
+    line-height: 1.55;
 }
 
-@media (min-width: 48em) {
-    body {
-        max-width: var(--content-width);
-        margin-inline: auto;
-        padding: 1em 2em;
-    }
-}
+/* Code */
 
-code, pre {
+code, pre, kbd, samp {
     font-family: var(--font-mono);
     font-size: 0.889em;
 }
 
-/* Modular scale, ratio 1.2 */
-h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-sans);
-    line-height: 1.2;
-    margin-block: var(--space-sm) var(--space-xs);
-    font-weight: 700;
+code {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+    padding: 0.1em 0.3em;
 }
 
-h1 { font-size: 2.073rem; color: var(--color-heading-1); }
-h2 { font-size: 1.728rem; color: var(--color-heading-2); margin-block-start: var(--space-md); }
-h3 { font-size: 1.44rem;  color: var(--color-heading-3); }
-h4 { font-size: 1.2rem; }
+pre {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    padding: 0.75em 0.9em;
+    max-width: var(--measure);
+    margin-block: var(--space-sm);
+    overflow-x: auto;
+    line-height: 1.45;
+}
+
+/* Inside a block, the surface and border belong to the <pre>, not each token. */
+pre code {
+    background: none;
+    border: 0;
+    padding: 0;
+    font-size: 1em;
+}
+
+hr {
+    max-width: var(--measure);
+    margin-block: var(--space-lg);
+    border: 0;
+    border-block-start: 1px solid var(--color-border);
+}
+
+blockquote {
+    max-width: var(--measure);
+    margin-block: var(--space-sm);
+    padding-inline-start: 1em;
+    border-inline-start: 3px solid var(--color-border);
+    color: var(--color-muted);
+}
+
+/* Syntax highlighting. Hugo's Chroma writes these token classes; the colors are
+   the Modus accents, so a code block reads the same way in either theme. */
+.chroma                       { background: none; }
+.chroma .k,  .chroma .kd,
+.chroma .kn, .chroma .kr      { color: light-dark(#5317ac, #b6a0ff); } /* keyword */
+.chroma .kt, .chroma .nc,
+.chroma .nn                   { color: light-dark(#005e8b, #00d3d0); } /* type, namespace */
+.chroma .s,  .chroma .s1,
+.chroma .s2, .chroma .sb,
+.chroma .sc, .chroma .sd      { color: light-dark(#2544bb, #79a8ff); } /* string */
+.chroma .m,  .chroma .mi,
+.chroma .mf, .chroma .mh      { color: light-dark(#0000c0, #00bcff); } /* number */
+.chroma .nf, .chroma .nd      { color: light-dark(#721045, #feacd0); } /* function */
+.chroma .nb, .chroma .bp      { color: light-dark(#884900, #fec43f); } /* builtin */
+.chroma .c,  .chroma .c1,
+.chroma .cm, .chroma .cs      { color: var(--color-muted); font-style: italic; }
+.chroma .err                  { color: light-dark(#a60000, #ff8059); }
+
+/* Modular scale, ratio 1.2, one step down from browser-default drama. */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-sans);
+    line-height: 1.25;
+    margin-block: var(--space-md) var(--space-xs);
+    font-weight: 600;
+}
+
+h1 {
+    font-size: 1.728rem;
+    color: var(--color-heading-1);
+    margin-block-start: 0;
+    /* A section heading always starts at the left margin: it is never indented
+       by a float that ran past the end of the section above it. */
+    clear: both;
+}
+h2 { font-size: 1.44rem; color: var(--color-heading-2); }
+h3 { font-size: 1.2rem;  color: var(--color-heading-3); }
+h4 { font-size: 1rem; }
 
 p {
-    margin-block-end: var(--space-xs);
-    max-width: var(--max-width);
+    margin-block-end: var(--space-sm);
+    max-width: var(--measure);
 }
 
 /* reset.css clears list-style globally for the nav; restore it for prose. */
 main ul, main ol {
     list-style: revert;
     padding-inline-start: 1.5em;
-    margin-block: var(--space-xs);
-    max-width: var(--max-width);
+    margin-block: var(--space-sm);
+    max-width: var(--measure);
 }
 
 main li { margin-block-end: 0.25em; }
@@ -105,42 +170,73 @@ article > time {
     margin-block-end: var(--space-md);
 }
 
-a         { color: var(--color-link); }
-a:hover   { color: var(--color-link-hover); text-decoration: dashed underline 1px var(--color-link); }
+/* Underlined, the way a link looks when nobody has styled it. */
+a         { color: var(--color-link); text-decoration: underline; }
+a:hover   { color: var(--color-link-hover); text-decoration-style: dashed; }
 
 /* Layout */
 
-header, main, footer {
-    padding-block: var(--space-xs);
-}
-
-section {
-    clear: right;
-}
+/* The three bands. <header> and <footer> are as wide as the window, so their
+   rules run the full width of the page; <main> is capped at the column. What
+   sits inside a band is held to --content-width and stays left aligned. */
 
 header {
+    padding: var(--space-md) var(--pad) var(--space-xs);
     border-block-end: 1px solid var(--color-border);
 }
 
+/* Both bands span the header, so their toggles land at the window's right edge.
+   What stays in the column is the text inside them: .banner-titles, .trail. */
+.banner,
+.crumbs { max-width: none; }
+
+main {
+    max-width: calc(var(--content-width) + var(--pad) * 2);
+    padding: var(--space-md) var(--pad);
+}
+
+/* Sections do not clear or contain their floats: the portrait is allowed to
+   hang past the contact list and let whatever follows flow around it, rather
+   than stretching its section to the height of a picture. */
+section {
+    margin-block-end: var(--space-lg);
+}
+
+section:last-child { margin-block-end: 0; }
+
 footer {
+    clear: both;
+    margin-block-start: var(--space-lg);
+    padding: var(--space-sm) var(--pad) var(--space-lg);
     border-block-start: 1px solid var(--color-border);
     color: var(--color-muted);
     font-size: 0.875rem;
-    text-align: center;
 }
 
-footer p { max-width: none; }
+footer p { max-width: var(--content-width); margin: 0; }
 
-/* Navigation */
+/* Navigation
+   The home page carries the full banner. Every other page gets .crumbs
+   instead: where you are, and the way back out. */
 
-nav {
+/* The logo and menu stack on the left inside the column; the toggle is pinned
+   to the far right of the window, as it is on the breadcrumb. */
+.banner {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: var(--space-sm);
+}
+
+.banner-titles {
     display: flex;
     flex-direction: column;
     gap: var(--space-xs);
+    max-width: var(--content-width);
 }
 
-#logo        { font-size: 1.728rem; margin: 0; }
-#logo a      { color: var(--color-text); text-decoration: none; }
+#logo        { font-size: 1.44rem; margin: 0; border: none; padding: 0; color: var(--color-text); }
+#logo a      { color: inherit; text-decoration: none; }
 .accent      { color: var(--magenta); }
 
 .menu        { margin: 0; padding: 0; list-style: none; }
@@ -150,6 +246,21 @@ nav {
     content: "|";
     color: var(--color-muted);
 }
+
+.crumbs {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-sm);
+    font-size: 0.875rem;
+    color: var(--color-muted);
+}
+
+.crumbs .trail  { margin: 0; max-width: none; }
+.crumbs .sep    { padding-inline: 0.4em; }
+.crumbs .here   { color: var(--color-muted); }
+.crumbs a       { text-decoration: none; }
+.crumbs a:hover { text-decoration: dashed underline 1px; }
 
 #theme-toggle {
     background: none;
@@ -181,25 +292,33 @@ nav {
     margin-block-end: 0.25rem;
 }
 
-/* Notes float into the centered column and prose wraps around them, the way a
-   Wikipedia infobox sits in the text. Prose must be allowed to fill the column
-   for this to work: a max-width narrower than the column would hold the text
-   clear of the float and no wrapping would occur.
+/* The portrait: a margin note whose payload is a picture of me. It sits in the
+   gutter beside the contact list, so size it to that block rather than to the
+   gutter — a taller picture would leave dead space under the list. On a narrow
+   screen it drops into the flow like any other note. */
+.margin-note.portrait {
+    margin-block: 0;
+}
 
-   Below this breakpoint the column is too narrow to give up a third of its
-   width, so notes stay in the flow as the bordered blocks styled above. */
+.margin-note.portrait img {
+    width: 7rem;
+    max-width: 100%;
+    border: 1px solid var(--color-border);
+}
+
+/* Notes float to the right edge of the column. The column is wider than the
+   measure, so a note sits mostly in the margin beyond the prose and the last
+   few characters of each line tuck around it, the way a Wikipedia infobox does.
+   Prose keeps its measure either way.
+
+   Below this breakpoint there is no room for a gutter, so notes stay in the
+   flow as the bordered blocks styled above. */
 @media (min-width: 60em) {
-    /* Float containment: without a BFC the notes escape their <details>. */
+    /* Float containment: without a BFC the notes escape their <details>, and a
+       note at the end of a post would sit on top of the footer. The home page's
+       sections are deliberately left out — see above. */
     .details-body,
     article { display: flow-root; }
-
-    main p,
-    main dl,
-    main ul,
-    main ol,
-    main blockquote {
-        max-width: none;
-    }
 
     .margin-note {
         float: right;
@@ -208,6 +327,16 @@ nav {
         margin: 0.35rem 0 var(--space-sm) var(--note-gap);
         border-left: none;
         padding-left: 0;
+    }
+
+    /* The portrait is the exception: the page is left aligned, so it belongs on
+       the left, with the contact list set beside it. It sits after the heading
+       in the markup so that only the list moves over, not "Contact Info". */
+    .margin-note.portrait {
+        float: left;
+        clear: left;
+        width: auto;
+        margin: 0.2rem var(--note-gap) var(--space-sm) 0;
     }
 }
 
@@ -258,26 +387,12 @@ details[open] > summary + * { margin-block-start: var(--space-md); }
 .contact-list dt::after   { content: ":"; }
 .contact-list dd          { margin: 0; }
 
-/* Aligned entry list (project / article listings) */
-
-.entry-list {
-    display: grid;
-    grid-template-columns: max-content 1fr;
-    gap: 0.4em 1.5em;
-    margin-block: var(--space-sm);
-    max-width: var(--max-width);
-}
-
-.entry-list dd {
-    margin: 0;
-    color: var(--color-muted);
-}
-
 /* Tables */
 
 table {
     border-collapse: collapse;
     width: 100%;
+    max-width: var(--measure);
     margin-block: var(--space-md);
 }
 
@@ -289,7 +404,8 @@ th, td {
 }
 
 th {
-    background: light-dark(#f5f5f5, #1a1a1a);
+    background: var(--color-surface);
+    font-weight: 600;
 }
 
 /* Post listing (table-of-contents leader dots) */
@@ -298,11 +414,14 @@ th {
     display: flex;
     align-items: baseline;
     gap: 0.5em;
+    max-width: var(--measure);
     margin-block-end: 0.4em;
 }
 
 .post-entry > a    { order: 1; }
 .post-entry > time { order: 3; white-space: nowrap; color: var(--color-muted); }
+
+.empty { color: var(--color-muted); }
 
 .post-entry::after {
     content: "";

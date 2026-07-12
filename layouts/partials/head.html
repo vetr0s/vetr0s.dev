@@ -1,6 +1,23 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>{{ .Site.Title }}</title>
+
+{{- $title := .Site.Title }}
+{{- if not .IsHome }}{{ $title = printf "%s · %s" .Title .Site.Title }}{{ end }}
+{{- $description := or .Description .Summary .Site.Params.description | plainify | truncate 160 }}
+<title>{{ $title }}</title>
+<meta name="description" content="{{ $description }}">
+<meta name="author" content="{{ .Site.Params.author }}">
+
+<meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
+<meta property="og:title" content="{{ $title }}">
+<meta property="og:description" content="{{ $description }}">
+<meta property="og:url" content="{{ .Permalink }}">
+
+{{- /* RSS is an alternative output format on the home page and on sections. */}}
+{{- range .AlternativeOutputFormats }}
+<link rel="{{ .Rel }}" type="{{ .MediaType.Type }}" href="{{ .Permalink }}" title="{{ $title }}">
+{{- end }}
+
 <script>
   (function () {
     var t = localStorage.getItem('theme');
