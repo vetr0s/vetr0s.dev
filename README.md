@@ -31,7 +31,13 @@ publishes it to GitHub Pages.
 | `layouts/shortcodes/` | `aside.html`, the margin note |
 | `static/css/` | `reset.css` and `style.css`. The entire stylesheet, no build step |
 | `static/js/` | `theme.js`, the light/dark toggle |
-| `static/` | Everything else served as is: favicons, images, `resume.pdf` |
+| `static/` | Everything else served as is: favicons and images |
+
+`resume.pdf` is the exception. It is not committed here: it is built in
+[vetr0s/resume](https://github.com/vetr0s/resume), and the deploy pulls the
+current copy into `static/` on every build, so the served resume cannot fall
+behind the source. Pushing a new PDF there triggers a deploy here. `./dev`
+fetches a copy for local work.
 
 ## Writing a post
 

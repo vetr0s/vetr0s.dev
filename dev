@@ -14,6 +14,16 @@ if ! command -v hugo > /dev/null; then
   exit 1
 fi
 
+# static/resume.pdf is not committed: vetr0s/resume owns it and CI pulls it in
+# on every deploy. Grab a copy so the local link is not a 404. Only a warning
+# if it fails, since you can work on the site offline.
+if [ ! -f static/resume.pdf ]; then
+  curl --fail --silent --show-error --location --retry 2 \
+    -o static/resume.pdf \
+    https://raw.githubusercontent.com/vetr0s/resume/main/resume.pdf \
+    || echo "could not fetch resume.pdf; the /resume.pdf link will 404 locally" >&2
+fi
+
 case "${1:-}" in
   --build)
     rm -rf public resources

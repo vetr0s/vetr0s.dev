@@ -4,3 +4,6 @@
 public/
 resources/
 .hugo_build.lock
+
+# Pulled from vetr0s/resume at build time; that repo is the source of truth.
+static/resume.pdf

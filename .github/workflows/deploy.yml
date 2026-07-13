@@ -3,6 +3,11 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
+  # vetr0s/resume fires this when resume.pdf changes on its main.
+  repository_dispatch:
+    types: [resume-updated]
+  # Rebuild by hand from the Actions tab.
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -18,6 +23,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      # resume.pdf is not committed here. vetr0s/resume owns it, and the built
+      # PDF is pulled in fresh on every deploy so the two cannot drift.
+      - name: Fetch the resume
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh api repos/vetr0s/resume/contents/resume.pdf \
+            --header 'Accept: application/vnd.github.raw' \
+            > static/resume.pdf
+          # Fail loudly rather than publish a site whose resume link serves an
+          # API error page with a .pdf name.
+          file --brief static/resume.pdf | grep -q '^PDF document' \
+            || { echo "::error::fetched resume.pdf is not a PDF"; exit 1; }
 
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v3
