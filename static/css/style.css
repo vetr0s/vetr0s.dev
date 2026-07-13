@@ -27,8 +27,8 @@
        is centered. --measure is the reading width of a paragraph on a narrow
        screen. --content-width is the column that measure sits in, wide enough
        to also hold a margin note beside it. */
-    --measure:        80ch;
-    --content-width: 100ch;
+    --measure:        90ch;
+    --content-width: 110ch;
     --note-width:      30%;
     --note-gap:      2rem;
 
@@ -47,19 +47,28 @@
 
 /* Base */
 
+/* The page is sized from the root: the measure and the column are in ch, the
+   spacing in rem, so this one number scales the whole layout the way browser
+   zoom does. It is also what decides whether --content-width fits the window:
+   every step up here widens a ch, and the column with it. */
 html {
-    font-size: 100%;
+    font-size: 120%;
     -webkit-text-size-adjust: 100%;
 }
 
 body {
     font-family: var(--font-sans);
     font-size: 1.0625rem;
+    /* White on black reads thinner than black on white at the same weight, so
+       the body is set a half step up from regular to hold its colour. */
+    font-weight: 450;
     color: var(--color-text);
     background: var(--color-bg);
     margin: 0;
     padding: 0;
-    line-height: 1.55;
+    /* Tight for a reason: loose leading spreads the same ink over more page, so
+       a paragraph reads as a grey field rather than a block of white. */
+    line-height: 1.4;
 }
 
 /* Code */
@@ -285,6 +294,22 @@ footer p { max-width: var(--content-width); margin: 0; }
     margin: 0.5rem 0;
 }
 
+/* Photographs sit in the flow, not in the gutter: a 4:3 picture wide enough to
+   read is taller than the few paragraphs it would run beside, and it hung past
+   the end of them. Well short of the measure, though — a picture that runs the
+   full column stops illustrating the prose and becomes the page. */
+figure {
+    margin: var(--space-md) 0;
+    max-width: 32rem;
+}
+
+figcaption {
+    margin-block-start: 0.35rem;
+    color: var(--color-muted);
+    font-size: 0.85em;
+    line-height: 1.4;
+}
+
 .margin-note img {
     display: block;
     max-width: 100%;
@@ -372,7 +397,12 @@ details > summary::before {
 
 details[open] > summary::before { transform: rotate(90deg); }
 
-details[open] > summary + * { margin-block-start: var(--space-md); }
+details[open] > summary + * { margin-block-start: var(--space-sm); }
+
+/* The body already carries the gap under the summary; a heading that opens the
+   section would otherwise stack its own margin on top of it and sit adrift from
+   the h2 it belongs to. */
+.details-body > :first-child { margin-block-start: 0; }
 
 /* Contact list */
 
