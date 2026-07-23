@@ -1,0 +1,12 @@
+{{/* Registers a footnote on the page and writes its marker. Takes a dict of
+     "page" and "body"; the body is HTML. The notes queue on the page until a
+     "footnotes" partial flushes it, so where the list lands is that partial's
+     call site, not this one. */}}
+{{- $page := .page -}}
+{{- $notes := $page.Store.Get "fn_notes" | default slice -}}
+{{/* Counted apart from the queue: a flush empties the queue, and numbering has
+     to keep running past it or a second group would reuse the first's ids. */}}
+{{- $n := add (int ($page.Store.Get "fn_count")) 1 -}}
+{{- $page.Store.Set "fn_count" $n -}}
+{{- $page.Store.Set "fn_notes" ($notes | append (dict "n" $n "body" .body)) -}}
+<sup class="fn-ref" id="fnref-{{ $n }}"><a href="#fn-{{ $n }}" role="doc-noteref">{{ $n }}</a></sup>

@@ -27,9 +27,13 @@ Body text is set a half step above regular. White on black reads thinner than bl
 
 The page hugs the left margin and stops at its measure. Nothing is centered — a centered column asks your eye to find the text; a left-aligned one puts it where the eye already is.
 
-Prose is held to a `90ch` measure inside a `110ch` column. The difference between the two is the gutter, which is where margin notes live: a note floats to the right edge of the column, so it sits mostly *beside* the prose rather than carving a third out of it, and only the tail of each line tucks around it. On a screen too narrow to spare a gutter, notes drop back into the flow as bordered blocks.
+Prose is held to an `80ch` measure, and that measure is the whole column. There is no gutter beside it, because there is nothing left to put there.
 
-Photographs stay out of the gutter. A picture wide enough to see is taller than the two or three paragraphs it would sit beside, so it hangs past the end of them and leaves the section standing on empty space. In the flow instead, capped well short of the measure and placed after the passage it illustrates, it interrupts the prose without becoming the page. The gutter is for notes, which are short by nature.
+Asides used to float into that gutter as margin notes. They read well one at a time and badly in a run: a note beside a paragraph is a second thing to look at while you are still reading the first, and the eye takes the offer. Now an aside is a footnote. A small muted number marks the claim, the note waits under a rule at the end of the page, and the line you are reading runs its full width from the first word to the last. The marker links both ways, so the trip out and back is one click each.
+
+Notes are set smaller and muted, and links inside them keep the underline without the color. A footnote list is apparatus, and it should read as the end of the page rather than as more page.
+
+Photographs sit in the flow, capped well short of the measure and placed after the passage they illustrate, so a picture interrupts the prose without becoming the page.
 
 ## Colors
 
@@ -44,9 +48,12 @@ Headings use the `yellow-warmer`, `magenta`, and `cyan` accents from the same pa
 
 - [andrewkelley.me](https://andrewkelley.me/): the plainness. Left-aligned, underlined links, a document rather than a layout
 - [protesilaos.com](https://protesilaos.com/): system-font text on a modular scale, with no web fonts, and the Modus palettes above
-- [gingerbill.org](https://www.gingerbill.org/): the inline-list nav with `|` separators is borrowed from Bill's site
-- [Tufte CSS](https://edwardtufte.github.io/tufte-css/): the margin note, set beside the passage that introduces it rather than collected in a sidebar at the end
+- [Tufte CSS](https://edwardtufte.github.io/tufte-css/): the aside written where the claim is, rather than collected in a sidebar at the end. Set as a footnote here instead of a margin note
 
 ## Navigation
 
-The home page carries the full banner. Everywhere else — posts, projects, this page — the banner would be furniture in front of the thing you came to read, so it is replaced by a single line: where you are, and a link back out of it.
+Every page opens the same way: one line saying where you are, and a link back out of it. There is no menu and no banner, because a menu on every page is furniture standing in front of the thing you came to read, and a banner on the home page is the same furniture with a bigger typeface.
+
+That makes the home page the way in. It carries the contact details, a short list of everywhere else on the site, and the most recent posts, and it is one click from anywhere: a post climbs to its section, a section climbs home, and home has the rest.
+
+The about page used to live on the home page inside collapsible sections, which existed only to keep that page from running long. A page of its own does the same job without asking you to open anything.

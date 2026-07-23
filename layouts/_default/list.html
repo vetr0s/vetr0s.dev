@@ -1,6 +1,7 @@
 {{ define "main" }}
   <h1>{{ .Title }}</h1>
   {{ .Content }}
+  {{ partial "footnotes.html" . }}
   {{ range .Pages }}
     <article class="post-entry">
       <a href="{{ .Permalink }}">{{ .Title }}</a>

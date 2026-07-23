@@ -12,15 +12,17 @@ It is a draft, so it never reaches the built site — `./dev` shows it, and
 
 ## Prose, and what it can carry
 
-Body text is held to an `80ch` measure inside a `100ch` column. That gap on the
-right is the gutter, and it is where margin notes go. {{< aside >}}A margin note.
-It floats to the right edge of the column, so it sits mostly *beside* the prose
-rather than carving a third out of it. Only the tail of each line tucks around
-it.{{< /aside >}} A paragraph beside a note gives up the last few characters of
-each line and no more, which is the whole reason the column is wider than the
-measure. On a screen narrower than `60em` there is no room for a gutter at all,
-so the note drops back into the flow as a bordered block — shrink the window
-until it does.
+Body text is held to an `80ch` measure, and that is the whole column: there is no
+gutter beside it. An aside is a footnote{{< fn >}}A footnote. The marker is set
+where the claim is, the note itself waits under a rule at the end of the post,
+and the arrow at the end of this line goes back to where you were.{{< /fn >}}
+instead, so a paragraph reads at full width from the first line to the last and
+nothing sits in the corner of your eye asking to be read next.
+
+Numbering runs down the page in order, and a marker is a link both
+ways{{< fn >}}Notes carry [links](/colophon/), `code`, and *emphasis* like any
+other prose.{{< /fn >}} — follow one and the note you land on comes up to full
+text color.
 
 Inline, prose can carry **bold**, *italic*, `inline_code()`, a
 [link to another site](https://andrewkelley.me/), a [link back
@@ -90,25 +92,25 @@ this line is deliberately far too long to fit inside the measure and should prod
 | Path | What lives there |
 |---|---|
 | `layouts/index.html` | The home page, and the portrait slot |
-| `layouts/partials/header.html` | The banner on home, the breadcrumb everywhere else |
+| `layouts/partials/header.html` | The breadcrumb bar, on every page |
 | `static/css/style.css` | The whole stylesheet |
 
 ## Images
 
-An image in a margin note gets a caption under it:
+A picture sits in the flow, capped well short of the measure, with its caption
+under it:
 
-{{< aside >}}
+<figure>
 <img src="/img/huston_pit.webp" alt="Our team's pit at the FRC World Championships in Houston" />
-<small>A margin note whose payload is a picture.</small>
-{{< /aside >}}
+<figcaption>A figure, which is how every picture on the site is set.</figcaption>
+</figure>
 
-An image in the flow runs to the measure, and no further. The one below is the
-same picture, unconstrained by a gutter.
+A bare markdown image gets the same cap and no caption.
 
 ![Our team's pit at the FRC World Championships in Houston](/img/huston_pit.webp)
 
 ---
 
 That rule above is an `<hr>`. Below this line there is nothing but the footer,
-and above it, on this page, there is a breadcrumb instead of a banner: this is
-a post, so it opens on its own title and keeps a way back out.
+and above it the same breadcrumb every page carries: this is a post, so it
+climbs to `blog`, and `blog` climbs home.

@@ -1,19 +1,10 @@
-{{ if .IsHome }}
-  <nav class="banner">
-    <div class="banner-titles">
-      <p id="logo"><a href="/">vetr0s<span class="accent">.dev</span></a></p>
-      <ul class="menu">
-        <li><a href="/">home</a></li>
-        <li><a href="/blog">blog</a></li>
-        <li><a href="/projects">projects</a></li>
-      </ul>
-    </div>
-    <button id="theme-toggle" type="button" aria-label="Toggle color theme"></button>
-  </nav>
-{{ else }}
-  {{/* No banner away from home: a trail back out, and nothing else. */}}
-  <nav class="crumbs" aria-label="Breadcrumb">
-    <p class="trail">
+{{/* One bar on every page: where you are, and the way back out. Home is the
+     same bar with nothing to climb to. */}}
+<nav class="crumbs" aria-label="Breadcrumb">
+  <p class="trail">
+    {{ if .IsHome }}
+      <span class="here" aria-current="page">vetr0s<span class="accent">.dev</span></span>
+    {{ else }}
       <a href="/">vetr0s<span class="accent">.dev</span></a>
       {{ with .Section }}
         <span class="sep">/</span>
@@ -27,7 +18,7 @@
         <span class="sep">/</span>
         <span class="here" aria-current="page">{{ .Title | lower }}</span>
       {{ end }}
-    </p>
-    <button id="theme-toggle" type="button" aria-label="Toggle color theme"></button>
-  </nav>
-{{ end }}
+    {{ end }}
+  </p>
+  <button id="theme-toggle" type="button" aria-label="Toggle color theme"></button>
+</nav>

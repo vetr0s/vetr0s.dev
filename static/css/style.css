@@ -23,18 +23,14 @@
     --space-md: 1.1rem;
     --space-lg: 1.5rem;
 
-    /* The page hugs the left gutter and simply stops at the measure; nothing
-       is centered. --measure is the reading width of a paragraph on a narrow
-       screen. --content-width is the column that measure sits in, wide enough
-       to also hold a margin note beside it. */
-    --measure:        90ch;
-    --content-width: 110ch;
-    --note-width:      30%;
-    --note-gap:      2rem;
+    /* The page hugs the left margin and simply stops at the measure; nothing
+       is centered. There is one column: asides are footnotes now, so nothing
+       needs room beside the prose. */
+    --measure: 80ch;
 
     /* The page's left inset. The header and footer bands span the whole window,
        so the rules that bound them run edge to edge; only what is inside them
-       is held to this inset and to --content-width. */
+       is held to this inset and to --measure. */
     --pad: 1.25rem;
 }
 
@@ -47,10 +43,10 @@
 
 /* Base */
 
-/* The page is sized from the root: the measure and the column are in ch, the
-   spacing in rem, so this one number scales the whole layout the way browser
-   zoom does. It is also what decides whether --content-width fits the window:
-   every step up here widens a ch, and the column with it. */
+/* The page is sized from the root: the measure is in ch, the spacing in rem, so
+   this one number scales the whole layout the way browser zoom does. It is also
+   what decides whether --measure fits the window: every step up here widens a
+   ch, and the column with it. */
 html {
     font-size: 120%;
     -webkit-text-size-adjust: 100%;
@@ -186,21 +182,20 @@ a:hover   { color: var(--color-link-hover); text-decoration-style: dashed; }
 /* Layout */
 
 /* The three bands. <header> and <footer> are as wide as the window, so their
-   rules run the full width of the page; <main> is capped at the column. What
-   sits inside a band is held to --content-width and stays left aligned. */
+   rules run the full width of the page; <main> is capped at the measure. What
+   sits inside a band is held to the measure and stays left aligned. */
 
 header {
     padding: var(--space-md) var(--pad) var(--space-xs);
     border-block-end: 1px solid var(--color-border);
 }
 
-/* Both bands span the header, so their toggles land at the window's right edge.
-   What stays in the column is the text inside them: .banner-titles, .trail. */
-.banner,
+/* The bar spans the header, so its toggle lands at the window's right edge.
+   What stays in the column is the text inside it: .trail. */
 .crumbs { max-width: none; }
 
 main {
-    max-width: calc(var(--content-width) + var(--pad) * 2);
+    max-width: calc(var(--measure) + var(--pad) * 2);
     padding: var(--space-md) var(--pad);
 }
 
@@ -222,39 +217,13 @@ footer {
     font-size: 0.875rem;
 }
 
-footer p { max-width: var(--content-width); margin: 0; }
+footer p { max-width: var(--measure); margin: 0; }
 
 /* Navigation
-   The home page carries the full banner. Every other page gets .crumbs
-   instead: where you are, and the way back out. */
+   The same bar on every page: where you are, and the way back out. There is no
+   menu, so the way in to everything is the home page itself. */
 
-/* The logo and menu stack on the left inside the column; the toggle is pinned
-   to the far right of the window, as it is on the breadcrumb. */
-.banner {
-    display: flex;
-    align-items: end;
-    justify-content: space-between;
-    gap: var(--space-sm);
-}
-
-.banner-titles {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-xs);
-    max-width: var(--content-width);
-}
-
-#logo        { font-size: 1.44rem; margin: 0; border: none; padding: 0; color: var(--color-text); }
-#logo a      { color: inherit; text-decoration: none; }
-.accent      { color: var(--magenta); }
-
-.menu        { margin: 0; padding: 0; list-style: none; }
-.menu li     { display: inline; color: var(--color-muted); }
-.menu li:not(:first-child)::before {
-    padding: 0.5em;
-    content: "|";
-    color: var(--color-muted);
-}
+.accent { color: var(--magenta); }
 
 .crumbs {
     display: flex;
@@ -282,26 +251,71 @@ footer p { max-width: var(--content-width); margin: 0; }
 
 #theme-toggle:hover { color: var(--color-link-hover); }
 
-/* Margin notes */
+/* Footnotes */
 
-.margin-note {
-    display: block;
-    font-size: 0.85em;
-    color: var(--color-muted);
-    line-height: 1.4;
-    border-left: 2px solid var(--color-border);
-    padding-left: 0.75rem;
-    margin: 0.5rem 0;
+/* The marker rides on the line it annotates and takes no leading of its own, so
+   a paragraph carrying notes sets to the same rhythm as one that does not. */
+.fn-ref {
+    font-size: 0.7em;
+    font-weight: 600;
+    line-height: 0;
+    vertical-align: super;
+    margin-inline-start: 0.1em;
 }
 
-/* Photographs sit in the flow, not in the gutter: a 4:3 picture wide enough to
-   read is taller than the few paragraphs it would run beside, and it hung past
-   the end of them. Well short of the measure, though — a picture that runs the
-   full column stops illustrating the prose and becomes the page. */
+/* A marker is not a link to somewhere else, it is a pointer to the bottom of
+   this page. Set in link blue it reads as one more thing competing with the
+   prose, so it goes muted and only picks up color under the cursor. */
+.fn-ref a        { color: var(--color-muted); text-decoration: none; }
+.fn-ref a:hover  { color: var(--color-link-hover); }
+
+/* Notes collect under a rule at the end of the passage they belong to. They are
+   apparatus, not prose: smaller, muted, and quiet enough that reaching the rule
+   reads as the end of the page rather than as more page. */
+/* --measure is in ch, so it resolves against whatever font-size the element
+   carries. The block stays at body size and only the list inside it shrinks,
+   or the rule would stop well short of where a prose line ends. */
+.footnotes {
+    max-width: var(--measure);
+    margin-block-start: var(--space-lg);
+    padding-block-start: var(--space-sm);
+    border-block-start: 1px solid var(--color-border);
+    color: var(--color-muted);
+    line-height: 1.45;
+}
+
+.footnotes ol {
+    list-style: decimal;
+    padding-inline-start: 1.7em;
+    margin: 0;
+    max-width: none;
+    font-size: 0.78em;
+}
+
+.footnotes li             { margin-block-end: 0.4em; }
+.footnotes li:last-child  { margin-block-end: 0; }
+.footnotes p              { max-width: none; }
+
+/* A note is often mostly link. At full link blue the list turns into a wall of
+   blue, so links here carry the underline and none of the color until hover. */
+.footnotes a        { color: inherit; text-decoration: underline; }
+.footnotes a:hover  { color: var(--color-link-hover); }
+
+/* The note you followed a marker to comes up to full text color, so a list of
+   twelve says which one you landed on. */
+.footnotes li:target { color: var(--color-text); }
+
+.footnotes .fn-back { margin-inline-start: 0.3em; text-decoration: none; }
+
+/* Well short of the measure: a picture that runs the full column stops
+   illustrating the prose and becomes the page. */
 figure {
     margin: var(--space-md) 0;
     max-width: 32rem;
 }
+
+/* A bare markdown image gets the same cap; Goldmark hands it to us in a <p>. */
+main p > img { max-width: 32rem; }
 
 figcaption {
     margin-block-start: 0.35rem;
@@ -310,99 +324,27 @@ figcaption {
     line-height: 1.4;
 }
 
-.margin-note img {
+/* The portrait. Sized to the contact list it sits beside rather than to the
+   space available — a taller picture would leave dead space under the list. */
+.portrait img {
     display: block;
-    max-width: 100%;
-    height: auto;
-    margin-block-end: 0.25rem;
-}
-
-/* The portrait: a margin note whose payload is a picture of me. It sits in the
-   gutter beside the contact list, so size it to that block rather than to the
-   gutter — a taller picture would leave dead space under the list. On a narrow
-   screen it drops into the flow like any other note. */
-.margin-note.portrait {
-    margin-block: 0;
-}
-
-.margin-note.portrait img {
     width: 7rem;
     max-width: 100%;
+    height: auto;
     border: 1px solid var(--color-border);
 }
 
-/* Notes float to the right edge of the column. The column is wider than the
-   measure, so a note sits mostly in the margin beyond the prose and the last
-   few characters of each line tuck around it, the way a Wikipedia infobox does.
-   Prose keeps its measure either way.
-
-   Below this breakpoint there is no room for a gutter, so notes stay in the
-   flow as the bordered blocks styled above. */
-@media (min-width: 60em) {
-    /* Float containment: without a BFC the notes escape their <details>, and a
-       note at the end of a post would sit on top of the footer. The home page's
-       sections are deliberately left out — see above. */
-    .details-body,
-    article { display: flow-root; }
-
-    .margin-note {
-        float: right;
-        clear: right;
-        width: var(--note-width);
-        margin: 0.35rem 0 var(--space-sm) var(--note-gap);
-        border-left: none;
-        padding-left: 0;
-    }
-
-    /* The portrait is the exception: the page is left aligned, so it belongs on
-       the left, with the contact list set beside it. It sits after the heading
-       in the markup so that only the list moves over, not "Contact Info". */
-    .margin-note.portrait {
+/* The page is left aligned, so the portrait belongs on the left with the list
+   set beside it. It sits after the heading in the markup so that only the list
+   moves over, not "Contact Info". Narrower than this there is no room, and it
+   goes back to being a block above the list. */
+@media (min-width: 40em) {
+    .portrait {
         float: left;
         clear: left;
-        width: auto;
-        margin: 0.2rem var(--note-gap) var(--space-sm) 0;
+        margin: 0.2rem var(--space-lg) var(--space-sm) 0;
     }
 }
-
-/* Foldable sections */
-
-details {
-    margin-block: var(--space-xs);
-}
-
-details > summary {
-    cursor: pointer;
-    list-style: none;
-    padding-block: 0.25rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5em;
-}
-
-details > summary::-webkit-details-marker { display: none; }
-
-details > summary > h2 { margin: 0; }
-
-details > summary::before {
-    content: "";
-    flex: none;
-    width: 0;
-    height: 0;
-    border-left: 0.4em solid var(--color-muted);
-    border-top: 0.3em solid transparent;
-    border-bottom: 0.3em solid transparent;
-    transition: transform 0.15s ease;
-}
-
-details[open] > summary::before { transform: rotate(90deg); }
-
-details[open] > summary + * { margin-block-start: var(--space-sm); }
-
-/* The body already carries the gap under the summary; a heading that opens the
-   section would otherwise stack its own margin on top of it and sit adrift from
-   the h2 it belongs to. */
-.details-body > :first-child { margin-block-start: 0; }
 
 /* Contact list */
 
@@ -411,6 +353,7 @@ details[open] > summary + * { margin-block-start: var(--space-sm); }
     grid-template-columns: max-content 1fr;
     gap: 0.25em 1em;
     margin: 0;
+    max-width: var(--measure);
 }
 
 .contact-list dt          { color: var(--color-muted); }

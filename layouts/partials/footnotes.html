@@ -1,0 +1,14 @@
+{{/* Writes every note registered since the last flush, then empties the queue.
+     A post flushes once at the end; the home page flushes at the end of each
+     folded section, so a section's notes stay with the section. */}}
+{{- $notes := .Store.Get "fn_notes" -}}
+{{- with $notes -}}
+<div class="footnotes" role="doc-endnotes">
+  <ol start="{{ (index . 0).n }}">
+    {{- range . }}
+    <li id="fn-{{ .n }}">{{ .body | safeHTML }} <a class="fn-back" href="#fnref-{{ .n }}" aria-label="Back to text">&#8617;</a></li>
+    {{- end }}
+  </ol>
+</div>
+{{- end -}}
+{{- .Store.Set "fn_notes" slice -}}
