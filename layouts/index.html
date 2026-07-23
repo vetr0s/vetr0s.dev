@@ -1,6 +1,6 @@
 {{ define "main" }}
-<section id="contact">
-  <h1>Contact Info</h1>
+<section id="find-me">
+  <h1>Find Me</h1>
   <div class="portrait">
     <img src="/img/gh_profile.jpg" alt="Nathan Tebbs" width="553" height="553" />
   </div>
@@ -9,6 +9,8 @@
     <dd><a href="mailto:vetr0s.dev@gmail.com">vetr0s.dev@gmail.com</a></dd>
     <dt>github</dt>
     <dd><a href="https://github.com/vetr0s">github.com/vetr0s</a></dd>
+    <dt>linkedin</dt>
+    <dd><a href="https://www.linkedin.com/in/ntebbs">linkedin.com/in/ntebbs</a></dd>
     <dt>resume</dt>
     <dd><a href="/resume.pdf">resume.pdf</a></dd>
   </dl>
@@ -28,7 +30,10 @@
 
 {{ with first 5 (where .Site.RegularPages "Section" "blog") }}
 <section id="recent">
-  <h1>Recent Posts</h1>
+  <div class="section-head">
+    <h1>Recent Posts</h1>
+    <a class="rss-badge" href="/index.xml" title="RSS feed">RSS</a>
+  </div>
   {{ range . }}
   <article class="post-entry">
     <a href="{{ .Permalink }}">{{ .Title }}</a>

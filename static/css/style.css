@@ -337,6 +337,36 @@ figcaption {
     }
 }
 
+/* A heading with something pinned to the right of it. The h1 keeps its own
+   bottom margin, so the row does not add one. */
+.section-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-sm);
+    max-width: var(--measure);
+}
+
+/* Small enough to read as apparatus beside the heading rather than as a call
+   to action competing with it. */
+.rss-badge {
+    flex: none;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: var(--color-muted);
+    text-decoration: none;
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+    padding: 0.2em 0.5em;
+}
+
+.rss-badge:hover {
+    color: var(--color-link-hover);
+    border-color: var(--color-link-hover);
+    text-decoration: none;
+}
+
 /* Contact list */
 
 .contact-list {

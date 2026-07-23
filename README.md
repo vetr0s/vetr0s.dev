@@ -25,10 +25,10 @@ publishes it to GitHub Pages.
 | Path | What lives there |
 |---|---|
 | `content/` | The markdown. Posts under `blog/`, projects under `projects/`, plus `about.md` and `colophon.md` |
-| `layouts/index.html` | The home page, written by hand rather than generated from content. It carries contact details, the list of everywhere else, and recent posts. The portrait is the `.portrait` div. Swap its `src` to change the picture |
-| `layouts/_default/` | `baseof.html`, `single.html` for a post, `list.html` for a section |
-| `layouts/partials/` | `head.html`, `header.html`, `footer.html`, plus `fn.html` and `footnotes.html` |
-| `layouts/shortcodes/` | `fn.html`, the footnote |
+| `layouts/index.html` | The home page, written by hand rather than generated from content. It carries where to find me, the list of everywhere else, and recent posts. The portrait is the `.portrait` div. Swap its `src` to change the picture |
+| `layouts/_default/` | `baseof.html`, `single.html` for a post, `list.html` for a section, `rss.xml` for the feed |
+| `layouts/partials/` | `head.html`, `header.html`, `footer.html`, plus `fn.html`, `footnotes.html`, and `feed-content.html` |
+| `layouts/shortcodes/` | `fn.html`, the footnote. `fn.rss.xml` is the same shortcode for the feed |
 | `static/css/` | `reset.css` and `style.css`. The entire stylesheet, no build step |
 | `static/js/` | `theme.js`, the light/dark toggle |
 | `static/` | Everything else served as is: favicons and images |
@@ -78,6 +78,32 @@ Then it flushes the queue wherever the list should land:
 ```
 
 Numbering keeps running across flushes. One page can hold more than one list.
+
+## The feed
+
+`/index.xml` and `/blog/index.xml` are the same feed. Both carry blog posts and
+nothing else. Both are advertised in the head. Each is also linked from an
+`.rss-badge` beside the heading of the list it feeds, on the home page and on
+the blog page. `list.html` only draws the badge for a section that publishes a
+feed, so the projects page has none.
+
+Items carry the full post. `feed-content.html` appends the footnote list and
+rewrites every page-relative anchor against the permalink, because a feed item
+is read away from the page it came from.
+
+Hugo renders content once per output format, so a shortcode runs twice for a
+post that is also in the feed. `fn.html` keys its counter and its queue by
+format for that reason. `fn.rss.xml` is the feed's copy of the shortcode, and
+it writes absolute anchors where the HTML one writes bare fragments. A shared
+counter would number the feed's markers `3` and `4` on a post with two notes.
+
+The feed reads its queue without draining it. The blog feed and the home feed
+are two documents built from one render, so a flush would empty the queue
+before the second one got to it.
+
+Taxonomies are off in `hugo.toml`. The site has no tags or categories, and Hugo
+builds a feed for every taxonomy it finds. `content/projects/_index.md` sets
+`outputs: ["html"]` for the same reason.
 
 ## The look
 

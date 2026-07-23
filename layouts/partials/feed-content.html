@@ -1,0 +1,16 @@
+{{/* A post's full content for a feed, with its notes appended. Read without
+     draining: the same post appears in both the home feed and the blog feed,
+     and content renders once per output format, not once per document. */}}
+{{- $p := . -}}
+{{- $content := $p.Content -}}
+{{- $notes := $p.Store.Get "fn_notes_rss" -}}
+{{- replaceRE `href="#` (printf `href="%s#` $p.Permalink) $content | safeHTML -}}
+{{- with $notes }}
+<div class="footnotes" role="doc-endnotes">
+  <ol start="{{ (index . 0).n }}">
+    {{- range . }}
+    <li id="fn-{{ .n }}">{{ .body | safeHTML }} <a href="{{ $p.Permalink }}#fnref-{{ .n }}">&#8617;</a></li>
+    {{- end }}
+  </ol>
+</div>
+{{- end -}}

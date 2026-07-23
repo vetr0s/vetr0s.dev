@@ -1,7 +1,7 @@
 {{/* Writes every note registered since the last flush, then empties the queue.
-     A post flushes once at the end; the home page flushes at the end of each
-     folded section, so a section's notes stay with the section. */}}
-{{- $notes := .Store.Get "fn_notes" -}}
+     The HTML queue only. A feed reads its own without draining it, because the
+     same post appears in more than one feed document. */}}
+{{- $notes := .Store.Get "fn_notes_html" -}}
 {{- with $notes -}}
 <div class="footnotes" role="doc-endnotes">
   <ol start="{{ (index . 0).n }}">
@@ -11,4 +11,4 @@
   </ol>
 </div>
 {{- end -}}
-{{- .Store.Set "fn_notes" slice -}}
+{{- .Store.Set "fn_notes_html" slice -}}

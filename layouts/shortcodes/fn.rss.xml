@@ -1,0 +1,1 @@
+{{- partial "fn.html" (dict "page" .Page "body" (.Inner | .Page.RenderString) "scope" "rss" "prefix" .Page.Permalink) -}}

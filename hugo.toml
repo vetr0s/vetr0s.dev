@@ -2,9 +2,13 @@ baseURL = 'https://vetr0s.dev/'
 locale = 'en-us'
 title = 'vetr0s.dev'
 
+# The site uses no tags or categories, and Hugo builds a feed for every one it
+# finds. Without these there are two empty feeds advertised to readers.
+disableKinds = ['taxonomy', 'term']
+
 [params]
 author = 'Nathan Tebbs'
-description = 'Nathan Tebbs — software engineer. Writing, projects, and a page about who I am.'
+description = 'Nathan Tebbs, software engineer. Writing, projects, and a page about who I am.'
 
 [markup.goldmark.renderer]
 unsafe = true

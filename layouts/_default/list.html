@@ -1,5 +1,9 @@
 {{ define "main" }}
-  <h1>{{ .Title }}</h1>
+  <div class="section-head">
+    <h1>{{ .Title }}</h1>
+    {{/* Only sections that publish a feed get the badge. */}}
+    {{ with .OutputFormats.Get "rss" }}<a class="rss-badge" href="{{ .RelPermalink }}" title="RSS feed">RSS</a>{{ end }}
+  </div>
   {{ .Content }}
   {{ partial "footnotes.html" . }}
   {{ range .Pages }}

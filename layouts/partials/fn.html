@@ -1,12 +1,21 @@
 {{/* Registers a footnote on the page and writes its marker. Takes a dict of
-     "page" and "body"; the body is HTML. The notes queue on the page until a
-     "footnotes" partial flushes it, so where the list lands is that partial's
-     call site, not this one. */}}
+     "page" and "body", plus an optional "scope" and "prefix"; the body is HTML.
+     The notes queue on the page until a "footnotes" partial flushes it, so
+     where the list lands is that partial's call site, not this one.
+
+     Scope keys the queue by output format. Hugo renders content once per
+     format, so a single shared counter would keep climbing and the feed's
+     markers would carry on from where the HTML page stopped. Prefix absolutizes
+     the anchor, which a feed item needs and a page does not. */}}
 {{- $page := .page -}}
-{{- $notes := $page.Store.Get "fn_notes" | default slice -}}
+{{- $scope := .scope | default "html" -}}
+{{- $prefix := .prefix | default "" -}}
+{{- $countKey := printf "fn_count_%s" $scope -}}
+{{- $notesKey := printf "fn_notes_%s" $scope -}}
 {{/* Counted apart from the queue: a flush empties the queue, and numbering has
      to keep running past it or a second group would reuse the first's ids. */}}
-{{- $n := add (int ($page.Store.Get "fn_count")) 1 -}}
-{{- $page.Store.Set "fn_count" $n -}}
-{{- $page.Store.Set "fn_notes" ($notes | append (dict "n" $n "body" .body)) -}}
-<sup class="fn-ref" id="fnref-{{ $n }}"><a href="#fn-{{ $n }}" role="doc-noteref">{{ $n }}</a></sup>
+{{- $n := add (int ($page.Store.Get $countKey)) 1 -}}
+{{- $notes := $page.Store.Get $notesKey | default slice -}}
+{{- $page.Store.Set $countKey $n -}}
+{{- $page.Store.Set $notesKey ($notes | append (dict "n" $n "body" .body)) -}}
+<sup class="fn-ref" id="fnref-{{ $n }}"><a href="{{ $prefix }}#fn-{{ $n }}" role="doc-noteref">{{ $n }}</a></sup>

@@ -9,6 +9,7 @@ The tools, themes, and influences behind this site.
 - [Hugo](https://gohugo.io/): static site generator
 - Hand-written templates and CSS. No theme, no framework, no JavaScript beyond a theme toggle
 - Built and deployed to [GitHub Pages](https://pages.github.com/) by [GitHub Actions](https://github.com/features/actions) on every push to `main`
+- An [RSS feed](/index.xml) of the posts
 
 ## Typography
 
@@ -60,6 +61,12 @@ Both schemes follow your system preference by default. The toggle overrides it. 
 
 Every page opens the same way. One line says where you are and links back out of it. There is no menu and no banner. A menu on every page is furniture standing in front of the thing you came to read. A banner on the home page is the same furniture in a bigger typeface.
 
-That makes the home page the way in. It carries the contact details, a short list of everywhere else, and the most recent posts. It is one click from anywhere. A post climbs to its section. A section climbs home. Home has the rest.
+That makes the home page the way in. It carries where to find me, a short list of everywhere else, and the most recent posts. It is one click from anywhere. A post climbs to its section. A section climbs home. Home has the rest.
 
 The about page used to live on the home page inside collapsible sections. Those existed only to keep the home page from running long. A page of its own does the same job. Nothing needs opening.
+
+## The feed
+
+[`/index.xml`](/index.xml) carries the posts. [`/blog/index.xml`](/blog/index.xml) carries the same ones, so either address works in a reader.
+
+An item carries the whole post rather than an excerpt. The footnotes ride along with it, and their anchors are absolute, because a feed item is read a long way from the page it came from. Nothing here asks you to click through to finish reading.
