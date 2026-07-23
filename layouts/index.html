@@ -28,18 +28,20 @@
   </ul>
 </section>
 
-{{ with first 5 (where .Site.RegularPages "Section" "blog") }}
+{{/* Rendered even with nothing to list. The badge is the only visible way to
+     the feed on this page, and an empty blog is when subscribing matters. */}}
 <section id="recent">
   <div class="section-head">
     <h1>Recent Posts</h1>
     <a class="rss-badge" href="/index.xml" title="RSS feed">RSS</a>
   </div>
-  {{ range . }}
+  {{ range first 5 (where .Site.RegularPages "Section" "blog") }}
   <article class="post-entry">
     <a href="{{ .Permalink }}">{{ .Title }}</a>
     <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time>
   </article>
+  {{ else }}
+  <p class="empty">Nothing published yet.</p>
   {{ end }}
 </section>
-{{ end }}
 {{ end }}
