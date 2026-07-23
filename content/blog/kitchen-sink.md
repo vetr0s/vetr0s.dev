@@ -7,7 +7,7 @@ description = 'Every content feature the site knows how to render, on one page.'
 
 This post exists to be looked at, not read. It uses every feature the templates
 and stylesheet support, so that changing the CSS has somewhere to fail loudly.
-It is a draft, so it never reaches the built site — `./dev` shows it, and
+It is a draft, so it never reaches the built site. `./dev` shows it, and
 `./dev --build` does not.
 
 ## Prose, and what it can carry
@@ -21,7 +21,7 @@ nothing sits in the corner of your eye asking to be read next.
 
 Numbering runs down the page in order, and a marker is a link both
 ways{{< fn >}}Notes carry [links](/colophon/), `code`, and *emphasis* like any
-other prose.{{< /fn >}} — follow one and the note you land on comes up to full
+other prose.{{< /fn >}} Follow one and the note you land on comes up to full
 text color.
 
 Inline, prose can carry **bold**, *italic*, `inline_code()`, a
@@ -58,7 +58,7 @@ Ordered:
 ## Code
 
 Inline code like `hugo server -D` sits in a bordered box. A fenced block does
-not repeat that border on every token — the surface belongs to the block:
+not repeat that border on every token. The surface belongs to the block:
 
 ```zig
 const std = @import("std");
