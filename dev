@@ -1,48 +1,80 @@
 #!/usr/bin/env bash
-# Run the site locally. Drafts are on: this is for looking at the thing, not
-# for checking what the world will see.
+# Build the site with ostat and serve it.
 #
-#   ./dev            serve on :1313, live reload, drafts and future posts shown
-#   ./dev --clean    same, but throw away Hugo's caches first
-#   ./dev --build    no server; do the production build the CI does, into public/
+#   ./dev            build with drafts and future posts, serve on $PORT
+#   ./dev --build    the production build CI does, no server
+#   ./dev --clean    discard the output tree first, then serve
+#
+# PORT overrides the port, default 1313.
+#
+# There is no file watcher and no live reload. ostat builds the whole site in
+# milliseconds, so rebuilding is ctrl-c and rerun.
 set -euo pipefail
 
 cd "$(dirname "$0")"
 
-if ! command -v hugo > /dev/null; then
-  echo "hugo is not installed. brew install hugo" >&2
-  exit 1
-fi
+OUT="public"
+PORT="${PORT:-1313}"
 
-# static/resume.pdf is not committed: vetr0s/resume owns it and CI pulls it in
-# on every deploy. Grab a copy so the local link is not a 404. Only a warning
-# if it fails, since you can work on the site offline.
-if [ ! -f static/resume.pdf ]; then
-  curl --fail --silent --show-error --location --retry 2 \
-    -o static/resume.pdf \
-    https://raw.githubusercontent.com/vetr0s/resume/main/resume.pdf \
-    || echo "could not fetch resume.pdf; the /resume.pdf link will 404 locally" >&2
-fi
-
-case "${1:-}" in
-  --build)
-    rm -rf public resources
-    hugo --minify
-    echo
-    echo "Built to public/. This is what GitHub Actions publishes."
-    ;;
-  *)
-    if [ "${1:-}" = "--clean" ]; then
-      rm -rf public resources .hugo_build.lock
+# ostat on PATH wins. Otherwise a sibling checkout is built, because this site
+# and its generator are developed together and that is where it lives.
+find_ostat() {
+    if command -v ostat > /dev/null; then
+        command -v ostat
+        return
     fi
 
-    # -D drafts, -F future-dated posts, --navigateToChanged jumps the browser to
-    # whatever file you just saved.
-    exec hugo server \
-      --buildDrafts \
-      --buildFuture \
-      --navigateToChanged \
-      --disableFastRender \
-      --printPathWarnings
-    ;;
+    local repo="../ostat"
+    if [ ! -d "$repo" ]; then
+        echo "ostat is not on PATH and there is no checkout at $repo." >&2
+        echo "Clone https://github.com/vetr0s/ostat beside this repo." >&2
+        exit 1
+    fi
+
+    # ostat's own build.sh handles the cmark linker flag.
+    ( cd "$repo" && ./build.sh release > /dev/null )
+    echo "$(cd "$repo" && pwd)/build/release/ostat"
+}
+
+OSTAT="$(find_ostat)"
+
+case "${1:-}" in
+    --build)
+        rm -rf "$OUT"
+        "$OSTAT" build . -o "$OUT"
+        echo
+        echo "Built to $OUT/. This is what GitHub Actions publishes."
+        ;;
+
+    --clean | "")
+        if [ "${1:-}" = "--clean" ]; then
+            rm -rf "$OUT"
+        fi
+
+        # Drafts and future posts are on: this is for looking at the thing, not
+        # for checking what the world will see.
+        "$OSTAT" build . -o "$OUT" -drafts -future
+
+        if ! command -v python3 > /dev/null; then
+            echo
+            echo "Built to $OUT/, but python3 is missing so there is no server." >&2
+            echo "Serve $OUT/ with anything you like, or use ./dev --build." >&2
+            exit 1
+        fi
+
+        echo
+        echo "serving $OUT/ on http://localhost:$PORT"
+        exec python3 -m http.server "$PORT" --directory "$OUT"
+        ;;
+
+    -h | --help)
+        sed -n '2,10p' "$0" | sed 's/^# \{0,1\}//'
+        ;;
+
+    *)
+        echo "dev: unknown option ${1}" >&2
+        echo >&2
+        sed -n '2,10p' "$0" | sed 's/^# \{0,1\}//' >&2
+        exit 2
+        ;;
 esac

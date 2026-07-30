@@ -1,4 +1,5 @@
 ---
-title: "Posts"
-draft: false
+{
+    "title": "Posts"
+}
 ---

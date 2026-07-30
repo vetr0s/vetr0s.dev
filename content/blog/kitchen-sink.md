@@ -1,28 +1,36 @@
-+++
-date = '2026-07-12'
-draft = true
-title = 'Kitchen Sink'
-description = 'Every content feature the site knows how to render, on one page.'
-+++
+---
+{
+    "title": "Kitchen Sink",
+    "description": "Every content feature the site knows how to render, on one page.",
+    "date": "2026-07-12",
+    "draft": true
+}
+---
 
-This post exists to be looked at, not read. It uses every feature the templates
+This post exists to be looked at, not read. It uses every feature the layouts
 and stylesheet support, so that changing the CSS has somewhere to fail loudly.
 It is a draft, so it never reaches the built site. `./dev` shows it, and
 `./dev --build` does not.
 
 ## Prose, and what it can carry
 
-Body text is held to an `80ch` measure, and that is the whole column: there is no
-gutter beside it. An aside is a footnote{{< fn >}}A footnote. The marker is set
-where the claim is, the note itself waits under a rule at the end of the post,
-and the arrow at the end of this line goes back to where you were.{{< /fn >}}
-instead, so a paragraph reads at full width from the first line to the last and
-nothing sits in the corner of your eye asking to be read next.
+Body text is held to an `80ch` measure, and beside it there is a gutter. An
+aside is a margin note[^a-margin-note], so the note sits out there next to the
+line that raised it rather than waiting at the bottom of the page.
 
-Numbering runs down the page in order, and a marker is a link both
-ways{{< fn >}}Notes carry [links](/colophon/), `code`, and *emphasis* like any
-other prose.{{< /fn >}} Follow one and the note you land on comes up to full
-text color.
+[^a-margin-note]: A margin note. The marker is set where the claim is, and this
+    text sits in the gutter at the height of that marker. There is nothing to
+    click and nowhere to come back from.
+
+Numbering runs down the page in order and comes from a CSS
+counter[^numbering-is-css], not from the generator.
+
+[^numbering-is-css]: Notes carry [links](/colophon/), `code`, and *emphasis*
+    like any other prose. Because the number is a counter, the markup holds no
+    numbers at all and the marker and its note cannot drift apart.
+
+Narrow the window past about `70em` and every note on this page folds: the
+markers become toggles and the notes open inline where they are tapped.
 
 Inline, prose can carry **bold**, *italic*, `inline_code()`, a
 [link to another site](https://andrewkelley.me/), a [link back
@@ -51,13 +59,13 @@ Unordered, with nesting:
 
 Ordered:
 
-1. Install Hugo
+1. Install Odin and `libcmark`
 2. Run `./dev`
 3. There is no step three
 
 ## Code
 
-Inline code like `hugo server -D` sits in a bordered box. A fenced block does
+Inline code like `ostat build .` sits in a bordered box. A fenced block does
 not repeat that border on every token. The surface belongs to the block:
 
 ```zig
@@ -91,8 +99,8 @@ this line is deliberately far too long to fit inside the measure and should prod
 
 | Path | What lives there |
 |---|---|
-| `layouts/index.html` | The home page, and the portrait slot |
-| `layouts/partials/header.html` | The breadcrumb bar, on every page |
+| `site.json` | The site's identity: title, brand, contact, home page links |
+| `content/` | The markdown, and nothing else |
 | `static/css/style.css` | The whole stylesheet |
 
 ## Images

@@ -1,5 +1,7 @@
 ---
-title: "About"
+{
+    "title": "About"
+}
 ---
 
 Hi! I'm Nathan. Thank you for checking out my site. The majority of the content
@@ -13,27 +15,28 @@ I graduated from the [University of Arizona](https://www.arizona.edu/) in May
 Science](https://www.cs.arizona.edu/). Before Arizona, I grew up in
 [Washington](https://en.wikipedia.org/wiki/Washington_(state)), where I earned
 my associate's degree alongside my high school diploma through the state's
-[Running Start](https://en.wikipedia.org/wiki/Running_Start){{< fn >}}Running
-Start lets Washington high schoolers take community college classes for joint
-credit, tuition-free.{{< /fn >}} program.
+[Running Start](https://en.wikipedia.org/wiki/Running_Start)[^running-start]
+program.
+
+[^running-start]: Running Start lets Washington high schoolers take community
+    college classes for joint credit, tuition-free.
 
 During Spring 2025 I worked as a Teaching Assistant for CSc 346: Cloud
-Computing{{< fn >}}CSc 346 covers [cloud
-computing](https://en.wikipedia.org/wiki/Cloud_computing) fundamentals: IaaS,
-PaaS, SaaS, and hands-on work with major providers.{{< /fn >}} at the
-[University of Arizona](https://www.cs.arizona.edu/).
+Computing[^csc-346] at the [University of Arizona](https://www.cs.arizona.edu/).
+
+[^csc-346]: CSc 346 covers [cloud
+    computing](https://en.wikipedia.org/wiki/Cloud_computing) fundamentals:
+    IaaS, PaaS, SaaS, and hands-on work with major providers.
 
 ## High School Robotics
 
 ### Egypt Expedition
 
 For 4 years I was part of [ORF 4450](https://www.orf4450.org/home), an [FRC
-robotics](https://www.firstinspires.org/programs/frc/){{< fn >}}FRC is the FIRST
-Robotics Competition, the high-school-level league where teams build 120-pound
-robots in 6 weeks.{{< /fn >}} team. I joined as a freshman when the roster was
-small. 4 of us became the dedicated core that season, and by the time I
-graduated the team had grown to nearly 50 members. In my third year, one of our
-mentors connected us with a mother in
+robotics](https://www.firstinspires.org/programs/frc/)[^frc] team. I joined as a
+freshman when the roster was small. 4 of us became the dedicated core that
+season, and by the time I graduated the team had grown to nearly 50 members. In
+my third year, one of our mentors connected us with a mother in
 [Egypt](https://en.wikipedia.org/wiki/Egypt) whose son attended a STEM school in
 [Cairo](https://en.wikipedia.org/wiki/Cairo) doing [Lego-based
 robotics](https://en.wikipedia.org/wiki/Lego_Mindstorms), and we set out to
@@ -46,6 +49,9 @@ members. The following season, the team also made it to the FRC World
 Championships in [Houston](https://en.wikipedia.org/wiki/Houston) to compete for
 the [Impact
 Award](https://www.firstinspires.org/resources/library/frc/fia-resources).
+
+[^frc]: FRC is the FIRST Robotics Competition, the high-school-level league
+    where teams build 120-pound robots in 6 weeks.
 
 <figure>
 <img src="/img/cairo_kids.webp" alt="Myself and the teams co-captain at the Cairo STEM school working on FTC robotics kits with our group" />

@@ -1,6 +1,9 @@
 *.zip
 
-# Hugo build output — rebuilt from source by GitHub Actions on every push.
+# Build output, rebuilt from source by GitHub Actions on every push.
 public/
-resources/
-.hugo_build.lock
+
+# The generator and its toolchain, fetched by CI into the workspace. Never
+# committed here: ostat is pinned by commit in .github/workflows/deploy.yml.
+.ostat/
+.odin/
