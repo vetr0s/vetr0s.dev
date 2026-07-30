@@ -1,0 +1,37 @@
+{
+    "base_url": "https://vetr0s.dev/",
+    "title": "vetr0s.dev",
+    "description": "Nathan Tebbs, software engineer. Writing, projects, and a page about who I am.",
+    "author": "Nathan Tebbs",
+    "locale": "en-us",
+
+    "brand": { "head": "vetr0s", "accent": ".dev" },
+
+    "portrait": {
+        "src": "/img/gh_profile.jpg",
+        "alt": "Nathan Tebbs",
+        "width": 553,
+        "height": 553
+    },
+
+    "contact": [
+        { "label": "email",    "text": "vetr0s.dev@gmail.com",    "url": "mailto:vetr0s.dev@gmail.com" },
+        { "label": "github",   "text": "github.com/vetr0s",       "url": "https://github.com/vetr0s" },
+        { "label": "linkedin", "text": "linkedin.com/in/ntebbs",  "url": "https://www.linkedin.com/in/ntebbs" },
+        { "label": "resume",   "text": "resume.pdf",              "url": "/resume.pdf" }
+    ],
+
+    "elsewhere": [
+        { "label": "about",     "url": "/about/" },
+        { "label": "blog",      "url": "/blog/" },
+        { "label": "projects",  "url": "/projects/" },
+        { "label": "colophon",  "url": "/colophon/" }
+    ],
+
+    "home": {
+        "contact_heading": "Find Me",
+        "elsewhere_heading": "Elsewhere",
+        "recent_heading": "Recent Posts",
+        "nothing_published": "Nothing published yet."
+    }
+}

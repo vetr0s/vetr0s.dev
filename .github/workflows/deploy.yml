@@ -15,19 +15,61 @@ concurrency:
   group: pages
   cancel-in-progress: false
 
+env:
+  # Both pinned, because the generator is built from source here rather than
+  # downloaded as a release. An unpinned ref would let a push to either repo
+  # change this site without a commit in it.
+  OSTAT_REF: ca8469f4b00efa88ed0db9746e363bddf5a8bc47
+  ODIN_VERSION: dev-2026-07
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Check out the site
+        uses: actions/checkout@v4
 
-      - name: Setup Hugo
-        uses: peaceiris/actions-hugo@v3
+      - name: Check out ostat
+        uses: actions/checkout@v4
         with:
-          hugo-version: latest
+          repository: vetr0s/ostat
+          ref: ${{ env.OSTAT_REF }}
+          path: .ostat
 
-      - name: Build
-        run: hugo --minify
+      # ostat links libcmark through vendor:commonmark, and Odin shells out to
+      # clang to link. Neither is on a runner by default.
+      - name: Install the build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends clang libcmark-dev
+
+      - name: Cache the Odin toolchain
+        id: odin-cache
+        uses: actions/cache@v4
+        with:
+          path: .odin
+          key: odin-${{ env.ODIN_VERSION }}-${{ runner.os }}
+
+      - name: Install Odin
+        if: steps.odin-cache.outputs.cache-hit != 'true'
+        run: |
+          mkdir -p .odin
+          curl --fail --silent --show-error --location \
+            -o odin.tar.gz \
+            "https://github.com/odin-lang/Odin/releases/download/${ODIN_VERSION}/odin-linux-amd64-${ODIN_VERSION}.tar.gz"
+          # The archive nests one directory named for the nightly build date,
+          # not for the tag, so it cannot be written down here. Strip it.
+          tar xzf odin.tar.gz -C .odin --strip-components=1
+          chmod +x .odin/odin
+
+      - name: Build ostat
+        run: |
+          export PATH="$PWD/.odin:$PATH"
+          cd .ostat && ./build.sh release
+
+      # No -drafts and no -future: this is what the world sees.
+      - name: Build the site
+        run: .ostat/build/release/ostat build . -o public
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

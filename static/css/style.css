@@ -3,9 +3,46 @@
    font-relative, the measure in ch and the spacing in rem, so the root
    font-size scales the layout the way browser zoom does. Colors are the Modus
    palettes, switched by light-dark() against the user's color-scheme. Asides
-   are footnotes, so nothing floats beside the prose and there is no gutter.
-   Order below: tokens, base, code, type, layout, nav, footnotes, figures,
+   are margin notes: the prose keeps its measure and the note floats into a
+   gutter beside it. Below the breakpoint the gutter is gone and the marker
+   folds the note inline instead.
+   Order below: tokens, base, code, type, layout, nav, margin notes, figures,
    lists, tables. */
+
+/* ET Book, Tufte's Bembo digitisation and the face gingerBill.org is set in.
+   Self-hosted from static/font; MIT, notice beside the files.
+
+   font-display: optional, not the swap that Tufte CSS and gingerBill both
+   use. swap guarantees a visible change: fallback first, then the real face
+   drops in under the reader's eyes. optional instead lets the browser use the
+   face only if it is ready by first paint and skip it for that load
+   otherwise, so the text never reflows mid-sentence. The preload in the head
+   is what makes ready-in-time the usual case, and after one visit it is
+   cached and always is. The cost is that a cold visit on a slow line reads in
+   Palatino, which is a fair thing to fall back to. */
+@font-face {
+    font-family: "ET Book";
+    src: url("/font/et-book-roman-line-figures.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: optional;
+}
+
+@font-face {
+    font-family: "ET Book";
+    src: url("/font/et-book-display-italic-old-style-figures.woff2") format("woff2");
+    font-weight: 400;
+    font-style: italic;
+    font-display: optional;
+}
+
+@font-face {
+    font-family: "ET Book";
+    src: url("/font/et-book-bold-line-figures.woff2") format("woff2");
+    font-weight: 700;
+    font-style: normal;
+    font-display: optional;
+}
 
 /* Modus Operandi light, Modus Vivendi dark. */
 :root {
@@ -23,8 +60,10 @@
     --color-heading-3:    light-dark(#005e8b, #00d3d0);
     --magenta:            light-dark(#721045, #feacd0);
 
-    /* System fonts only. Nothing downloads and nothing swaps in later. */
-    --font-sans:  system-ui, -apple-system, "Segoe UI", "Noto Sans", sans-serif;
+    /* The fallbacks are the same ones Tufte CSS names, and they matter here:
+       under font-display: optional a cold first visit reads in Palatino. */
+    --font-body:  "ET Book", Palatino, "Palatino Linotype", "Palatino LT STD",
+                  "Book Antiqua", Georgia, serif;
     --font-mono:  ui-monospace, "Hack", "DejaVu Sans Mono", monospace;
 
     --space-xs: 0.35rem;
@@ -32,8 +71,34 @@
     --space-md: 1.1rem;
     --space-lg: 1.5rem;
 
-    /* One column. Asides are footnotes, so nothing sits beside the prose. */
+    /* The prose column. Nothing but a margin note may sit outside it.
+
+       In ch, so it is a count of characters and holds its reading width
+       whatever the face. The px it costs does change: a char of ET Book at
+       this size is 9.78px, against 10.86px for the system sans it replaced,
+       so the same characters now ask for a window about 80px narrower.
+
+       Changing this also means changing the fold breakpoint at the foot of
+       the margin-note section, which is derived from it. That comment owns
+       the arithmetic and the conversion table; do not restate them here. */
     --measure: 80ch;
+
+    /* In rem, not ch. A note is set at 0.78em, and ch resolves against the
+       font of the element it is used on, so a width in ch would come out a
+       fifth narrower than the space reserved for it here and the arithmetic
+       below would quietly over-reserve.
+
+       A note is apparatus, not a second column. Past about 16rem it stops
+       reading as a gloss on the prose and starts competing with it.
+
+       This is the second input to the fold breakpoint, along with --measure.
+       Changing it means recomputing that breakpoint too. */
+    --sidenote-width: 15rem;
+    --sidenote-gap: 1.5rem;
+
+    /* Prose plus gutter. main is sized from this, and the container query
+       that decides whether a note can float uses the same number. */
+    --layout-width: calc(var(--measure) + var(--sidenote-gap) + var(--sidenote-width));
 
     /* The left inset. Header and footer span the window. Only what is
        inside them is held to this. */
@@ -50,18 +115,24 @@
 /* Base */
 
 /* Sized from the root. The measure is in ch and the spacing in rem, so this
-   one number scales the layout the way browser zoom does. */
+   one number scales the layout the way browser zoom does. Left at the
+   browser's own size: a reader who wants it larger has a zoom control, and
+   scaling past their setting overrides a choice they already made. */
 html {
-    font-size: 120%;
+    font-size: 100%;
     -webkit-text-size-adjust: 100%;
 }
 
 body {
-    font-family: var(--font-sans);
-    font-size: 1.0625rem;
-    /* White on black reads thinner at the same weight. Half a step up from
-       regular holds its colour. */
-    font-weight: 450;
+    font-family: var(--font-body);
+    /* ET Book has a small x-height, so it sets optically smaller than a UI
+       sans at the same size. Tufte CSS answers this with 1.4rem; 1.25 is
+       enough here because the measure is narrower than his. */
+    font-size: 1.25rem;
+    /* 400, not the half step the system sans was given. Only the roman and
+       bold cuts are loaded, so anything between them either rounds back to
+       400 or gets synthesised into a smeared fake bold. */
+    font-weight: 400;
     color: var(--color-text);
     background: var(--color-bg);
     margin: 0;
@@ -69,6 +140,9 @@ body {
     /* Loose leading spreads the same ink over more page. A paragraph then
        reads as a grey field rather than a block of white. */
     line-height: 1.4;
+
+    /* Margin notes are numbered here, not by the generator. */
+    counter-reset: sidenote-counter;
 }
 
 /* Code */
@@ -82,7 +156,7 @@ code {
     background: var(--color-surface);
     border: 1px solid var(--color-border);
     border-radius: 3px;
-    padding: 0.1em 0.3em;
+    padding: 0.05em 0.2em;
 }
 
 pre {
@@ -138,10 +212,13 @@ blockquote {
 
 /* Modular scale, ratio 1.2, one step down from browser-default drama. */
 h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-sans);
+    font-family: var(--font-body);
     line-height: 1.25;
     margin-block: var(--space-md) var(--space-xs);
     font-weight: 600;
+    /* main is wider than the prose now, to leave room for the gutter. A
+       heading has to be held to the measure explicitly or it runs into it. */
+    max-width: var(--measure);
 }
 
 h1 {
@@ -196,8 +273,13 @@ header {
 /* The bar spans the header. Its toggle lands at the window's right edge. */
 .crumbs { max-width: none; }
 
+/* Wide enough for the prose plus the gutter beside it. Everything except a
+   margin note is still held to the measure, so the text does not move. */
+/* No container-type here, however much a container query would suit the job
+   below. container-type applies style containment, style containment scopes
+   counters, and every margin note then came out numbered 1. */
 main {
-    max-width: calc(var(--measure) + var(--pad) * 2);
+    max-width: calc(var(--layout-width) + var(--pad) * 2);
     padding: var(--space-md) var(--pad);
 }
 
@@ -230,7 +312,6 @@ footer p { max-width: var(--measure); margin: 0; }
     align-items: baseline;
     justify-content: space-between;
     gap: var(--space-sm);
-    font-size: 0.875rem;
     color: var(--color-muted);
 }
 
@@ -251,54 +332,107 @@ footer p { max-width: var(--measure); margin: 0; }
 
 #theme-toggle:hover { color: var(--color-link-hover); }
 
-/* Footnotes */
+/* Margin notes
+   The generator writes a label, a hidden checkbox, and the note. It writes no
+   numbers: both the marker and the note are numbered by the counter below, so
+   they cannot drift apart. */
 
-/* The marker takes no leading of its own. A paragraph with notes sets to the
-   same rhythm as one without. */
-.fn-ref {
+.sidenote-number {
+    counter-increment: sidenote-counter;
+}
+
+/* The marker takes no leading of its own, so a paragraph with notes sets to
+   the same rhythm as one without. */
+.sidenote-number::after {
+    content: counter(sidenote-counter);
     font-size: 0.7em;
     font-weight: 600;
     line-height: 0;
     vertical-align: super;
-    margin-inline-start: 0.1em;
-}
-
-/* A marker points to the bottom of this page, not away from it. Link blue
-   would make it compete with the prose. */
-.fn-ref a        { color: var(--color-muted); text-decoration: none; }
-.fn-ref a:hover  { color: var(--color-link-hover); }
-
-/* Apparatus, not prose. --measure is in ch, so the block stays at body size
-   and only the list shrinks, or the rule would stop short of a prose line. */
-.footnotes {
-    max-width: var(--measure);
-    margin-block-start: var(--space-lg);
-    padding-block-start: var(--space-sm);
-    border-block-start: 1px solid var(--color-border);
     color: var(--color-muted);
-    line-height: 1.45;
+    cursor: pointer;
 }
 
-.footnotes ol {
-    list-style: decimal;
-    padding-inline-start: 1.7em;
-    margin: 0;
-    max-width: none;
+.sidenote-number:hover::after { color: var(--color-link-hover); }
+
+/* Floated out of the measure into the gutter. The negative margin is what
+   moves it past the right edge of the prose. */
+.sidenote {
+    float: right;
+    clear: right;
+    width: var(--sidenote-width);
+    margin-right: calc(-1 * (var(--sidenote-width) + var(--sidenote-gap)));
+    margin-block: 0.25rem var(--space-sm);
     font-size: 0.78em;
+    line-height: 1.45;
+    color: var(--color-muted);
+    text-align: left;
 }
 
-.footnotes li             { margin-block-end: 0.4em; }
-.footnotes li:last-child  { margin-block-end: 0; }
-.footnotes p              { max-width: none; }
+.sidenote::before {
+    content: counter(sidenote-counter) " ";
+    font-weight: 600;
+    vertical-align: super;
+    font-size: 0.7em;
+    line-height: 0;
+}
 
-/* A note is often mostly link. At full blue the list becomes a wall of it. */
-.footnotes a        { color: inherit; text-decoration: underline; }
-.footnotes a:hover  { color: var(--color-link-hover); }
+/* A note is often mostly link. At full blue it becomes a wall of it. */
+.sidenote a        { color: inherit; text-decoration: underline; }
+.sidenote a:hover  { color: var(--color-link-hover); }
 
-/* The note you landed on comes up to full text color. */
-.footnotes li:target { color: var(--color-text); }
+/* The checkbox exists only to hold open/closed state below the breakpoint. */
+input.margin-toggle { display: none; }
 
-.footnotes .fn-back { margin-inline-start: 0.3em; text-decoration: none; }
+/* No gutter to float into. The marker becomes the toggle and the note folds
+   into the prose under it.
+
+   THIS NUMBER IS DERIVED FROM --measure AND --sidenote-width AND MUST BE
+   RECOMPUTED WITH EITHER. It is written out by hand because a media query
+   can read neither a custom property nor ch, so the derivation cannot live
+   in the stylesheet as code. This comment is the only place it is recorded.
+   The layout needs
+
+       measure + gap + note + 2 x pad, rounded up to the next em
+
+   A char of ET Book at this body size measures 9.78px, so 80ch is 782px;
+   plus 24px of gap, 240px of note, and 64px of padding, that is 1110px, or
+   69.4em. Rounded up to 70em so the last few pixels of the gutter are never
+   squeezed.
+
+   Both inputs move this number, so the tables below hold one fixed while
+   varying the other. At the current 15rem note:
+
+       72ch -> 1032px -> 65em
+       80ch -> 1110px -> 70em   (current)
+       88ch -> 1189px -> 75em
+
+   At the current 80ch measure:
+
+       13rem -> 1078px -> 68em
+       15rem -> 1110px -> 70em  (current)
+       16rem -> 1126px -> 71em
+
+   The px figure for the measure is taken from the per-character width above
+   rather than assumed, because ch is a property of the font. Change
+   --measure, --sidenote-width, the body size, or the family without
+   changing this and notes fold when there was room, or float when there
+   was not. */
+@media (max-width: 70em) {
+    .sidenote {
+        display: none;
+        float: none;
+        width: auto;
+        margin-right: 0;
+        max-width: var(--measure);
+    }
+
+    input.margin-toggle:checked + .sidenote {
+        display: block;
+        padding-inline-start: 1em;
+        border-inline-start: 2px solid var(--color-border);
+    }
+}
 
 /* Well short of the measure. A picture at full column stops illustrating the
    prose and becomes the page. */
@@ -337,13 +471,14 @@ figcaption {
     }
 }
 
-/* A heading with something pinned to the right of it. The h1 keeps its own
-   bottom margin, so the row does not add one. */
+/* A heading with the feed link beside it. It used to be pinned to the far
+   right of the measure, which at this width left it stranded most of a column
+   away from the words it belongs to. It sits next to the heading now. The h1
+   keeps its own bottom margin, so the row does not add one. */
 .section-head {
     display: flex;
     align-items: baseline;
-    justify-content: space-between;
-    gap: var(--space-sm);
+    gap: var(--space-md);
     max-width: var(--measure);
 }
 
@@ -402,26 +537,19 @@ th {
     font-weight: 600;
 }
 
-/* Post listing. Leader dots, like a table of contents. */
+/* Post listing. The title, then its date on the line under it. Leader dots
+   used to run between them, which is decoration standing in for a
+   relationship the two lines already have. */
 
 .post-entry {
-    display: flex;
-    align-items: baseline;
-    gap: 0.5em;
     max-width: var(--measure);
-    margin-block-end: 0.4em;
+    margin-block-end: var(--space-sm);
 }
 
-.post-entry > a    { order: 1; }
-.post-entry > time { order: 3; white-space: nowrap; color: var(--color-muted); }
+.post-entry > time {
+    display: block;
+    color: var(--color-muted);
+    font-size: 0.85em;
+}
 
 .empty { color: var(--color-muted); }
-
-.post-entry::after {
-    content: "";
-    order: 2;
-    flex: 1;
-    border-bottom: 2px dotted var(--color-muted);
-    position: relative;
-    top: -0.25em;
-}
