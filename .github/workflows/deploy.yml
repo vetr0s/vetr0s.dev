@@ -3,6 +3,10 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
+  # Build without deploying, so a change to the toolchain or the generator is
+  # proved before it can reach the live site. The deploy job is skipped below.
+  pull_request:
+    branches: [main]
   # Rebuild by hand from the Actions tab.
   workflow_dispatch:
 
@@ -77,6 +81,9 @@ jobs:
           path: ./public
 
   deploy:
+    # A pull request builds and stops. Publishing is what merging to main is
+    # for, and a PR that could deploy would make the check pointless.
+    if: github.event_name != 'pull_request'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
