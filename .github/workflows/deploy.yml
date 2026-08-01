@@ -27,7 +27,7 @@ env:
   # A tag rather than a SHA, now that ostat cuts releases. A tag can be moved,
   # which a SHA cannot, so this trades a little immutability for a ref that
   # says which version of the generator built the site.
-  OSTAT_REF: v0.2.0
+  OSTAT_REF: v0.2.1
   ODIN_VERSION: dev-2026-07
 
 jobs:

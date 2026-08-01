@@ -16,9 +16,10 @@ The tools, themes, and influences behind this site.
   Actions](https://github.com/features/actions) on every push to `main`
 - An [RSS feed](/index.xml) of the posts
 
-The site's identity lives in one `site.json`: title, author, the brand split,
-and the home page's links and headings. Everything else about the shape of a
-page is a procedure in the generator.
+The site's identity lives in one `site.json`: title, base URL, author, locale,
+and the brand split. The front page lives in `html/home.html` and is ordinary
+markup, with one marker saying where the recent posts go. Everything else about
+the shape of a page is a procedure in the generator.
 
 ## Typography
 
