@@ -30,18 +30,24 @@ to `main` and publishes it to GitHub Pages.
 
 | Path | What lives there |
 |---|---|
-| `site.json` | The site's identity: title, base URL, author, the brand split, the portrait, and the home page's contact rows and links |
+| `site.json` | The site's identity: title, base URL, description, author, locale, the brand split |
+| `html/home.html` | The front page, written out whole. `<!--ostat:recent-->` marks where ostat drops the recent posts |
 | `content/` | The markdown. Posts under `blog/`, projects under `projects/`, plus `about.md` and `colophon.md` |
 | `static/css/` | `reset.css` and `style.css`. The entire stylesheet, no build step |
 | `static/font/` | ET Book, three cuts, served from this domain |
 | `static/js/` | `theme.js`, the light/dark toggle |
 | `static/` | Everything else served as is: favicons, images, `CNAME`, and `resume.pdf` |
 
-There are no layout files. Every layout is a procedure in ostat's
-`src/render.odin`, so changing the shape of a page means editing the generator
+The front page and the two halves of every page's `<head>` live in `html/` and
+are ordinary HTML. Everything else is a procedure in ostat's `src/render.odin`,
+so changing the shape of a post or a section listing means editing the generator
 and rebuilding it. That is the trade ostat makes: no template language to learn
 and a compiler that checks the whole thing, at the cost of recompiling to move a
 heading.
+
+`html/` may also hold `header-01.html`, `header-02.html` and
+`not-found-404.html`. This site supplies none of them and takes ostat's
+defaults, which is why its favicons and stylesheet links are the generator's.
 
 ## Writing a post
 

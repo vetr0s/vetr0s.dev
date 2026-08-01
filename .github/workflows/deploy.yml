@@ -23,7 +23,11 @@ env:
   # Both pinned, because the generator is built from source here rather than
   # downloaded as a release. An unpinned ref would let a push to either repo
   # change this site without a commit in it.
-  OSTAT_REF: ca8469f4b00efa88ed0db9746e363bddf5a8bc47
+  #
+  # A tag rather than a SHA, now that ostat cuts releases. A tag can be moved,
+  # which a SHA cannot, so this trades a little immutability for a ref that
+  # says which version of the generator built the site.
+  OSTAT_REF: v0.2.0
   ODIN_VERSION: dev-2026-07
 
 jobs:
