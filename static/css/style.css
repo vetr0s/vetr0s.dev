@@ -1,6 +1,8 @@
 /* The whole stylesheet. No build step and no preprocessor.
-   The page is one left-aligned column capped at --measure. Every length is
-   font-relative, the measure in ch and the spacing in rem, so the root
+   The page is one column capped at --measure, set inside a sheet that is
+   capped at --sheet-width and centred in the window. Text stays left aligned
+   within it; only the sheet is centred. Every length is font-relative, the
+   measure in ch and the spacing in rem, so the root
    font-size scales the layout the way browser zoom does. Colors are the Modus
    palettes, switched by light-dark() against the user's color-scheme. Asides
    are margin notes: the prose keeps its measure and the note floats into a
@@ -74,6 +76,10 @@
                   "Book Antiqua", Georgia, serif;
     --font-mono:  ui-monospace, "Hack", "DejaVu Sans Mono", monospace;
 
+    /* A token because --measure-flat is derived from it. Raising it widens
+       the prose column, since --measure is in ch. */
+    --body-size: 1.25rem;
+
     --space-xs: 0.35rem;
     --space-sm: 0.7rem;
     --space-md: 1.1rem;
@@ -81,17 +87,28 @@
 
     /* The prose column. Nothing but a margin note may sit outside it.
 
-       In ch, so it is a count of characters and holds its reading width
-       whatever the face. The px it costs does not hold: ch resolves against
-       the body size, so changing that moves this column even though the
-       character count is unchanged. 68 rather than the 80 it was, and that
-       cut is what buys the page at either side of the sheet. Still inside
-       the 45 to 75 a line wants.
+       Two forms of the same column, because ch resolves against the font of
+       the element that uses it and not against the root or the body. On
+       prose that is what you want: --measure holds a character count at
+       whatever size the text is set, so the footer at 14px gets the same 68
+       characters in fewer px. On anything set in another size or weight it
+       is a trap. A heading at var(--measure) gets 68 of ITS characters,
+       which is half again the column it heads, so use --measure-flat there.
+
+       68 rather than the 80 it was, and that cut is what buys the page at
+       either side of the sheet. Still inside the 45 to 75 a line wants.
 
        Changing this also means changing the fold breakpoint at the foot of
        the margin-note section, which is derived from it. That comment owns
        the arithmetic and the conversion table; do not restate them here. */
-    --measure: 68ch;
+    --measure-chars: 68;
+    --measure: calc(var(--measure-chars) * 1ch);
+
+    /* The prose column as a fixed length, for elements whose font is not the
+       body's. 0.4888 is ET Book roman's advance per character, measured, and
+       the same figure the fold breakpoint is derived from. Changing the face
+       changes it. */
+    --measure-flat: calc(var(--measure-chars) * 0.4888 * var(--body-size));
 
     /* In rem, not ch. A note is set at 0.78em, and ch resolves against the
        font of the element it is used on, so a width in ch would come out a
@@ -150,7 +167,7 @@ body {
        enough here because the measure is narrower than his. Tried at 1.375
        and put back: a note is 0.78em of this inside a box fixed in rem, so
        raising the body size fills the box without widening it. */
-    font-size: 1.25rem;
+    font-size: var(--body-size);
     /* 400, not the half step the system sans was given. Only the roman and
        bold cuts are loaded, so anything between them either rounds back to
        400 or gets synthesised into a smeared fake bold. */
@@ -205,7 +222,9 @@ pre {
     background: var(--color-surface);
     border: 1px solid var(--color-border);
     padding: 0.75em 0.9em;
-    max-width: var(--measure);
+    /* Flat, not --measure: a mono ch is wider than ET Book's, so the
+       character count would push the block past the prose and under a note. */
+    max-width: var(--measure-flat);
     margin-block: var(--space-sm);
     overflow-x: auto;
     line-height: 1.45;
@@ -255,18 +274,23 @@ blockquote {
 /* Modular scale, ratio 1.2, one step down from browser-default drama.
 
    The scale is anchored to rem, so it counts from the 16px root and not from
-   the 1.25rem body. Its lower steps land under the prose they head: h3 sat at
-   the body size exactly and h4 still sits below it. h3 is off the scale now
-   to clear the prose, boxed in by h2 at 1.44 above and the body at 1.25
-   below. Re-anchoring the whole scale to the body size is the real fix. */
+   the 1.25rem body. Its lower steps land under the prose they head: h3 was
+   1.2rem against a 1.25rem body, so a subheading set smaller than its own
+   paragraphs, and h4 still does. h3 is off the scale now to clear the prose,
+   boxed in by h2 at 1.44 above and the body at 1.25 below. Re-anchoring the
+   whole scale to the body size is the real fix. */
 h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-body);
     line-height: 1.25;
     margin-block: var(--space-md) var(--space-xs);
     font-weight: 600;
-    /* main is wider than the prose now, to leave room for the gutter. A
-       heading has to be held to the measure explicitly or it runs into it. */
-    max-width: var(--measure);
+    /* main is wider than the prose, to leave room for the gutter, so a
+       heading has to be held to the column explicitly or it runs into it.
+       --measure-flat and not --measure: a heading is set larger than the
+       prose and in the bold cut, and ch resolves against the element using
+       it, so var(--measure) here would cap h1 at 919px against a 665px
+       column and cap nothing at all in practice. */
+    max-width: var(--measure-flat);
 }
 
 h1 {
@@ -461,10 +485,13 @@ input.margin-toggle { display: none; }
        16rem -> 1009px -> 64em
 
    The px figure for the measure is taken from the per-character fraction
-   above rather than assumed, because ch is a property of the font and of the
-   body size. Change --measure, --sidenote-width, the body size, or the
-   family without changing this and notes fold when there was room, or float
-   when there was not. */
+   above rather than assumed, because ch is a property of the font. The body
+   size is what it is measured at here only because the prose is what sets
+   the gutter's position; an element in another size gets another px width
+   from the same token, which is what --measure-flat exists for. Change
+   --measure-chars, --sidenote-width, --body-size, or the family without
+   changing this and notes fold when there was room, or float when there was
+   not. */
 @media (max-width: 63em) {
     .sidenote {
         display: none;
