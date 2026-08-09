@@ -271,14 +271,19 @@ blockquote {
 .chroma .cm, .chroma .cs      { color: var(--color-muted); font-style: italic; }
 .chroma .err                  { color: light-dark(#a60000, #ff8059); }
 
-/* Modular scale, ratio 1.2, one step down from browser-default drama.
+/* Modular scale, ratio 1.15, anchored to --body-size and not to the root.
 
-   The scale is anchored to rem, so it counts from the 16px root and not from
-   the 1.25rem body. Its lower steps land under the prose they head: h3 was
-   1.2rem against a 1.25rem body, so a subheading set smaller than its own
-   paragraphs, and h4 still does. h3 is off the scale now to clear the prose,
-   boxed in by h2 at 1.44 above and the body at 1.25 below. Re-anchoring the
-   whole scale to the body size is the real fix. */
+   Anchoring to the root was the bug. It counted from 16px while the prose is
+   set at 1.25rem, so the bottom of the scale landed under the text it headed:
+   h4 was 1rem against a 20px body, and h3 was 1.2rem, which is why h3 had to
+   be hand-picked off the scale to clear the prose at all. With the floor at
+   the body size no heading can set smaller than its own paragraphs, and h3 is
+   a scale step again rather than a patch.
+
+   1.15 rather than the 1.2 it climbed at before: the old ratio from the higher
+   anchor puts h1 at 2.16rem, above the browser default this scale is meant to
+   sit one step under. At 1.15 it lands at 1.9rem, 30px against the browser's
+   32, and the steps come out even instead of bunching at the top. */
 h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-body);
     line-height: 1.25;
@@ -294,16 +299,20 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-    font-size: 1.728rem;
+    font-size: 1.9rem;
     color: var(--color-heading-1);
     margin-block-start: 0;
     /* A heading starts at the left margin. A float from the section above
        never indents it. */
     clear: both;
 }
-h2 { font-size: 1.44rem; color: var(--color-heading-2); }
-h3 { font-size: 1.35rem; color: var(--color-heading-3); }
-h4 { font-size: 1rem; }
+h2 { font-size: 1.65rem; color: var(--color-heading-2); }
+h3 { font-size: 1.44rem; color: var(--color-heading-3); }
+
+/* The scale defines nothing below h4. h5 and h6 are floored at the body size
+   rather than left to the UA, which would set them at 0.83em and 0.67em and
+   put them back under the prose. */
+h4, h5, h6 { font-size: var(--body-size); }
 
 p {
     margin-block-end: var(--space-sm);

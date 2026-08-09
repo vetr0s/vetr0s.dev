@@ -36,8 +36,9 @@ rather than waiting on the network or swapping the text out mid-read.
 - Body and headings: ET Book, falling back to Palatino and then Georgia
 - Code: `ui-monospace`, then `Hack`, `DejaVu Sans Mono`
 
-Headings run on a 1.2 modular scale. The body runs `1.25rem` at every width,
-with no step up on large screens. The page should read like a document, not a
+Headings run on a 1.15 modular scale, anchored to the body size so that none of
+them sets smaller than the prose. The body runs `1.25rem` at every width, with
+no step up on large screens. The page should read like a document, not a
 poster.
 
 Every length is font-relative. The measure is in `ch` and the spacing is in

@@ -39,8 +39,8 @@ that is what a link looks like when nobody has styled it.
 
 ### A third-level heading
 
-Headings run `h1` warm-yellow, `h2` magenta, `h3` cyan, on a 1.2 scale. Only the
-`h1` carries a rule under it.
+Headings run `h1` warm-yellow, `h2` magenta, `h3` cyan, on a 1.15 scale anchored
+to the body size. Only the `h1` carries a rule under it.
 
 #### And a fourth
 
