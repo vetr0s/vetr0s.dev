@@ -252,7 +252,13 @@ blockquote {
 .chroma .cm, .chroma .cs      { color: var(--color-muted); font-style: italic; }
 .chroma .err                  { color: light-dark(#a60000, #ff8059); }
 
-/* Modular scale, ratio 1.2, one step down from browser-default drama. */
+/* Modular scale, ratio 1.2, one step down from browser-default drama.
+
+   The scale is anchored to rem, so it counts from the 16px root and not from
+   the 1.25rem body. Its lower steps land under the prose they head: h3 sat at
+   the body size exactly and h4 still sits below it. h3 is off the scale now
+   to clear the prose, boxed in by h2 at 1.44 above and the body at 1.25
+   below. Re-anchoring the whole scale to the body size is the real fix. */
 h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-body);
     line-height: 1.25;
@@ -272,7 +278,7 @@ h1 {
     clear: both;
 }
 h2 { font-size: 1.44rem; color: var(--color-heading-2); }
-h3 { font-size: 1.2rem;  color: var(--color-heading-3); }
+h3 { font-size: 1.35rem; color: var(--color-heading-3); }
 h4 { font-size: 1rem; }
 
 p {
