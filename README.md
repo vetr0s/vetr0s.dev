@@ -80,7 +80,7 @@ An aside is a margin note, written as a standard Markdown footnote: a marker
 where the claim is, and a definition anywhere in the file.
 
 ```markdown
-The measure is `80ch`.[^measure]
+The measure is `68ch`.[^measure]
 
 [^measure]: Which is wide. It suits a document.
 ```
