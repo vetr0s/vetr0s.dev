@@ -14,7 +14,7 @@ It is a draft, so it never reaches the built site. `./dev` shows it, and
 
 ## Prose, and what it can carry
 
-Body text is held to an `80ch` measure, and beside it there is a gutter. An
+Body text is held to a `68ch` measure, and beside it there is a gutter. An
 aside is a margin note[^a-margin-note], so the note sits out there next to the
 line that raised it rather than waiting at the bottom of the page.
 
@@ -29,7 +29,7 @@ counter[^numbering-is-css], not from the generator.
     like any other prose. Because the number is a counter, the markup holds no
     numbers at all and the marker and its note cannot drift apart.
 
-Narrow the window past about `70em` and every note on this page folds: the
+Narrow the window past about `63em` and every note on this page folds: the
 markers become toggles and the notes open inline where they are tapped.
 
 Inline, prose can carry **bold**, *italic*, `inline_code()`, a
@@ -39,8 +39,8 @@ that is what a link looks like when nobody has styled it.
 
 ### A third-level heading
 
-Headings run `h1` warm-yellow, `h2` magenta, `h3` cyan, on a 1.2 scale. Only the
-`h1` carries a rule under it.
+Headings run `h1` warm-yellow, `h2` magenta, `h3` cyan, on a 1.15 scale anchored
+to the body size. Only the `h1` carries a rule under it.
 
 #### And a fourth
 

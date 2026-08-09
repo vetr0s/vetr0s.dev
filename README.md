@@ -86,7 +86,7 @@ The measure is `80ch`.[^measure]
 ```
 
 The generator emits no numbers. The visible number comes from a CSS counter, so
-the marker and its note cannot drift apart. Below about `70em` of window there
+the marker and its note cannot drift apart. Below about `63em` of window there
 is no gutter to float into, and the note folds inline behind a toggle.
 
 A definition that nothing references fails the build, which is how a mistyped
@@ -106,8 +106,9 @@ absolute, because a feed item is read away from the page it came from.
 
 ## The look
 
-Set in [ET Book](https://edwardtufte.github.io/et-book/), left aligned, held to
-an `80ch` measure with a gutter beside it for margin notes. Colors come from
+Set in [ET Book](https://edwardtufte.github.io/et-book/), left aligned inside a
+sheet that is centered in the window, held to a `68ch` measure with a gutter
+beside it for margin notes. Colors come from
 Protesilaos Stavrou's [Modus
 themes](https://protesilaos.com/emacs/modus-themes-colors), `modus-operandi` for
 light and `modus-vivendi` for dark, and they carry through to syntax
