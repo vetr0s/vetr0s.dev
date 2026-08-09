@@ -48,7 +48,15 @@
 :root {
     color-scheme: light dark;
 
-    --color-bg:           light-dark(#ffffff, #000000);
+    /* The sheet. Used on body and nowhere else, which is what lets the dark
+       value sit off pure black: the page below it takes the black instead. */
+    --color-bg:           light-dark(#ffffff, #0d0d0d);
+    /* Behind the sheet, at the left and right of the window. The two themes
+       reach the separation from opposite directions. Light dims the page away
+       from the white sheet, Modus bg-dim. Dark cannot dim any further, so it
+       drops the page to true black and lifts the sheet off it instead, which
+       also puts a code block's #1e1e1e a clear step above both. */
+    --color-page:         light-dark(#f0f0f0, #000000);
     --color-surface:      light-dark(#f2f2f2, #1e1e1e);
     --color-text:         light-dark(#000000, #ffffff);
     --color-muted:        light-dark(#595959, #989898);
@@ -74,14 +82,16 @@
     /* The prose column. Nothing but a margin note may sit outside it.
 
        In ch, so it is a count of characters and holds its reading width
-       whatever the face. The px it costs does change: a char of ET Book at
-       this size is 9.78px, against 10.86px for the system sans it replaced,
-       so the same characters now ask for a window about 80px narrower.
+       whatever the face. The px it costs does not hold: ch resolves against
+       the body size, so changing that moves this column even though the
+       character count is unchanged. 68 rather than the 80 it was, and that
+       cut is what buys the page at either side of the sheet. Still inside
+       the 45 to 75 a line wants.
 
        Changing this also means changing the fold breakpoint at the foot of
        the margin-note section, which is derived from it. That comment owns
        the arithmetic and the conversion table; do not restate them here. */
-    --measure: 80ch;
+    --measure: 68ch;
 
     /* In rem, not ch. A note is set at 0.78em, and ch resolves against the
        font of the element it is used on, so a width in ch would come out a
@@ -100,8 +110,15 @@
        that decides whether a note can float uses the same number. */
     --layout-width: calc(var(--measure) + var(--sidenote-gap) + var(--sidenote-width));
 
-    /* The left inset. Header and footer span the window. Only what is
-       inside them is held to this. */
+    /* The sheet: prose, gutter, and the inset around them. body is capped at
+       this and centred, so it is the whole visible page. What is centred is
+       the sheet, not the measure, which leaves the prose sitting left of the
+       window's centre by half the gutter. That is the honest reading: the
+       gutter is part of the page whether or not a note is in it. */
+    --sheet-width: calc(var(--layout-width) + var(--pad) * 2);
+
+    /* The inset from the sheet edge. Header and footer span the sheet. Only
+       what is inside them is held to this. */
     --pad: 1.25rem;
 }
 
@@ -121,13 +138,18 @@
 html {
     font-size: 100%;
     -webkit-text-size-adjust: 100%;
+    /* The band at either side of the sheet. On html rather than body so it
+       still paints under overscroll and past the end of a short page. */
+    background: var(--color-page);
 }
 
 body {
     font-family: var(--font-body);
     /* ET Book has a small x-height, so it sets optically smaller than a UI
        sans at the same size. Tufte CSS answers this with 1.4rem; 1.25 is
-       enough here because the measure is narrower than his. */
+       enough here because the measure is narrower than his. Tried at 1.375
+       and put back: a note is 0.78em of this inside a box fixed in rem, so
+       raising the body size fills the box without widening it. */
     font-size: 1.25rem;
     /* 400, not the half step the system sans was given. Only the roman and
        bold cuts are loaded, so anything between them either rounds back to
@@ -135,7 +157,14 @@ body {
     font-weight: 400;
     color: var(--color-text);
     background: var(--color-bg);
-    margin: 0;
+
+    /* The sheet, centred. reset.css already gives it the window's height, so
+       the column runs edge to edge vertically even on a short page. */
+    max-width: var(--sheet-width);
+    margin-inline: auto;
+    border-inline: 1px solid var(--color-border);
+
+    margin-block: 0;
     padding: 0;
     /* Loose leading spreads the same ink over more page. A paragraph then
        reads as a grey field rather than a block of white. */
@@ -143,6 +172,16 @@ body {
 
     /* Margin notes are numbered here, not by the generator. */
     counter-reset: sidenote-counter;
+}
+
+/* Below the sheet's own width there is no page beside it to divide from and
+   the rules just hug the window. 63em is the fold breakpoint derived at the
+   foot of the margin-note section; the sheet caps a few pixels under it,
+   which is close enough that a second constant is not worth keeping in step.
+   This has to sit after the rule above, not up with the other queries: a
+   media query carries no specificity of its own. */
+@media (max-width: 63em) {
+    body { border-inline: 0; }
 }
 
 /* Code */
@@ -265,24 +304,23 @@ a:hover   { color: var(--color-link-hover); text-decoration-style: dashed; }
 
 /* Layout */
 
-/* Three bands. Header and footer span the window. Main is capped at the
-   measure, and everything inside stays left aligned. */
+/* Three bands, stacked inside the sheet. Each spans the sheet's full width,
+   and everything inside stays left aligned. Centring happens once, on body. */
 
 header {
     padding: var(--space-md) var(--pad) var(--space-xs);
     border-block-end: 1px solid var(--color-border);
 }
 
-/* The bar spans the header. Its toggle lands at the window's right edge. */
+/* The bar spans the header. Its toggle lands at the sheet's right edge. */
 .crumbs { max-width: none; }
 
-/* Wide enough for the prose plus the gutter beside it. Everything except a
-   margin note is still held to the measure, so the text does not move. */
+/* body caps the width. Everything except a margin note is still held to the
+   measure, so the text does not move. */
 /* No container-type here, however much a container query would suit the job
    below. container-type applies style containment, style containment scopes
    counters, and every margin note then came out numbered 1. */
 main {
-    max-width: calc(var(--layout-width) + var(--pad) * 2);
     padding: var(--space-md) var(--pad);
 }
 
@@ -398,30 +436,30 @@ input.margin-toggle { display: none; }
 
        measure + gap + note + 2 x pad, rounded up to the next em
 
-   A char of ET Book at this body size measures 9.78px, so 80ch is 782px;
-   plus 24px of gap, 240px of note, and 64px of padding, that is 1110px, or
-   69.4em. Rounded up to 70em so the last few pixels of the gutter are never
-   squeezed.
+   A char of ET Book is 0.489 of the body size, so 9.78px at the 20px it is
+   set at, and 68ch is 665px; plus 24px of gap, 240px of note, and 64px of
+   padding, that is 993px, or 62.1em. Rounded up to 63em so the last few
+   pixels of the gutter are never squeezed.
 
    Both inputs move this number, so the tables below hold one fixed while
    varying the other. At the current 15rem note:
 
-       72ch -> 1032px -> 65em
-       80ch -> 1110px -> 70em   (current)
-       88ch -> 1189px -> 75em
+       60ch ->  915px -> 58em
+       68ch ->  993px -> 63em   (current)
+       76ch -> 1071px -> 67em
 
-   At the current 80ch measure:
+   At the current 68ch measure:
 
-       13rem -> 1078px -> 68em
-       15rem -> 1110px -> 70em  (current)
-       16rem -> 1126px -> 71em
+       14rem ->  977px -> 62em
+       15rem ->  993px -> 63em  (current)
+       16rem -> 1009px -> 64em
 
-   The px figure for the measure is taken from the per-character width above
-   rather than assumed, because ch is a property of the font. Change
-   --measure, --sidenote-width, the body size, or the family without
-   changing this and notes fold when there was room, or float when there
-   was not. */
-@media (max-width: 70em) {
+   The px figure for the measure is taken from the per-character fraction
+   above rather than assumed, because ch is a property of the font and of the
+   body size. Change --measure, --sidenote-width, the body size, or the
+   family without changing this and notes fold when there was room, or float
+   when there was not. */
+@media (max-width: 63em) {
     .sidenote {
         display: none;
         float: none;
