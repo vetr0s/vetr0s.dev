@@ -46,11 +46,19 @@ zoom does.
 
 ## Layout
 
-The page hugs the left margin and stops at its measure. Nothing is centered. A
-centered column asks your eye to find the text. A left-aligned one puts it where
-the eye already is.
+The page is a sheet, centered in the window, with a band of the page showing at
+either side. Inside it nothing is centered: the text is left aligned and stops
+at its measure, the way it always was.
 
-Prose is held to an `80ch` measure, and beside it there is a gutter.
+This used to be the other way around. The page hugged the left margin and
+nothing was centered at all, on the argument that a centered column asks your
+eye to find the text while a left-aligned one puts it where the eye already is.
+That argument holds on a narrow window. On a wide one it strands the column
+against one edge and leaves the rest of the display reading as spill. Centering
+the sheet rather than the text keeps both: the column has an edge to sit
+against, and the eye still lands on the first word.
+
+Prose is held to a `68ch` measure, and beside it there is a gutter.
 
 An aside is a margin note. A small number marks the claim, and the note itself
 sits in the gutter beside it, at the height of the line that raised it. No
@@ -63,7 +71,7 @@ look at while you are still reading the first. The argument against was that the
 trip to the bottom of the page and back costs more attention than the glance
 ever did.
 
-Below about `70em` of window there is no room for a gutter. The note folds: the
+Below about `63em` of window there is no room for a gutter. The note folds: the
 marker becomes a toggle, and tapping it opens the note inline underneath.
 Nothing is lost on a phone. It waits to be asked for.
 
@@ -83,6 +91,11 @@ Stavrou:
 
 - `modus-operandi`: light
 - `modus-vivendi`: dark
+
+The sheet is divided from the page behind it by one step of tone and a hairline
+rule. Light dims the page away from a white sheet. Dark cannot dim below black,
+so it does the reverse and lifts the sheet off a page that takes the black. The
+rule is what actually reads as the edge, which lets both tones stay quiet.
 
 Headings use the `yellow-warmer`, `magenta`, and `cyan` accents from the same
 palettes. Syntax highlighting is drawn from the same set. A code block is tinted
