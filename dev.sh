@@ -2,7 +2,7 @@
 # Build the site with ostat and serve it.
 #
 #   ./dev            build with drafts and future posts, serve on $PORT
-#   ./dev --build    the production build CI does, no server
+#   ./dev --build    production build into docs/, the published tree
 #   ./dev --clean    discard the output tree first, then serve
 #
 # PORT overrides the port, default 1313.
@@ -40,10 +40,10 @@ OSTAT="$(find_ostat)"
 
 case "${1:-}" in
     --build)
-        rm -rf "$OUT"
-        "$OSTAT" build . -o "$OUT"
+        rm -rf docs
+        "$OSTAT" build . -o docs
         echo
-        echo "Built to $OUT/. This is what GitHub Actions publishes."
+        echo "Built to docs/. Commit it: GitHub Pages serves this tree."
         ;;
 
     --clean | "")

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ostat · vetr0s.dev</title>
+<meta name="description" content="A static site generator written in Odin. Layouts are procedures, not templates. It builds this site.">
+<meta name="author" content="Nathan Tebbs">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ostat · vetr0s.dev">
+<meta property="og:description" content="A static site generator written in Odin. Layouts are procedures, not templates. It builds this site.">
+<meta property="og:url" content="https://vetr0s.dev/projects/ostat/">
+<script>
+  (function () {
+    var t = localStorage.getItem('theme');
+    if (t === 'light' || t === 'dark') {
+      document.documentElement.setAttribute('data-theme', t);
+    }
+  })();
+</script>
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<!-- The roman cut starts downloading here, during HTML parse, rather than
+     after the stylesheet is parsed and a glyph is first wanted. font-display
+     is optional, so being ready by first paint is the difference between the
+     page being set in ET Book and being set in Palatino. crossorigin is
+     required on a font preload even same-origin, or the fetch is made twice. -->
+<link rel="preload" href="/font/et-book-roman-line-figures.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/css/reset.css">
+<link rel="stylesheet" href="/css/style.css">
+<script src="/js/theme.js" defer></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('a[href]').forEach(function (a) {
+      if (a.hostname && a.hostname !== location.hostname) {
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+      }
+    });
+  });
+</script>
+</head>
+<body>
+  <header>
+<nav class="crumbs" aria-label="Breadcrumb">
+  <p class="trail">
+    <a href="/">vetr0s<span class="accent">.dev</span></a>
+    <span class="sep">/</span>
+    <a href="/projects/">projects</a>
+  </p>
+  <button id="theme-toggle" type="button" aria-label="Toggle color theme"></button>
+</nav>
+  </header>
+  <main>
+<article>
+  <h1>ostat</h1>
+<p>A static site generator written in <a href="https://odin-lang.org/">Odin</a>, modeled
+after the generator behind
+<a href="https://github.com/gingerBill/gingerBill.org">gingerBill.org</a>. It builds this
+site, and its own <a href="https://ostat.vetr0s.dev/">documentation</a>.</p>
+<ul>
+<li><a href="https://github.com/vetr0s/ostat">Source</a></li>
+<li><a href="https://ostat.vetr0s.dev/">Documentation</a></li>
+<li><a href="https://github.com/vetr0s/ostat/releases">Releases</a></li>
+</ul>
+<h2>What it does</h2>
+<p>Markdown in, a directory of HTML out. A file named <code>_index.md</code> is its
+directory’s section page and any other <code>.md</code> file is a regular page, so the
+URL structure is the content structure. A build also writes <code>sitemap.xml</code>, a
+404 page, and two RSS feeds carrying the same items, so either address works in
+a reader.</p>
+<p>Beyond that it does the small number of things these two sites actually needed:
+margin notes in the Tufte style, syntax highlighting, tables, a summary lifted
+from a page’s opening paragraph when the front matter does not give one, and
+dates that may carry a time so two posts published on one day have an order.</p>
+<h2>What it does not do</h2>
+<p>There is no template language. Every layout is a procedure that writes HTML
+with <code>write_string</code> and <code>sbprintf</code>, which means no partials to thread and no
+syntax to learn, and it means moving a heading is a recompile rather than an
+edit. That is the trade, made deliberately<label for="sn-trade" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-trade" class="margin-toggle"><span class="sidenote">The compiler checks the whole thing, which a template language cannot do. Whether that is worth a recompile depends entirely on how often you move headings.</span>.</p>
+<p>There is no theme system and no plugin API. A site brings a <code>site.json</code> holding
+its identity, an <code>html/</code> directory holding its front page, its 404, and the two
+halves of its <code>&lt;head&gt;</code>, and its content. Those are documents, so they are
+stored as documents. Everything about the shape of a page lives in the
+generator.</p>
+<h2>Why write one</h2>
+<p>Hugo built this site before ostat did, and it worked. It is also a large Go
+program behind a template language and a theme system, in service of eight
+pages of HTML I could describe exactly. Writing the generator meant the whole
+pipeline from markdown to bytes on disk fits in my head, and every decision in
+it is one I made rather than one I configured around.</p>
+<p>Odin because I wanted to write something real in it, and because a generator is
+a good fit for a language with arena allocation: a build is a batch job with a
+clear end, so two arenas and no frees is the whole memory strategy.</p>
+<h2>Where it is</h2>
+<p>At <a href="https://github.com/vetr0s/ostat/releases">0.5.0</a>, and about three thousand
+lines of Odin.</p>
+<p>It is pinned by a fixture site and a committed tree of its expected output, so
+a change that alters any page of any shape the fixture covers shows up as a
+diff to read rather than as a surprise later. That, plus a hundred-odd unit
+tests for the parts a document comparison cannot reach.</p>
+<p>It is used by exactly two sites, both of them mine, which is the correct number
+for software of this age.</p>
+</article>
+  </main>
+</body>
+</html>

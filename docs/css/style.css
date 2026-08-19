@@ -1,0 +1,646 @@
+/* The whole stylesheet. No build step and no preprocessor.
+   The page is one column capped at --measure, set inside a sheet that is
+   capped at --sheet-width and centred in the window. Text stays left aligned
+   within it; only the sheet is centred. Every length is font-relative, the
+   measure in ch and the spacing in rem, so the root
+   font-size scales the layout the way browser zoom does. Colors are the Modus
+   palettes, switched by light-dark() against the user's color-scheme. Asides
+   are margin notes: the prose keeps its measure and the note floats into a
+   gutter beside it. Below the breakpoint the gutter is gone and the marker
+   folds the note inline instead.
+   Order below: tokens, base, code, type, layout, nav, margin notes, figures,
+   lists, tables. */
+
+/* ET Book, Tufte's Bembo digitisation and the face gingerBill.org is set in.
+   Self-hosted from static/font; MIT, notice beside the files.
+
+   font-display: optional, not the swap that Tufte CSS and gingerBill both
+   use. swap guarantees a visible change: fallback first, then the real face
+   drops in under the reader's eyes. optional instead lets the browser use the
+   face only if it is ready by first paint and skip it for that load
+   otherwise, so the text never reflows mid-sentence. The preload in the head
+   is what makes ready-in-time the usual case, and after one visit it is
+   cached and always is. The cost is that a cold visit on a slow line reads in
+   Palatino, which is a fair thing to fall back to. */
+@font-face {
+    font-family: "ET Book";
+    src: url("/font/et-book-roman-line-figures.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: optional;
+}
+
+@font-face {
+    font-family: "ET Book";
+    src: url("/font/et-book-display-italic-old-style-figures.woff2") format("woff2");
+    font-weight: 400;
+    font-style: italic;
+    font-display: optional;
+}
+
+@font-face {
+    font-family: "ET Book";
+    src: url("/font/et-book-bold-line-figures.woff2") format("woff2");
+    font-weight: 700;
+    font-style: normal;
+    font-display: optional;
+}
+
+/* Modus Operandi light, Modus Vivendi dark. */
+:root {
+    color-scheme: light dark;
+
+    /* The sheet. Used on body and nowhere else, which is what lets the dark
+       value sit off pure black: the page below it takes the black instead. */
+    --color-bg:           light-dark(#ffffff, #0d0d0d);
+    /* Behind the sheet, at the left and right of the window. The two themes
+       reach the separation from opposite directions. Light dims the page away
+       from the white sheet, Modus bg-dim. Dark cannot dim any further, so it
+       drops the page to true black and lifts the sheet off it instead, which
+       also puts a code block's #1e1e1e a clear step above both. */
+    --color-page:         light-dark(#f0f0f0, #000000);
+    --color-surface:      light-dark(#f2f2f2, #1e1e1e);
+    --color-text:         light-dark(#000000, #ffffff);
+    --color-muted:        light-dark(#595959, #989898);
+    --color-border:       light-dark(#c4c4c4, #535353);
+    --color-link:         light-dark(#0031a9, #2fafff);
+    --color-link-hover:   light-dark(#005e8b, #00d3d0);
+    --color-heading-1:    light-dark(#884900, #fec43f);
+    --color-heading-2:    light-dark(#721045, #feacd0);
+    --color-heading-3:    light-dark(#005e8b, #00d3d0);
+    --magenta:            light-dark(#721045, #feacd0);
+
+    /* The fallbacks are the same ones Tufte CSS names, and they matter here:
+       under font-display: optional a cold first visit reads in Palatino. */
+    --font-body:  "ET Book", Palatino, "Palatino Linotype", "Palatino LT STD",
+                  "Book Antiqua", Georgia, serif;
+    --font-mono:  ui-monospace, "Hack", "DejaVu Sans Mono", monospace;
+
+    /* A token because --measure-flat is derived from it. Raising it widens
+       the prose column, since --measure is in ch. */
+    --body-size: 1.25rem;
+
+    --space-xs: 0.35rem;
+    --space-sm: 0.7rem;
+    --space-md: 1.1rem;
+    --space-lg: 1.5rem;
+
+    /* The prose column. Nothing but a margin note may sit outside it.
+
+       Two forms of the same column, because ch resolves against the font of
+       the element that uses it and not against the root or the body. On
+       prose that is what you want: --measure holds a character count at
+       whatever size the text is set, so the footer at 14px gets the same 68
+       characters in fewer px. On anything set in another size or weight it
+       is a trap. A heading at var(--measure) gets 68 of ITS characters,
+       which is half again the column it heads, so use --measure-flat there.
+
+       68 rather than the 80 it was, and that cut is what buys the page at
+       either side of the sheet. Still inside the 45 to 75 a line wants.
+
+       Changing this also means changing the fold breakpoint at the foot of
+       the margin-note section, which is derived from it. That comment owns
+       the arithmetic and the conversion table; do not restate them here. */
+    --measure-chars: 68;
+    --measure: calc(var(--measure-chars) * 1ch);
+
+    /* The prose column as a fixed length, for elements whose font is not the
+       body's. 0.4888 is ET Book roman's advance per character, measured, and
+       the same figure the fold breakpoint is derived from. Changing the face
+       changes it. */
+    --measure-flat: calc(var(--measure-chars) * 0.4888 * var(--body-size));
+
+    /* In rem, not ch. A note is set at 0.78em, and ch resolves against the
+       font of the element it is used on, so a width in ch would come out a
+       fifth narrower than the space reserved for it here and the arithmetic
+       below would quietly over-reserve.
+
+       A note is apparatus, not a second column. Past about 16rem it stops
+       reading as a gloss on the prose and starts competing with it.
+
+       This is the second input to the fold breakpoint, along with --measure.
+       Changing it means recomputing that breakpoint too. */
+    --sidenote-width: 15rem;
+    --sidenote-gap: 1.5rem;
+
+    /* Prose plus gutter. main is sized from this, and the container query
+       that decides whether a note can float uses the same number. */
+    --layout-width: calc(var(--measure) + var(--sidenote-gap) + var(--sidenote-width));
+
+    /* The sheet: prose, gutter, and the inset around them. body is capped at
+       this and centred, so it is the whole visible page. What is centred is
+       the sheet, not the measure, which leaves the prose sitting left of the
+       window's centre by half the gutter. That is the honest reading: the
+       gutter is part of the page whether or not a note is in it. */
+    --sheet-width: calc(var(--layout-width) + var(--pad) * 2);
+
+    /* The inset from the sheet edge. Header and footer span the sheet. Only
+       what is inside them is held to this. */
+    --pad: 1.25rem;
+}
+
+@media (min-width: 48em) {
+    :root { --pad: 2rem; }
+}
+
+:root[data-theme="light"] { color-scheme: light; }
+:root[data-theme="dark"]  { color-scheme: dark;  }
+
+/* Base */
+
+/* Sized from the root. The measure is in ch and the spacing in rem, so this
+   one number scales the layout the way browser zoom does. Left at the
+   browser's own size: a reader who wants it larger has a zoom control, and
+   scaling past their setting overrides a choice they already made. */
+html {
+    font-size: 100%;
+    -webkit-text-size-adjust: 100%;
+    /* The band at either side of the sheet. On html rather than body so it
+       still paints under overscroll and past the end of a short page. */
+    background: var(--color-page);
+}
+
+body {
+    font-family: var(--font-body);
+    /* ET Book has a small x-height, so it sets optically smaller than a UI
+       sans at the same size. Tufte CSS answers this with 1.4rem; 1.25 is
+       enough here because the measure is narrower than his. Tried at 1.375
+       and put back: a note is 0.78em of this inside a box fixed in rem, so
+       raising the body size fills the box without widening it. */
+    font-size: var(--body-size);
+    /* 400, not the half step the system sans was given. Only the roman and
+       bold cuts are loaded, so anything between them either rounds back to
+       400 or gets synthesised into a smeared fake bold. */
+    font-weight: 400;
+    color: var(--color-text);
+    background: var(--color-bg);
+
+    /* The sheet, centred. reset.css already gives it the window's height, so
+       the column runs edge to edge vertically even on a short page. */
+    max-width: var(--sheet-width);
+    margin-inline: auto;
+    border-inline: 1px solid var(--color-border);
+
+    margin-block: 0;
+    padding: 0;
+    /* Loose leading spreads the same ink over more page. A paragraph then
+       reads as a grey field rather than a block of white. */
+    line-height: 1.4;
+
+    /* Margin notes are numbered here, not by the generator. */
+    counter-reset: sidenote-counter;
+}
+
+/* Below the sheet's own width there is no page beside it to divide from and
+   the rules just hug the window. 63em is the fold breakpoint derived at the
+   foot of the margin-note section; the sheet caps a few pixels under it,
+   which is close enough that a second constant is not worth keeping in step.
+   This has to sit after the rule above, not up with the other queries: a
+   media query carries no specificity of its own. */
+@media (max-width: 63em) {
+    body { border-inline: 0; }
+}
+
+/* Code */
+
+code, pre, kbd, samp {
+    font-family: var(--font-mono);
+    font-size: 0.889em;
+}
+
+/* Smaller than a block's, because inline code is measured against ET Book,
+   whose x-height is small enough that a mono face beside it reads oversized. */
+code {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+    padding: 0.05em 0.2em;
+    font-size: 0.8em;
+}
+
+pre {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    padding: 0.75em 0.9em;
+    /* Flat, not --measure: a mono ch is wider than ET Book's, so the
+       character count would push the block past the prose and under a note. */
+    max-width: var(--measure-flat);
+    margin-block: var(--space-sm);
+    overflow-x: auto;
+    line-height: 1.45;
+}
+
+/* Inside a block, the surface and border belong to the <pre>, not each token. */
+pre code {
+    background: none;
+    border: 0;
+    padding: 0;
+    font-size: 1em;
+}
+
+hr {
+    max-width: var(--measure);
+    margin-block: var(--space-lg);
+    border: 0;
+    border-block-start: 1px solid var(--color-border);
+}
+
+blockquote {
+    max-width: var(--measure);
+    margin-block: var(--space-sm);
+    padding-inline-start: 1em;
+    border-inline-start: 3px solid var(--color-border);
+    color: var(--color-muted);
+}
+
+/* Chroma writes these token classes. The colors are Modus accents. A block
+   reads the same way in either theme. */
+.chroma                       { background: none; }
+.chroma .k,  .chroma .kd,
+.chroma .kn, .chroma .kr      { color: light-dark(#5317ac, #b6a0ff); } /* keyword */
+.chroma .kt, .chroma .nc,
+.chroma .nn                   { color: light-dark(#005e8b, #00d3d0); } /* type, namespace */
+.chroma .s,  .chroma .s1,
+.chroma .s2, .chroma .sb,
+.chroma .sc, .chroma .sd      { color: light-dark(#2544bb, #79a8ff); } /* string */
+.chroma .m,  .chroma .mi,
+.chroma .mf, .chroma .mh      { color: light-dark(#0000c0, #00bcff); } /* number */
+.chroma .nf, .chroma .nd      { color: light-dark(#721045, #feacd0); } /* function */
+.chroma .nb, .chroma .bp      { color: light-dark(#884900, #fec43f); } /* builtin */
+.chroma .c,  .chroma .c1,
+.chroma .cm, .chroma .cs      { color: var(--color-muted); font-style: italic; }
+.chroma .err                  { color: light-dark(#a60000, #ff8059); }
+
+/* Modular scale, ratio 1.15, anchored to --body-size and not to the root.
+
+   Anchoring to the root was the bug. It counted from 16px while the prose is
+   set at 1.25rem, so the bottom of the scale landed under the text it headed:
+   h4 was 1rem against a 20px body, and h3 was 1.2rem, which is why h3 had to
+   be hand-picked off the scale to clear the prose at all. With the floor at
+   the body size no heading can set smaller than its own paragraphs, and h3 is
+   a scale step again rather than a patch.
+
+   1.15 rather than the 1.2 it climbed at before: the old ratio from the higher
+   anchor puts h1 at 2.16rem, above the browser default this scale is meant to
+   sit one step under. At 1.15 it lands at 1.9rem, 30px against the browser's
+   32, and the steps come out even instead of bunching at the top. */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-body);
+    line-height: 1.25;
+    margin-block: var(--space-md) var(--space-xs);
+    font-weight: 600;
+    /* main is wider than the prose, to leave room for the gutter, so a
+       heading has to be held to the column explicitly or it runs into it.
+       --measure-flat and not --measure: a heading is set larger than the
+       prose and in the bold cut, and ch resolves against the element using
+       it, so var(--measure) here would cap h1 at 919px against a 665px
+       column and cap nothing at all in practice. */
+    max-width: var(--measure-flat);
+}
+
+h1 {
+    font-size: 1.9rem;
+    color: var(--color-heading-1);
+    margin-block-start: 0;
+    /* A heading starts at the left margin. A float from the section above
+       never indents it. */
+    clear: both;
+}
+h2 { font-size: 1.65rem; color: var(--color-heading-2); }
+h3 { font-size: 1.44rem; color: var(--color-heading-3); }
+
+/* The scale defines nothing below h4. h5 and h6 are floored at the body size
+   rather than left to the UA, which would set them at 0.83em and 0.67em and
+   put them back under the prose. */
+h4, h5, h6 { font-size: var(--body-size); }
+
+p {
+    margin-block-end: var(--space-sm);
+    max-width: var(--measure);
+}
+
+/* reset.css clears list-style globally. Restore it for prose. */
+main ul, main ol {
+    list-style: revert;
+    padding-inline-start: 1.5em;
+    margin-block: var(--space-sm);
+    max-width: var(--measure);
+}
+
+main li { margin-block-end: 0.25em; }
+
+/* Dateline under a post title. */
+article > time {
+    display: block;
+    color: var(--color-muted);
+    font-size: 0.875rem;
+    margin-block-end: var(--space-md);
+}
+
+/* Underlined, the way a link looks when nobody has styled it. */
+a         { color: var(--color-link); text-decoration: underline; }
+a:hover   { color: var(--color-link-hover); text-decoration-style: dashed; }
+
+/* Layout */
+
+/* Three bands, stacked inside the sheet. Each spans the sheet's full width,
+   and everything inside stays left aligned. Centring happens once, on body. */
+
+header {
+    padding: var(--space-md) var(--pad) var(--space-xs);
+    border-block-end: 1px solid var(--color-border);
+}
+
+/* The bar spans the header. Its toggle lands at the sheet's right edge. */
+.crumbs { max-width: none; }
+
+/* body caps the width. Everything except a margin note is still held to the
+   measure, so the text does not move. */
+/* No container-type here, however much a container query would suit the job
+   below. container-type applies style containment, style containment scopes
+   counters, and every margin note then came out numbered 1. */
+main {
+    padding: var(--space-md) var(--pad);
+}
+
+/* Sections do not contain their floats. The portrait hangs past the contact
+   list instead of stretching the section to its height. */
+section {
+    margin-block-end: var(--space-lg);
+}
+
+section:last-child { margin-block-end: 0; }
+
+footer {
+    clear: both;
+    margin-block-start: var(--space-lg);
+    padding: var(--space-sm) var(--pad) var(--space-lg);
+    border-block-start: 1px solid var(--color-border);
+    color: var(--color-muted);
+    font-size: 0.875rem;
+}
+
+footer p { max-width: var(--measure); margin: 0; }
+
+/* Navigation
+   The same bar on every page. There is no menu. Home is the way in. */
+
+.accent { color: var(--magenta); }
+
+.crumbs {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-sm);
+    color: var(--color-muted);
+}
+
+.crumbs .trail  { margin: 0; max-width: none; }
+.crumbs .sep    { padding-inline: 0.4em; }
+.crumbs .here   { color: var(--color-muted); }
+.crumbs a       { text-decoration: none; }
+.crumbs a:hover { text-decoration: dashed underline 1px; }
+
+#theme-toggle {
+    background: none;
+    border: none;
+    color: var(--color-link);
+    font: inherit;
+    cursor: pointer;
+    padding: 0;
+}
+
+#theme-toggle:hover { color: var(--color-link-hover); }
+
+/* Margin notes
+   The generator writes a label, a hidden checkbox, and the note. It writes no
+   numbers: both the marker and the note are numbered by the counter below, so
+   they cannot drift apart. */
+
+.sidenote-number {
+    counter-increment: sidenote-counter;
+}
+
+/* The marker takes no leading of its own, so a paragraph with notes sets to
+   the same rhythm as one without. */
+.sidenote-number::after {
+    content: counter(sidenote-counter);
+    font-size: 0.7em;
+    font-weight: 600;
+    line-height: 0;
+    vertical-align: super;
+    color: var(--color-muted);
+    cursor: pointer;
+}
+
+.sidenote-number:hover::after { color: var(--color-link-hover); }
+
+/* Floated out of the measure into the gutter. The negative margin is what
+   moves it past the right edge of the prose. */
+.sidenote {
+    float: right;
+    clear: right;
+    width: var(--sidenote-width);
+    margin-right: calc(-1 * (var(--sidenote-width) + var(--sidenote-gap)));
+    margin-block: 0.25rem var(--space-sm);
+    font-size: 0.78em;
+    line-height: 1.45;
+    color: var(--color-muted);
+    text-align: left;
+}
+
+.sidenote::before {
+    content: counter(sidenote-counter) " ";
+    font-weight: 600;
+    vertical-align: super;
+    font-size: 0.7em;
+    line-height: 0;
+}
+
+/* A note is often mostly link. At full blue it becomes a wall of it. */
+.sidenote a        { color: inherit; text-decoration: underline; }
+.sidenote a:hover  { color: var(--color-link-hover); }
+
+/* The checkbox exists only to hold open/closed state below the breakpoint. */
+input.margin-toggle { display: none; }
+
+/* No gutter to float into. The marker becomes the toggle and the note folds
+   into the prose under it.
+
+   THIS NUMBER IS DERIVED FROM --measure AND --sidenote-width AND MUST BE
+   RECOMPUTED WITH EITHER. It is written out by hand because a media query
+   can read neither a custom property nor ch, so the derivation cannot live
+   in the stylesheet as code. This comment is the only place it is recorded.
+   The layout needs
+
+       measure + gap + note + 2 x pad, rounded up to the next em
+
+   A char of ET Book is 0.489 of the body size, so 9.78px at the 20px it is
+   set at, and 68ch is 665px; plus 24px of gap, 240px of note, and 64px of
+   padding, that is 993px, or 62.1em. Rounded up to 63em so the last few
+   pixels of the gutter are never squeezed.
+
+   Both inputs move this number, so the tables below hold one fixed while
+   varying the other. At the current 15rem note:
+
+       60ch ->  915px -> 58em
+       68ch ->  993px -> 63em   (current)
+       76ch -> 1071px -> 67em
+
+   At the current 68ch measure:
+
+       14rem ->  977px -> 62em
+       15rem ->  993px -> 63em  (current)
+       16rem -> 1009px -> 64em
+
+   The px figure for the measure is taken from the per-character fraction
+   above rather than assumed, because ch is a property of the font. The body
+   size is what it is measured at here only because the prose is what sets
+   the gutter's position; an element in another size gets another px width
+   from the same token, which is what --measure-flat exists for. Change
+   --measure-chars, --sidenote-width, --body-size, or the family without
+   changing this and notes fold when there was room, or float when there was
+   not. */
+@media (max-width: 63em) {
+    .sidenote {
+        display: none;
+        float: none;
+        width: auto;
+        margin-right: 0;
+        max-width: var(--measure);
+    }
+
+    input.margin-toggle:checked + .sidenote {
+        display: block;
+        padding-inline-start: 1em;
+        border-inline-start: 2px solid var(--color-border);
+    }
+}
+
+/* Well short of the measure. A picture at full column stops illustrating the
+   prose and becomes the page. */
+figure {
+    margin: var(--space-md) 0;
+    max-width: 24rem;
+}
+
+/* A bare markdown image gets the same cap. Goldmark wraps it in a <p>. */
+main p > img { max-width: 24rem; }
+
+figcaption {
+    margin-block-start: 0.35rem;
+    color: var(--color-muted);
+    font-size: 0.85em;
+    line-height: 1.4;
+}
+
+/* Sized to the contact list beside it. A taller picture would leave dead
+   space under the list. */
+.portrait img {
+    display: block;
+    width: 7rem;
+    max-width: 100%;
+    height: auto;
+    border: 1px solid var(--color-border);
+}
+
+/* The page is left aligned, so the portrait goes left. It sits after the
+   heading in the markup so only the list moves over. */
+@media (min-width: 40em) {
+    .portrait {
+        float: left;
+        clear: left;
+        margin: 0.2rem var(--space-lg) var(--space-sm) 0;
+    }
+}
+
+/* A heading with the feed link beside it. It used to be pinned to the far
+   right of the measure, which at this width left it stranded most of a column
+   away from the words it belongs to. It sits next to the heading now. The h1
+   keeps its own bottom margin, so the row does not add one. */
+.section-head {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-md);
+    max-width: var(--measure);
+}
+
+/* Small enough to read as apparatus beside the heading rather than as a call
+   to action competing with it. */
+.rss-badge {
+    flex: none;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: var(--color-muted);
+    text-decoration: none;
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+    padding: 0.2em 0.5em;
+}
+
+.rss-badge:hover {
+    color: var(--color-link-hover);
+    border-color: var(--color-link-hover);
+    text-decoration: none;
+}
+
+/* Contact list */
+
+.contact-list {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 0.25em 1em;
+    margin: 0;
+    max-width: var(--measure);
+}
+
+.contact-list dt          { color: var(--color-muted); }
+.contact-list dt::after   { content: ":"; }
+.contact-list dd          { margin: 0; }
+
+/* Tables */
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    max-width: var(--measure);
+    margin-block: var(--space-md);
+}
+
+th, td {
+    border: 1px solid var(--color-border);
+    padding: 0.4em 0.7em;
+    text-align: left;
+    vertical-align: top;
+}
+
+th {
+    background: var(--color-surface);
+    font-weight: 600;
+}
+
+/* Post listing. The title, then its date on the line under it. Leader dots
+   used to run between them, which is decoration standing in for a
+   relationship the two lines already have. */
+
+.post-entry {
+    max-width: var(--measure);
+    margin-block-end: var(--space-sm);
+}
+
+.post-entry > time {
+    display: block;
+    color: var(--color-muted);
+    font-size: 0.85em;
+}
+
+/* The same treatment as the date above it: apparatus under the title rather
+   than prose competing with it. */
+.post-entry > .entry-summary {
+    margin-block-start: 0.15em;
+    color: var(--color-muted);
+    font-size: 0.85em;
+}
+
+.empty { color: var(--color-muted); }

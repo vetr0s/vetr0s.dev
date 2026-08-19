@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Colophon · vetr0s.dev</title>
+<meta name="description" content="The tools, themes, and influences behind this site.">
+<meta name="author" content="Nathan Tebbs">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Colophon · vetr0s.dev">
+<meta property="og:description" content="The tools, themes, and influences behind this site.">
+<meta property="og:url" content="https://vetr0s.dev/colophon/">
+<script>
+  (function () {
+    var t = localStorage.getItem('theme');
+    if (t === 'light' || t === 'dark') {
+      document.documentElement.setAttribute('data-theme', t);
+    }
+  })();
+</script>
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<!-- The roman cut starts downloading here, during HTML parse, rather than
+     after the stylesheet is parsed and a glyph is first wanted. font-display
+     is optional, so being ready by first paint is the difference between the
+     page being set in ET Book and being set in Palatino. crossorigin is
+     required on a font preload even same-origin, or the fetch is made twice. -->
+<link rel="preload" href="/font/et-book-roman-line-figures.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/css/reset.css">
+<link rel="stylesheet" href="/css/style.css">
+<script src="/js/theme.js" defer></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('a[href]').forEach(function (a) {
+      if (a.hostname && a.hostname !== location.hostname) {
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+      }
+    });
+  });
+</script>
+</head>
+<body>
+  <header>
+<nav class="crumbs" aria-label="Breadcrumb">
+  <p class="trail">
+    <a href="/">vetr0s<span class="accent">.dev</span></a>
+    <span class="sep">/</span>
+    <span class="here" aria-current="page">colophon</span>
+  </p>
+  <button id="theme-toggle" type="button" aria-label="Toggle color theme"></button>
+</nav>
+  </header>
+  <main>
+<article>
+  <h1>Colophon</h1>
+<p>The tools, themes, and influences behind this site.</p>
+<h2>Built with</h2>
+<ul>
+<li><a href="https://github.com/vetr0s/ostat">ostat</a>: a static site generator I wrote in
+<a href="https://odin-lang.org/">Odin</a>. There is no template language. Every layout
+is a procedure that writes HTML</li>
+<li>Hand-written CSS. No theme, no framework, no JavaScript beyond a theme toggle</li>
+<li>Built and deployed to <a href="https://pages.github.com/">GitHub Pages</a> by <a href="https://github.com/features/actions">GitHub
+Actions</a> on every push to <code>main</code></li>
+<li>An <a href="/index.xml">RSS feed</a> of the posts</li>
+</ul>
+<p>The site’s identity lives in one <code>site.json</code>: title, base URL, author, locale,
+and the brand split. The front page lives in <code>html/home.html</code> and is ordinary
+markup, with one marker saying where the recent posts go. Everything else about
+the shape of a page is a procedure in the generator.</p>
+<h2>Typography</h2>
+<p>The site is set in <a href="https://edwardtufte.github.io/et-book/">ET Book</a>, the
+typeface from Edward Tufte’s books, served from this domain in three cuts:
+roman, bold, and display italic.</p>
+<p>This is a change. The site used to load no web fonts at all and set everything
+in <code>system-ui</code>. Serving a face costs a download that a system font does not, so
+the roman cut is preloaded during HTML parse and is ready by first paint.
+<code>font-display</code> is <code>optional</code>, which means a cold first visit renders in Palatino
+rather than waiting on the network or swapping the text out mid-read.</p>
+<ul>
+<li>Body and headings: ET Book, falling back to Palatino and then Georgia</li>
+<li>Code: <code>ui-monospace</code>, then <code>Hack</code>, <code>DejaVu Sans Mono</code></li>
+</ul>
+<p>Headings run on a 1.15 modular scale, anchored to the body size so that none of
+them sets smaller than the prose. The body runs <code>1.25rem</code> at every width, with
+no step up on large screens. The page should read like a document, not a
+poster.</p>
+<p>Every length is font-relative. The measure is in <code>ch</code> and the spacing is in
+<code>rem</code>, so one number at the root scales the whole layout the way your browser’s
+zoom does.</p>
+<h2>Layout</h2>
+<p>The page is a sheet, centered in the window, with a band of the page showing at
+either side. Inside it nothing is centered: the text is left aligned and stops
+at its measure, the way it always was.</p>
+<p>This used to be the other way around. The page hugged the left margin and
+nothing was centered at all, on the argument that a centered column asks your
+eye to find the text while a left-aligned one puts it where the eye already is.
+That argument holds on a narrow window. On a wide one it strands the column
+against one edge and leaves the rest of the display reading as spill. Centering
+the sheet rather than the text keeps both: the column has an edge to sit
+against, and the eye still lands on the first word.</p>
+<p>Prose is held to a <code>68ch</code> measure, and beside it there is a gutter.</p>
+<p>An aside is a margin note. A small number marks the claim, and the note itself
+sits in the gutter beside it, at the height of the line that raised it. No
+click, no jump to the bottom of the page, and no trip back.</p>
+<p>This is the second time these have changed. They began as margin notes, became
+footnotes collected under a rule at the end, and are margin notes again. The
+argument for footnotes was that a note beside a paragraph is a second thing to
+look at while you are still reading the first. The argument against was that the
+trip to the bottom of the page and back costs more attention than the glance
+ever did.</p>
+<p>Below about <code>63em</code> of window there is no room for a gutter. The note folds: the
+marker becomes a toggle, and tapping it opens the note inline underneath.
+Nothing is lost on a phone. It waits to be asked for.</p>
+<p>Notes are set smaller and muted. Links inside them keep the underline without
+the color. A note is apparatus. It should read as a gloss on the page rather
+than as more page.</p>
+<p>Photographs sit in the flow. Each one is capped well short of the measure and
+placed after the passage it illustrates. A picture interrupts the prose without
+becoming the page.</p>
+<h2>Colors</h2>
+<p>The light and dark color schemes are based on the <a href="https://protesilaos.com/emacs/modus-themes-colors">Modus
+themes</a> by Protesilaos
+Stavrou:</p>
+<ul>
+<li><code>modus-operandi</code>: light</li>
+<li><code>modus-vivendi</code>: dark</li>
+</ul>
+<p>The sheet is divided from the page behind it by one step of tone and a hairline
+rule. Light dims the page away from a white sheet. Dark cannot dim below black,
+so it does the reverse and lifts the sheet off a page that takes the black. The
+rule is what actually reads as the edge, which lets both tones stay quiet.</p>
+<p>Headings use the <code>yellow-warmer</code>, <code>magenta</code>, and <code>cyan</code> accents from the same
+palettes. Syntax highlighting is drawn from the same set. A code block is tinted
+like the rest of the page instead of carrying a theme of its own.</p>
+<p>Highlighting is done by the generator rather than by a library. It is a keyword
+table and a scanner, not a parser, and it produces only the seven token groups
+the stylesheet distinguishes.</p>
+<p>Both schemes follow your system preference by default. The toggle overrides it.
+The choice persists in <code>localStorage</code>.</p>
+<h2>Design influence</h2>
+<ul>
+<li><a href="https://edwardtufte.github.io/tufte-css/">Tufte CSS</a>: the margin note, and
+the typeface</li>
+<li><a href="https://github.com/gingerBill/gingerBill.org">gingerBill.org</a>: the generator
+ostat is modeled on, layouts as procedures rather than templates</li>
+<li><a href="https://andrewkelley.me/">andrewkelley.me</a>: the plainness. Left-aligned,
+underlined links, a document rather than a layout</li>
+<li><a href="https://protesilaos.com/">protesilaos.com</a>: the Modus palettes above</li>
+</ul>
+<h2>Navigation</h2>
+<p>Every page opens the same way. One line says where you are and links back out of
+it. There is no menu and no banner. A menu on every page is furniture standing
+in front of the thing you came to read. A banner on the home page is the same
+furniture in a bigger typeface.</p>
+<p>That makes the home page the way in. It carries where to find me, a short list
+of everywhere else, and the most recent posts. It is one click from anywhere. A
+post climbs to its section. A section climbs home. Home has the rest.</p>
+<h2>The feed</h2>
+<p><a href="/index.xml"><code>/index.xml</code></a> carries the posts.
+<a href="/blog/index.xml"><code>/blog/index.xml</code></a> carries the same ones, so either address
+works in a reader.</p>
+<p>An item carries the whole post rather than an excerpt. A feed has no margin and
+no stylesheet, so each post is rendered a second time with its notes as numbered
+endnotes and every anchor absolute. Nothing here asks you to click through to
+finish reading.</p>
+</article>
+  </main>
+</body>
+</html>
