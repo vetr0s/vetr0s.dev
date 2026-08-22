@@ -18,11 +18,12 @@ and the brand split. The front page is a template written out whole, with a loop
 where the recent posts go. Changing the shape of any page means editing an HTML
 file rather than recompiling anything.
 
-This site used to be built by [ostat](https://github.com/vetr0s/ostat), a static
-site generator I wrote in [Odin](https://odin-lang.org/). It worked, and I moved
-off it anyway. A compiler checking the whole site is worth little at six pages,
-and having to rebuild that compiler to move a heading is worth a lot of
-friction. That trade was a bad one at this size.
+Until August 2026 this site was built by [ostat](/projects/ostat/), a static
+site generator I wrote in [Odin](https://odin-lang.org/). It was an experiment
+in owning the whole pipeline, and as an experiment it worked. Keeping it was the
+part that stopped making sense. A compiler checking the whole site is worth
+little at six pages, and rebuilding that compiler to move a heading is worth a
+lot of friction. ostat is archived now.
 
 ## Typography
 
