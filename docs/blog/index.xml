@@ -4,7 +4,7 @@
     <title>vetr0s.dev</title>
     <link>https://vetr0s.dev/blog/</link>
     <description>Nathan Tebbs, software engineer. Writing, projects, and a page about who I am.</description>
-    <generator>ostat</generator>
+    <generator>pandoc</generator>
     <language>en-us</language>
     <atom:link href="https://vetr0s.dev/blog/index.xml" rel="self" type="application/rss+xml" />
   </channel>

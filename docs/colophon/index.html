@@ -60,18 +60,23 @@
 <p>The tools, themes, and influences behind this site.</p>
 <h2>Built with</h2>
 <ul>
-<li><a href="https://github.com/vetr0s/ostat">ostat</a>: a static site generator I wrote in
-<a href="https://odin-lang.org/">Odin</a>. There is no template language. Every layout
-is a procedure that writes HTML</li>
+<li><a href="https://pandoc.org/">pandoc</a> and <code>make</code>. The page shapes are pandoc
+templates. What a template cannot express is a Lua filter</li>
 <li>Hand-written CSS. No theme, no framework, no JavaScript beyond a theme toggle</li>
 <li>Built by hand and committed, then served from <code>main:/docs</code> by <a href="https://pages.github.com/">GitHub
 Pages</a></li>
 <li>An <a href="/index.xml">RSS feed</a> of the posts</li>
 </ul>
-<p>The site’s identity lives in one <code>site.json</code>: title, base URL, author, locale,
-and the brand split. The front page lives in <code>html/home.html</code> and is ordinary
-markup, with one marker saying where the recent posts go. Everything else about
-the shape of a page is a procedure in the generator.</p>
+<p>The site’s identity lives in one <code>site.yaml</code>: title, base URL, author, locale,
+and the brand split. The front page is a template written out whole, with a loop
+where the recent posts go. Changing the shape of any page means editing an HTML
+file rather than recompiling anything.</p>
+<p>Until August 2026 this site was built by <a href="/projects/ostat/">ostat</a>, a static
+site generator I wrote in <a href="https://odin-lang.org/">Odin</a>. It was an experiment
+in owning the whole pipeline, and as an experiment it worked. Keeping it was the
+part that stopped making sense. A compiler checking the whole site is worth
+little at six pages, and rebuilding that compiler to move a heading is worth a
+lot of friction. ostat is archived now.</p>
 <h2>Typography</h2>
 <p>The site is set in <a href="https://edwardtufte.github.io/et-book/">ET Book</a>, the
 typeface from Edward Tufte’s books, served from this domain in three cuts:
@@ -137,17 +142,18 @@ rule is what actually reads as the edge, which lets both tones stay quiet.</p>
 <p>Headings use the <code>yellow-warmer</code>, <code>magenta</code>, and <code>cyan</code> accents from the same
 palettes. Syntax highlighting is drawn from the same set. A code block is tinted
 like the rest of the page instead of carrying a theme of its own.</p>
-<p>Highlighting is done by the generator rather than by a library. It is a keyword
-table and a scanner, not a parser, and it produces only the seven token groups
-the stylesheet distinguishes.</p>
+<p>Highlighting is pandoc’s, which lexes about two hundred languages properly. Its
+token names are translated to the Chroma names the stylesheet already carried,
+so the palette above is what colors the code. A token the stylesheet has no rule
+for is left unclassed rather than given a color it never chose.</p>
 <p>Both schemes follow your system preference by default. The toggle overrides it.
 The choice persists in <code>localStorage</code>.</p>
 <h2>Design influence</h2>
 <ul>
 <li><a href="https://edwardtufte.github.io/tufte-css/">Tufte CSS</a>: the margin note, and
 the typeface</li>
-<li><a href="https://github.com/gingerBill/gingerBill.org">gingerBill.org</a>: the generator
-ostat is modeled on, layouts as procedures rather than templates</li>
+<li><a href="https://github.com/gingerBill/gingerBill.org">gingerBill.org</a>: the margin
+note markup, and the case for a site you assemble yourself</li>
 <li><a href="https://andrewkelley.me/">andrewkelley.me</a>: the plainness. Left-aligned,
 underlined links, a document rather than a layout</li>
 <li><a href="https://protesilaos.com/">protesilaos.com</a>: the Modus palettes above</li>
