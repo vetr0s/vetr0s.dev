@@ -42,6 +42,9 @@ case "${1:-}" in
     --build)
         rm -rf docs
         "$OSTAT" build . -o docs
+        # Pages runs Jekyll over the tree without this, and ostat does not
+        # emit it. Writing it here keeps it from vanishing on every build.
+        touch docs/.nojekyll
         echo
         echo "Built to docs/. Commit it: GitHub Pages serves this tree."
         ;;

@@ -12,8 +12,8 @@ The tools, themes, and influences behind this site.
   [Odin](https://odin-lang.org/). There is no template language. Every layout
   is a procedure that writes HTML
 - Hand-written CSS. No theme, no framework, no JavaScript beyond a theme toggle
-- Built and deployed to [GitHub Pages](https://pages.github.com/) by [GitHub
-  Actions](https://github.com/features/actions) on every push to `main`
+- Built by hand and committed, then served from `main:/docs` by [GitHub
+  Pages](https://pages.github.com/)
 - An [RSS feed](/index.xml) of the posts
 
 The site's identity lives in one `site.json`: title, base URL, author, locale,

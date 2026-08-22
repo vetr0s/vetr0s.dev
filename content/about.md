@@ -62,8 +62,8 @@ FTC robotics kits with our group.</figcaption>
 ### Other Experiences
 
 During the last 2 years I spent on the team I served as Safety Captain, which
-put me in charge of all shop, robot, and event safety. Additionally, in my final
-year I led the robot build team into the FRC World Championship.
+put me in charge of all shop, robot, and event safety. In my final year I also
+led the robot build team into the FRC World Championship.
 
 <figure>
 <img src="/img/huston_pit.webp" alt="Our team's pit at the FRC World Championships in Houston" />

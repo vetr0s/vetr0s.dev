@@ -5,17 +5,15 @@ built by [ostat](https://github.com/vetr0s/ostat), a static site generator I
 wrote in [Odin](https://odin-lang.org/). No theme, no framework, no template
 language. It ships one small script for the light/dark toggle.
 
-[![Deploy](https://github.com/vetr0s/vetr0s.dev/actions/workflows/deploy.yml/badge.svg)](https://github.com/vetr0s/vetr0s.dev/actions/workflows/deploy.yml)
-
 ## Running it
 
 ```bash
-./dev            # build with drafts, serve on localhost:1313
-./dev --build    # the production build CI does, into public/
-./dev --clean    # discard public/ first, then serve
+./dev.sh            # build with drafts, serve on localhost:1313
+./dev.sh --build    # the published build, into docs/
+./dev.sh --clean    # discard public/ first, then serve
 ```
 
-`./dev` uses `ostat` from your `PATH` if it is there. Otherwise it builds a
+`./dev.sh` uses `ostat` from your `PATH` if it is there. Otherwise it builds a
 sibling checkout at `../ostat`, which is where the generator lives when the two
 are worked on together. That needs [Odin](https://odin-lang.org/docs/install/)
 and `libcmark` (`brew install cmark`).
@@ -23,8 +21,11 @@ and `libcmark` (`brew install cmark`).
 There is no file watcher and no live reload. A whole build takes milliseconds,
 so rebuilding is ctrl-c and rerun.
 
-`public/` is not committed. GitHub Actions rebuilds it from source on every push
-to `main` and publishes it to GitHub Pages.
+`public/` is the local preview and is not committed. The published tree is
+`docs/`, which is committed: GitHub Pages serves `main:/docs` with its own
+builder. Publishing is `./dev.sh --build`, then commit `docs/` and push. The
+workflow at `.github/workflows/deploy.yml.disabled` is an unused alternative to
+that, kept for reference.
 
 ## How it's laid out
 
@@ -74,7 +75,7 @@ No YAML, no TOML.
 | `date` | Rendered under the title. Required for a post under `blog/` |
 | `description` | Used for the meta description. Falls back to the opening paragraph |
 | `slug` | Overrides the URL, which otherwise comes from the filename |
-| `draft` | `true` keeps it out of a normal build. `./dev` shows it anyway |
+| `draft` | `true` keeps it out of a normal build. `./dev.sh` shows it anyway |
 
 An aside is a margin note, written as a standard Markdown footnote: a marker
 where the claim is, and a definition anywhere in the file.
