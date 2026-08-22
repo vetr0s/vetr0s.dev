@@ -1,81 +1,74 @@
 # vetr0s.dev
 
 My personal site. Some writing, a few projects, and a page about who I am. It is
-built by [ostat](https://github.com/vetr0s/ostat), a static site generator I
-wrote in [Odin](https://odin-lang.org/). No theme, no framework, no template
-language. It ships one small script for the light/dark toggle.
+built by [pandoc](https://pandoc.org/) and `make`. The page shapes are pandoc
+templates and the transformations pandoc cannot express are Lua filters. It
+ships one small script for the light/dark toggle.
 
 ## Running it
 
 ```bash
-./dev.sh            # build with drafts, serve on localhost:1313
-./dev.sh --build    # the published build, into docs/
-./dev.sh --clean    # discard public/ first, then serve
+make                  # build with drafts, into public/
+make serve            # the same, then serve on localhost:1313
+make build            # the published build, into docs/
+make clean            # discard both output trees
+make new t="A Title"  # start a post under content/blog/
 ```
 
-`./dev.sh` uses `ostat` from your `PATH` if it is there. Otherwise it builds a
-sibling checkout at `../ostat`, which is where the generator lives when the two
-are worked on together. That needs [Odin](https://odin-lang.org/docs/install/)
-and `libcmark` (`brew install cmark`).
+`PORT` overrides the port. The only requirement is pandoc 3 and `python3` for
+`make serve`.
 
-There is no file watcher and no live reload. A whole build takes milliseconds,
-so rebuilding is ctrl-c and rerun.
+There is no file watcher and no live reload. A whole build takes about two
+seconds, so rebuilding is ctrl-c and rerun.
 
 `public/` is the local preview and is not committed. The published tree is
 `docs/`, which is committed: GitHub Pages serves `main:/docs` with its own
-builder. Publishing is `./dev.sh --build`, then commit `docs/` and push. The
-workflow at `.github/workflows/deploy.yml.disabled` is an unused alternative to
-that, kept for reference.
+builder. Publishing is `make build`, then commit `docs/` and push.
 
 ## How it's laid out
 
 | Path | What lives there |
 |---|---|
-| `site.json` | The site's identity: title, base URL, description, author, locale, the brand split |
-| `html/home.html` | The front page, written out whole. `<!--ostat:recent-->` marks where ostat drops the recent posts |
-| `content/` | The markdown. Posts under `blog/`, projects under `projects/`, plus `about.md` and `colophon.md` |
+| `site.yaml` | The site's identity: title, base URL, description, author, locale, the brand split. Everything is nested under `site:` so nothing collides with a page's own front matter |
+| `templates/` | The page shapes. `head.html` and `crumbs.html` are partials the rest pull in |
+| `lua/` | The filters. Anything a template cannot express lives here |
+| `content/` | The markdown. Posts under `blog/`, projects under `projects/`, plus `about.md`, `colophon.md` and `404.md` |
 | `static/css/` | `reset.css` and `style.css`. The entire stylesheet, no build step |
 | `static/font/` | ET Book, three cuts, served from this domain |
 | `static/js/` | `theme.js`, the light/dark toggle |
 | `static/` | Everything else served as is: favicons, images, `CNAME`, and `resume.pdf` |
 
-The front page and the two halves of every page's `<head>` live in `html/` and
-are ordinary HTML. Everything else is a procedure in ostat's `src/render.odin`,
-so changing the shape of a post or a section listing means editing the generator
-and rebuilding it. That is the trade ostat makes: no template language to learn
-and a compiler that checks the whole thing, at the cost of recompiling to move a
-heading.
+Changing the shape of a page means editing an HTML file in `templates/`.
+Changing what a page knows about itself means editing `lua/page.lua`.
 
-`html/` may also hold `header-01.html`, `header-02.html` and
-`not-found-404.html`. This site supplies none of them and takes ostat's
-defaults, which is why its favicons and stylesheet links are the generator's.
+`templates/home.html` is the front page, written out whole, with a
+`$for(recent)$` loop where the recent posts go.
 
 ## Writing a post
 
 ```bash
-ostat new blog/some-post -s .
+make new t="Some Post"
 ```
 
-Every post starts as a draft. Front matter is a `---` fence around literal JSON.
-No YAML, no TOML.
+Every post starts as a draft. Front matter is YAML.
 
 ```markdown
 ---
-{
-    "title": "Some Post",
-    "date": "2026-07-12",
-    "draft": true
-}
+title: "Some Post"
+date: 2026-07-12
+draft: true
 ---
 ```
 
 | Field | Notes |
 |---|---|
 | `title` | Required |
-| `date` | Rendered under the title. Required for a post under `blog/` |
-| `description` | Used for the meta description. Falls back to the opening paragraph |
+| `date` | Rendered under the title. Required for a post under `blog/`. May carry a time, so a day can hold two posts |
+| `description` | Used for the meta description and for the summary line in a section listing. Falls back to the opening paragraph for the meta tag only |
 | `slug` | Overrides the URL, which otherwise comes from the filename |
-| `draft` | `true` keeps it out of a normal build. `./dev.sh` shows it anyway |
+| `draft` | `true` keeps it out of `make build`. `make` shows it anyway |
+
+## Asides
 
 An aside is a margin note, written as a standard Markdown footnote: a marker
 where the claim is, and a definition anywhere in the file.
@@ -90,16 +83,22 @@ The generator emits no numbers. The visible number comes from a CSS counter, so
 the marker and its note cannot drift apart. Below about `63em` of window there
 is no gutter to float into, and the note folds inline behind a toggle.
 
+Note ids are `sn-1`, `sn-2`, numbered by first appearance. Pandoc's reader
+discards the label before a filter can see it, and the id only binds a label to
+its checkbox inside one page, so the number is enough. A second reference to one
+note emits only the marker and points at the note the first one wrote.
+
 A definition that nothing references fails the build, which is how a mistyped
 label gets caught. An unresolved `[^` in prose is left alone, because `[^` is
 ordinary text more often than it is a note.
 
 ## The feed
 
-`/index.xml` and `/blog/index.xml` are the same document. Both carry blog posts
-and nothing else, and both are advertised in the head. Each is linked from an
-`.rss-badge` beside the heading of the list it feeds. Only a section that
-publishes a feed draws the badge, so the projects page has none.
+`/index.xml` and `/blog/index.xml` are the same document, differing only in the
+address each advertises as its own. Both carry blog posts and nothing else, and
+both are linked from the head. Each is linked from an `.rss-badge` beside the
+heading of the list it feeds. Only a section that publishes a feed draws the
+badge, so the projects page has none.
 
 Items carry the full post. A feed has no margin and no stylesheet, so each post
 is rendered a second time with its notes as numbered endnotes and every anchor
@@ -109,11 +108,14 @@ absolute, because a feed item is read away from the page it came from.
 
 Set in [ET Book](https://edwardtufte.github.io/et-book/), left aligned inside a
 sheet that is centered in the window, held to a `68ch` measure with a gutter
-beside it for margin notes. Colors come from
-Protesilaos Stavrou's [Modus
+beside it for margin notes. Colors come from Protesilaos Stavrou's [Modus
 themes](https://protesilaos.com/emacs/modus-themes-colors), `modus-operandi` for
 light and `modus-vivendi` for dark, and they carry through to syntax
-highlighting. Code follows the theme rather than shipping one of its own.
+highlighting.
+
+Syntax highlighting is pandoc's, remapped to the Chroma class names the
+stylesheet already carried. `lua/code.lua` holds that mapping. Code follows the
+theme rather than shipping one of its own.
 
 Every page opens on the same breadcrumb line with the theme toggle beside it. A
 post reads `vetr0s.dev / blog`. Home is just the wordmark. There is no menu.
