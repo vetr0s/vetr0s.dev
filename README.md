@@ -15,8 +15,14 @@ make clean            # discard both output trees
 make new t="A Title"  # start a post under content/blog/
 ```
 
-`PORT` overrides the port. The only requirement is pandoc 3 and `python3` for
+`PORT` overrides the port. `V=1` prints each pandoc command line instead of a
+label, which is what you want when a page comes out wrong and you need to see
+what produced it. The only requirement is pandoc 3 and `python3` for
 `make serve`.
+
+Every target says what it wrote. A rebuild after one edit prints only the pages
+that actually changed, which is the quickest way to see whether make agrees with
+you about what depends on what.
 
 There is no file watcher and no live reload. A whole build takes about two
 seconds, so rebuilding is ctrl-c and rerun.

@@ -5,7 +5,8 @@
 #   make clean      discard both output trees
 #   make new t=...  start a post under content/blog/
 #
-# PORT overrides the port, default 1313.
+# PORT overrides the port, default 1313. V=1 prints each pandoc command line
+# instead of a label.
 #
 # There is no file watcher and no live reload. A whole build takes about a
 # second, so rebuilding is ctrl-c and rerun.
@@ -54,20 +55,37 @@ FROM  := markdown-auto_identifiers-markdown_in_html_blocks-implicit_figures
 PD    := pandoc --standalone --metadata-file=site.yaml --wrap=preserve -f $(FROM) -t html5
 NOTES := --lua-filter=lua/sidenotes.lua --lua-filter=lua/highlight.lua
 
-# A note defined and never referenced is a mistyped label. Pandoc reports it
-# and keeps going, so the build has to promote it.
-define pandoc-strict
+# V=1 prints the pandoc command line for each target instead of the label.
+V ?= 0
+
+# $(1) is the label, $(2) the command. A note defined and never referenced is a
+# mistyped label: pandoc reports it and keeps going, so the build promotes it.
+define run
 @mkdir -p $(@D)
-@err=$$($(1) 2>&1 >/dev/null); \
+@if [ "$(V)" = 1 ]; then echo "  $(2)"; else printf '  %-6s %s\n' "$(1)" "$@"; fi
+@err=$$($(2) 2>&1 >/dev/null); \
   if [ -n "$$err" ]; then echo "$$err" >&2; fi; \
   case "$$err" in *"but not used"*) exit 1;; esac
 endef
 
-.PHONY: all build serve clean clean-out copy-static new
+.PHONY: all banner build serve clean clean-out copy-static new
 .SUFFIXES:
 
-all: $(OUT)/index.html $(OUT_POSTS) $(OUT_SECTIONS) $(OUT_XML) \
+all: banner $(OUT)/index.html $(OUT_POSTS) $(OUT_SECTIONS) $(OUT_XML) \
      $(OUT)/404.html copy-static
+	@echo
+	@printf '%s pages, %s feeds, 1 sitemap into %s/\n' \
+	  "$$(find $(OUT) -name '*.html' | wc -l | tr -d ' ')" \
+	  "$$(find $(OUT) -name '*.xml' ! -name sitemap.xml | wc -l | tr -d ' ')" "$(OUT)"
+
+banner:
+	@echo "pandoc $$(pandoc --version | head -1 | cut -d' ' -f2), $(MODE) build into $(OUT)/"
+	@printf '%s content files' "$$(echo $(SRCS) | wc -w | tr -d ' ')"
+	@if [ "$(MODE)" = prod ]; then \
+	  printf ', %s skipped as draft or future\n' \
+	    "$$(( $$(echo $(SRCS) | wc -w) - $$(echo $(LIVE) | wc -w) ))"; \
+	else printf ', drafts and future posts included\n'; fi
+	@echo
 
 build:
 	@$(MAKE) --no-print-directory MODE=prod clean-out all
@@ -81,44 +99,47 @@ serve: all
 	@python3 -m http.server $(PORT) --directory $(OUT)
 
 clean:
-	rm -rf public docs
+	@echo "removing public/ and docs/"
+	@rm -rf public docs
 
 clean-out:
-	rm -rf $(OUT)
+	@rm -rf $(OUT)
 
 copy-static:
 	@mkdir -p $(OUT)
+	@printf '  %-6s %s files from static/\n' copy \
+	  "$$(find static -type f | wc -l | tr -d ' ')"
 	@cp -R static/. $(OUT)/
 
 $(OUT)/%/index.html: content/%.md $(DEPS)
-	$(call pandoc-strict,$(PD) --template=templates/page.html $(NOTES) \
+	$(call run,page,$(PD) --template=templates/page.html $(NOTES) \
 	  --lua-filter=lua/page.lua -M url=/$*/ -M kind=page -o $@ $<)
 
 $(OUT)/%/index.html: content/%/_index.md $(SRCS) $(DEPS)
-	$(call pandoc-strict,$(PD) --template=templates/section.html $(NOTES) \
+	$(call run,list,$(PD) --template=templates/section.html $(NOTES) \
 	  --lua-filter=lua/listing.lua --lua-filter=lua/page.lua $(FLAGS) \
 	  -M url=/$*/ -M kind=section -o $@ $<)
 
 $(OUT)/index.html: $(SRCS) $(DEPS)
-	$(call pandoc-strict,$(PD) --template=templates/home.html \
+	$(call run,home,$(PD) --template=templates/home.html \
 	  --lua-filter=lua/listing.lua --lua-filter=lua/page.lua $(FLAGS) \
 	  -M url=/ -M kind=home -o $@ /dev/null)
 
 $(OUT)/404.html: content/404.md $(DEPS)
-	$(call pandoc-strict,$(PD) --template=templates/page.html $(NOTES) \
+	$(call run,404,$(PD) --template=templates/page.html $(NOTES) \
 	  --lua-filter=lua/page.lua -M url=/404.html -M kind=page -o $@ $<)
 
 $(OUT)/index.xml: $(SRCS) $(DEPS)
-	$(call pandoc-strict,$(PD) --template=templates/rss.xml \
+	$(call run,feed,$(PD) --template=templates/rss.xml \
 	  --lua-filter=lua/feed.lua $(FLAGS) -M selfpath=/index.xml -o $@ /dev/null)
 
 # The same document, advertised at both addresses, so the self link differs.
 $(OUT)/blog/index.xml: $(SRCS) $(DEPS)
-	$(call pandoc-strict,$(PD) --template=templates/rss.xml \
+	$(call run,feed,$(PD) --template=templates/rss.xml \
 	  --lua-filter=lua/feed.lua $(FLAGS) -M selfpath=/blog/index.xml -o $@ /dev/null)
 
 $(OUT)/sitemap.xml: $(SRCS) $(DEPS)
-	$(call pandoc-strict,$(PD) --template=templates/sitemap.xml \
+	$(call run,map,$(PD) --template=templates/sitemap.xml \
 	  --lua-filter=lua/sitemap.lua $(FLAGS) -o $@ /dev/null)
 
 new:
