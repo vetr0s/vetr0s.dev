@@ -1,25 +1,28 @@
 ---
-{
-    "title": "Colophon"
-}
+title: "Colophon"
 ---
 
 The tools, themes, and influences behind this site.
 
 ## Built with
 
-- [ostat](https://github.com/vetr0s/ostat): a static site generator I wrote in
-  [Odin](https://odin-lang.org/). There is no template language. Every layout
-  is a procedure that writes HTML
+- [pandoc](https://pandoc.org/) and `make`. The page shapes are pandoc
+  templates. What a template cannot express is a Lua filter
 - Hand-written CSS. No theme, no framework, no JavaScript beyond a theme toggle
 - Built by hand and committed, then served from `main:/docs` by [GitHub
   Pages](https://pages.github.com/)
 - An [RSS feed](/index.xml) of the posts
 
-The site's identity lives in one `site.json`: title, base URL, author, locale,
-and the brand split. The front page lives in `html/home.html` and is ordinary
-markup, with one marker saying where the recent posts go. Everything else about
-the shape of a page is a procedure in the generator.
+The site's identity lives in one `site.yaml`: title, base URL, author, locale,
+and the brand split. The front page is a template written out whole, with a loop
+where the recent posts go. Changing the shape of any page means editing an HTML
+file rather than recompiling anything.
+
+This site used to be built by [ostat](https://github.com/vetr0s/ostat), a static
+site generator I wrote in [Odin](https://odin-lang.org/). It worked, and I moved
+off it anyway. A compiler checking the whole site is worth little at six pages,
+and having to rebuild that compiler to move a heading is worth a lot of
+friction. That trade was a bad one at this size.
 
 ## Typography
 
@@ -102,9 +105,10 @@ Headings use the `yellow-warmer`, `magenta`, and `cyan` accents from the same
 palettes. Syntax highlighting is drawn from the same set. A code block is tinted
 like the rest of the page instead of carrying a theme of its own.
 
-Highlighting is done by the generator rather than by a library. It is a keyword
-table and a scanner, not a parser, and it produces only the seven token groups
-the stylesheet distinguishes.
+Highlighting is pandoc's, which lexes about two hundred languages properly. Its
+token names are translated to the Chroma names the stylesheet already carried,
+so the palette above is what colors the code. A token the stylesheet has no rule
+for is left unclassed rather than given a color it never chose.
 
 Both schemes follow your system preference by default. The toggle overrides it.
 The choice persists in `localStorage`.
@@ -113,8 +117,8 @@ The choice persists in `localStorage`.
 
 - [Tufte CSS](https://edwardtufte.github.io/tufte-css/): the margin note, and
   the typeface
-- [gingerBill.org](https://github.com/gingerBill/gingerBill.org): the generator
-  ostat is modeled on, layouts as procedures rather than templates
+- [gingerBill.org](https://github.com/gingerBill/gingerBill.org): the margin
+  note markup, and the case for a site you assemble yourself
 - [andrewkelley.me](https://andrewkelley.me/): the plainness. Left-aligned,
   underlined links, a document rather than a layout
 - [protesilaos.com](https://protesilaos.com/): the Modus palettes above

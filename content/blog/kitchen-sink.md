@@ -1,10 +1,8 @@
 ---
-{
-    "title": "Kitchen Sink",
-    "description": "Every content feature the site knows how to render, on one page.",
-    "date": "2026-07-12",
-    "draft": true
-}
+title: "Kitchen Sink"
+description: "Every content feature the site knows how to render, on one page."
+date: 2026-07-12
+draft: true
 ---
 
 This post exists to be looked at, not read. It uses every feature the layouts

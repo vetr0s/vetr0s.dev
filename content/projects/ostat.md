@@ -1,8 +1,6 @@
 ---
-{
-    "title": "ostat",
-    "description": "A static site generator written in Odin. Layouts are procedures, not templates. It builds this site."
-}
+title: "ostat"
+description: "A static site generator written in Odin. Layouts are procedures, not templates. It builds this site."
 ---
 
 A static site generator written in [Odin](https://odin-lang.org/), modeled

@@ -1,0 +1,12 @@
+# Site identity. Nested under `site:` so nothing here collides with a page's
+# own front matter, which pandoc merges into the same metadata namespace.
+site:
+  base_url: https://vetr0s.dev
+  title: vetr0s.dev
+  description: Nathan Tebbs, software engineer. Writing, projects, and a page about who I am.
+  author: Nathan Tebbs
+  locale: en-us
+  generator: pandoc
+  brand:
+    head: vetr0s
+    accent: .dev

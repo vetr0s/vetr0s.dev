@@ -1,0 +1,11 @@
+<nav class="crumbs" aria-label="Breadcrumb">
+  <p class="trail">
+$if(is_home)$    <span class="here" aria-current="page">$site.brand.head$<span class="accent">$site.brand.accent$</span></span>
+$else$    <a href="/">$site.brand.head$<span class="accent">$site.brand.accent$</span></a>
+    <span class="sep">/</span>
+$if(parent_url)$    <a href="$parent_url$">$parent_crumb$</a>
+$else$    <span class="here" aria-current="page">$crumb$</span>
+$endif$$endif$  </p>
+  <button id="theme-toggle" type="button" aria-label="Toggle color theme"></button>
+</nav>
+

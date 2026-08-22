@@ -1,0 +1,14 @@
+$head()$
+<body>
+  <header>
+$crumbs()$
+  </header>
+  <main>
+<article>
+  <h1>$title$</h1>
+$if(date_raw)$  <time datetime="$date_raw$">$date_long$</time>
+$endif$$body$
+</article>
+  </main>
+</body>
+</html>

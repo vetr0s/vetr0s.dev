@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>$site.title$</title>
+    <link>$channellink$</link>
+    <description>$site.description$</description>
+    <generator>$site.generator$</generator>
+    <language>$site.locale$</language>
+$if(lastbuild)$    <lastBuildDate>$lastbuild$</lastBuildDate>
+$endif$    <atom:link href="$selflink$" rel="self" type="application/rss+xml" />
+$for(items)$    <item>
+      <title>$it.title$</title>
+      <link>$it.link$</link>
+      <pubDate>$it.pubdate$</pubDate>
+      <guid>$it.link$</guid>
+      <description>$it.body$</description>
+    </item>
+$endfor$  </channel>
+</rss>

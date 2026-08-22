@@ -1,3 +1,9 @@
+$head()$
+<body>
+  <header>
+$crumbs()$
+  </header>
+  <main>
 <section id="find-me">
   <h1>Find Me</h1>
   <div class="portrait">
@@ -30,5 +36,12 @@
     <h1>Recent Articles</h1>
     <a class="rss-badge" href="/index.xml" title="RSS feed">RSS</a>
   </div>
-  <!--ostat:recent-->
-</section>
+$for(recent)$  <article class="post-entry">
+    <a href="$it.url$">$it.title$</a>
+$if(it.date)$    <time datetime="$it.date$">$it.date$</time>
+$endif$  </article>
+$endfor$$if(empty)$  <p class="empty">$emptytext$</p>
+$endif$</section>
+  </main>
+</body>
+</html>

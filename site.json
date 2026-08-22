@@ -1,9 +1,0 @@
-{
-    "base_url": "https://vetr0s.dev/",
-    "title": "vetr0s.dev",
-    "description": "Nathan Tebbs, software engineer. Writing, projects, and a page about who I am.",
-    "author": "Nathan Tebbs",
-    "locale": "en-us",
-
-    "brand": { "head": "vetr0s", "accent": ".dev" }
-}

@@ -3,6 +3,3 @@
 # Local dev output. The published tree is docs/, built and committed by hand.
 public/
 
-# The generator and its toolchain, only ever fetched into the workspace.
-.ostat/
-.odin/

@@ -1,7 +1,5 @@
 ---
-{
-    "title": "About"
-}
+title: "About"
 ---
 
 Hi! I'm Nathan. Thank you for checking out my site. The majority of the content
