@@ -25,3 +25,31 @@ the stylesheet already documents at length.
 
 Decide whether the left-heavy band is worth that. Doing nothing is a real
 option.
+
+## Make the stylesheet its own project
+
+`static/css/style.css` is 646 lines and it is the actual asset here. Two
+generators have come and gone underneath it and it survived both untouched,
+which is the argument for pulling it out and treating it as a thing in its own
+right rather than as a file this repo happens to hold.
+
+That means auditing it first. It carries the full Chroma class vocabulary
+inherited from Hugo, most of which nothing emits any more, and it has at least
+three hand-maintained breakpoint constants that have to be kept in step by hand.
+Find the dead rules, name the constants that are actually load bearing, and work
+out which parts are decisions and which are leftovers.
+
+Then rewrite it to be exactly what I want rather than what accreted. Rock solid
+means the fold behaviour, the sheet centering, and the margin notes are all
+derived from constants that are stated once.
+
+## Add the rest of the projects
+
+`content/projects/` holds one page, and it is for the tool I just retired. The
+projects section reads as a graveyard.
+
+## Write a post
+
+`content/blog/` has one file and it is the kitchen sink fixture. The blog has
+never published anything. The whole point of the last two rebuilds was to make
+writing easier, and that claim is untested until something ships.
