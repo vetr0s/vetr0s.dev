@@ -134,7 +134,9 @@ for stale in (
         fail(f"stale gutter rule remains: {stale}")
 if ".sidenote {\n    display: none;" not in css:
     fail("notes are not collapsed at every width")
-if "@media (max-width: 32em)" not in css or "grid-template-columns: 1fr;" not in css:
+if "@media (max-width: 32em)" not in css or "justify-items: start;" not in css:
     fail("contact details do not stack on narrow screens")
+if "grid-template-columns: max-content minmax(0, 1fr);" not in css:
+    fail("mobile contact labels do not stay beside their links")
 
 print(f"checked {sum(1 for _ in root.rglob('*.html'))} pages")

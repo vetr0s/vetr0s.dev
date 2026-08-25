@@ -484,18 +484,14 @@ figcaption {
 @media (max-width: 32em) {
     .contact-panel {
         grid-template-columns: 1fr;
-        justify-items: center;
+        justify-items: start;
         gap: var(--space-sm);
     }
 
     .contact-list {
-        grid-template-columns: 1fr;
+        grid-template-columns: max-content minmax(0, 1fr);
         width: 100%;
-        gap: 0.1em;
-    }
-
-    .contact-list dd {
-        margin-block-end: var(--space-xs);
+        gap: 0.25em 0.5em;
     }
 }
 
