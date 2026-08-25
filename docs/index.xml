@@ -6,6 +6,115 @@
     <description>Nathan Tebbs, software engineer. Writing, projects, and a page about who I am.</description>
     <generator>pandoc</generator>
     <language>en-us</language>
+    <lastBuildDate>Tue, 25 Aug 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://vetr0s.dev/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Static Site Generator Hell</title>
+      <link>https://vetr0s.dev/blog/static-site-generator-hell/</link>
+      <pubDate>Tue, 25 Aug 2026 00:00:00 +0000</pubDate>
+      <guid>https://vetr0s.dev/blog/static-site-generator-hell/</guid>
+      <category>programming</category>
+      <category>web</category>
+      <category>tools</category>
+      <description>&lt;h2&gt;Foreword&lt;/h2&gt;
+&lt;p&gt;This site used to be built by a static site generator I wrote in Odin. It
+reached about three thousand lines, had more than a hundred tests, and produced
+every page, feed, and sitemap here. Then I replaced it with Pandoc and Make.&lt;/p&gt;
+&lt;p&gt;A static site generator reads source files and writes the finished HTML files a
+web server sends to visitors. It does this work before anyone opens the site.
+There is no application server assembling a page for each request.&lt;/p&gt;
+&lt;p&gt;The generator worked. That was not enough reason to keep it.&lt;/p&gt;
+&lt;h2&gt;Motivation&lt;/h2&gt;
+&lt;p&gt;Hugo built the first version of this site. It was fast and dependable. It was
+also a large program with a template language, a theme system, and a plugin
+model. My site had fewer than ten pages. I could describe every page it needed
+to produce.&lt;/p&gt;
+&lt;p&gt;I also wanted to learn Odin through a real project. Odin is a systems programming
+language aimed at direct control over data and memory. A static site generator
+was a good fit. It had file traversal, parsing, allocation, sorting, date
+handling, HTML generation, and enough edge cases to punish a weak design. The
+program ran as one batch job, so two arenas and no individual frees covered
+almost the whole memory strategy.&lt;sup class=&quot;fn-ref&quot; id=&quot;fnref-1&quot;&gt;&lt;a href=&quot;https://vetr0s.dev/blog/static-site-generator-hell/#fn-1&quot; role=&quot;doc-noteref&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;p&gt;The goal was not to make a general replacement for Hugo. The goal was to own
+the exact path from my Markdown to the bytes served at vetr0s.dev.&lt;/p&gt;
+&lt;h2&gt;What ostat owned&lt;/h2&gt;
+&lt;p&gt;The content folders determined the public addresses. A file named &lt;code&gt;_index.md&lt;/code&gt;
+became its directory’s section page. Every other Markdown file became a regular
+page. The same scan supplied section listings and the home page. It also built
+the RSS feeds that notify feed readers about new posts. The sitemap listed the
+site’s public pages for search engines.&lt;/p&gt;
+&lt;p&gt;The generator also handled notes, syntax highlighting, draft and future
+post filtering, summaries, and dates with enough precision to order two posts
+on one day. A small example site acted as a fixture. Its expected output caught
+changes to the generated files. Unit tests covered the pieces underneath it.&lt;/p&gt;
+&lt;p&gt;There was no template language. A template language normally lets a page mix
+HTML with placeholders and loops. Each layout was instead an Odin function that
+wrote HTML. That made page structure explicit. The compiler caught programming
+mistakes in the layout code before the generator ran. It also meant moving a
+heading required changing and rebuilding the generator.&lt;sup class=&quot;fn-ref&quot; id=&quot;fnref-2&quot;&gt;&lt;a href=&quot;https://vetr0s.dev/blog/static-site-generator-hell/#fn-2&quot; role=&quot;doc-noteref&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;h2&gt;What ostat’s ownership model bought&lt;/h2&gt;
+&lt;p&gt;The whole system fit in my head. When a URL was wrong, I knew which function had
+made it. When a note needed different markup, I changed the procedure
+that wrote it. There was no framework behavior to discover and no extension
+point to work around.&lt;/p&gt;
+&lt;p&gt;That clarity made the generator a useful systems exercise. I learned Odin well
+enough to make design choices instead of translating habits from another
+language. I learned how much simpler allocation becomes when every object has
+the same lifetime. I learned where a static site stops being a set of pages and
+starts being a build graph. A build graph records which outputs depend on which
+inputs. That relationship decides what must be rebuilt after a file changes.&lt;/p&gt;
+&lt;p&gt;The project answered the questions I had asked of it.&lt;/p&gt;
+&lt;h2&gt;The tradeoffs changed&lt;/h2&gt;
+&lt;p&gt;The cost appeared when I tried to work on the site. A new presentation detail
+often meant generator work. A page-level idea crossed into compiled layout code.
+Small changes asked me to reload the whole implementation in my head before I
+could make them confidently.&lt;/p&gt;
+&lt;p&gt;None of that made the design wrong. The compiler still checked the layouts.
+The generator still produced the right files. Its benefits had stopped matching
+the work I wanted to do.&lt;/p&gt;
+&lt;p&gt;I had written more generator than site. Keeping that ratio would have meant
+spending more time maintaining the path to the writing than writing anything.&lt;/p&gt;
+&lt;h2&gt;Replacing ostat&lt;/h2&gt;
+&lt;p&gt;Pandoc now turns Markdown into HTML. HTML templates hold the page shapes. Small
+programs written in Lua change the parts that templates cannot express. Make
+records which outputs depend on which source files, then rebuilds only what
+changed.&lt;/p&gt;
+&lt;p&gt;The core of the article template is plain HTML with Pandoc placeholders:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;chroma language-html&quot;&gt;&lt;span class=&quot;kt&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;article&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;kt&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;h1&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;&amp;gt;&lt;/span&gt;$title$&lt;span class=&quot;kt&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;h1&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;&amp;gt;&lt;/span&gt;
+  $body$
+&lt;span class=&quot;kt&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;article&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The Makefile connects a Markdown source file to its HTML output. This shortened
+rule shows the relationship:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;chroma language-makefile&quot;&gt;&lt;span class=&quot;m&quot;&gt;$(OUT)/%/index.html:&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt; content/%.md &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;DEPS&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;)&lt;/span&gt;
+	pandoc --template=templates/page.html -o &lt;span class=&quot;s&quot;&gt;$@&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;$&amp;lt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Make replaces &lt;code&gt;$&amp;lt;&lt;/code&gt; with the source filename and &lt;code&gt;$@&lt;/code&gt; with the output filename.
+The rule says that a page must be rebuilt when its Markdown file, template, or
+filter changes.&lt;/p&gt;
+&lt;p&gt;This setup is less mine. That is the point. Pandoc owns Markdown parsing and
+syntax highlighting. Make owns incremental builds. I own the content, the HTML,
+the filters specific to this site, and the stylesheet.&lt;/p&gt;
+&lt;p&gt;The split puts each change where I expect to find it. Moving a heading means
+editing a template. Changing a note means editing one Lua filter.
+Changing the page width means editing one CSS token. A full production build
+takes a few seconds.&lt;/p&gt;
+&lt;h2&gt;What survived&lt;/h2&gt;
+&lt;p&gt;The URLs did not change. The content folders still define them. The document
+layout, notes, syntax colors, full-text feeds, and restrained navigation
+all survived. Those were site decisions rather than generator decisions.&lt;/p&gt;
+&lt;p&gt;The generator survives too. Its source and releases remain available, and the
+project page records how it worked. I stopped using it because the experiment
+was complete, not because the work was wasted.&lt;/p&gt;
+&lt;p&gt;Building a layer yourself can be the right way to learn it. Keeping that layer
+forever is a separate decision.&lt;/p&gt;
+&lt;div class=&quot;footnotes&quot; role=&quot;doc-endnotes&quot;&gt;
+&lt;ol&gt;
+&lt;li id=&quot;fn-1&quot;&gt;One arena held data that lived for the full build. The other was cleared between pages. An arena reserves a region of memory and releases it all at once. The operating system reclaimed both arenas when the process exited. &lt;a href=&quot;https://vetr0s.dev/blog/static-site-generator-hell/#fnref-1&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&quot;fn-2&quot;&gt;This trade felt good while the generator was the project. It felt different once I wanted the site itself to be the project. &lt;a href=&quot;https://vetr0s.dev/blog/static-site-generator-hell/#fnref-2&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;</description>
+    </item>
   </channel>
 </rss>

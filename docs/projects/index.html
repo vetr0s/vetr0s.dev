@@ -6,10 +6,16 @@
 <title>Projects · vetr0s.dev</title>
 <meta name="description" content="Nathan Tebbs, software engineer. Writing, projects, and a page about who I am.">
 <meta name="author" content="Nathan Tebbs">
+<link rel="canonical" href="https://vetr0s.dev/projects/">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Projects · vetr0s.dev">
+<meta property="og:site_name" content="vetr0s.dev">
+<meta property="og:locale" content="en-us">
+<meta property="og:title" content="Projects">
 <meta property="og:description" content="Nathan Tebbs, software engineer. Writing, projects, and a page about who I am.">
 <meta property="og:url" content="https://vetr0s.dev/projects/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Projects">
+<meta name="twitter:description" content="Nathan Tebbs, software engineer. Writing, projects, and a page about who I am.">
 <script>
   (function () {
     var t = localStorage.getItem('theme');
@@ -32,18 +38,7 @@
 <link rel="stylesheet" href="/css/reset.css">
 <link rel="stylesheet" href="/css/style.css">
 <script src="/js/theme.js" defer></script>
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    document.querySelectorAll('a[href]').forEach(function (a) {
-      if (a.hostname && a.hostname !== location.hostname) {
-        a.target = '_blank';
-        a.rel = 'noopener noreferrer';
-      }
-    });
-  });
-</script>
-</head>
-<body>
+</head><body>
   <header>
 <nav class="crumbs" aria-label="Breadcrumb">
   <p class="trail">
@@ -59,7 +54,28 @@
     <h1>Projects</h1>
   </div>
   <article class="post-entry">
-    <a href="/projects/ostat/">ostat</a>
+    <h2><a href="/projects/tucson-crime-analysis/">Tucson crime analysis</a></h2>
+    <p class="entry-status">Course project, complete</p>
+    <p class="entry-summary">A multivariate study of Tucson crime data, neighborhood income, and streetlight locations. The results showed association, not causation.</p>
+  </article>
+  <article class="post-entry">
+    <h2><a href="/projects/mach/">Mach and mach.h</a></h2>
+    <p class="entry-status">Experiment, paused</p>
+    <p class="entry-summary">A factory game and the single-header C engine that grew out of it. A paused experiment in owning a game stack from the renderer up.</p>
+  </article>
+  <article class="post-entry">
+    <h2><a href="/projects/difr/">difr</a></h2>
+    <p class="entry-status">Experiment, complete</p>
+    <p class="entry-summary">A Go command-line tool for golden-file testing. Test cases are folders, expected output is a file, and accepting a change leaves a normal Git diff.</p>
+  </article>
+  <article class="post-entry">
+    <h2><a href="/projects/gaterelay/">GateRelay</a></h2>
+    <p class="entry-status">Experiment, complete</p>
+    <p class="entry-summary">A small TCP relay packaged as a hardened Linux service. The relay was the easy part. The operational envelope was the project.</p>
+  </article>
+  <article class="post-entry">
+    <h2><a href="/projects/ostat/">ostat</a></h2>
+    <p class="entry-status">Archived</p>
     <p class="entry-summary">A static site generator written in Odin. An experiment in building the whole pipeline myself. Archived.</p>
   </article>
   </main>

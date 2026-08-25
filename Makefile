@@ -3,7 +3,7 @@
 #   make            build with drafts and future posts into public/, serve
 #   make build      the published build, into docs/
 #   make clean      discard both output trees
-#   make new t=...  start a post under content/blog/
+#   make new        start a post under content/blog/
 #
 # PORT overrides the port, default 1313. V=1 prints each pandoc command line
 # instead of a label.
@@ -13,6 +13,7 @@
 
 MODE ?= dev
 PORT ?= 1313
+PANDOC ?= pandoc
 
 ifeq ($(MODE),prod)
   OUT   := docs
@@ -37,7 +38,7 @@ else
   LIVE := $(SRCS)
 endif
 
-POSTS    := $(filter-out content/404.md %/_index.md,$(LIVE))
+POSTS    := $(filter-out content/404.md content/_index.md %/_index.md,$(LIVE))
 SECTIONS := $(filter %/_index.md,$(LIVE))
 
 OUT_POSTS    := $(patsubst content/%.md,$(OUT)/%/index.html,$(POSTS))
@@ -52,7 +53,7 @@ DEPS      := site.yaml $(TEMPLATES) $(FILTERS)
 # and a diff: heading ids the stylesheet does not use, a raw HTML block pandoc
 # would relayout, and a lone image becoming a captioned <figure>.
 FROM  := markdown-auto_identifiers-markdown_in_html_blocks-implicit_figures
-PD    := pandoc --standalone --metadata-file=site.yaml --wrap=preserve -f $(FROM) -t html5
+PD    := $(PANDOC) --standalone --metadata-file=site.yaml --wrap=preserve -f $(FROM) -t html5
 NOTES := --lua-filter=lua/sidenotes.lua --lua-filter=lua/highlight.lua
 
 # V=1 prints the pandoc command line for each target instead of the label.
@@ -63,15 +64,18 @@ V ?= 0
 define run
 @mkdir -p $(@D)
 @if [ "$(V)" = 1 ]; then echo "  $(2)"; else printf '  %-6s %s\n' "$(1)" "$@"; fi
-@err=$$($(2) 2>&1 >/dev/null); \
-  if [ -n "$$err" ]; then echo "$$err" >&2; fi; \
-  case "$$err" in *"but not used"*) exit 1;; esac
+@err_file=$$(mktemp); \
+  $(2) 2>"$$err_file" >/dev/null; status=$$?; \
+  if [ -s "$$err_file" ]; then cat "$$err_file" >&2; fi; \
+  if [ $$status -ne 0 ]; then rm -f "$$err_file"; exit $$status; fi; \
+  if grep -q "but not used" "$$err_file"; then rm -f "$$err_file"; exit 1; fi; \
+  rm -f "$$err_file"
 endef
 
-.PHONY: all banner build serve clean clean-out copy-static new
+.PHONY: all banner build check check-tools serve clean clean-out copy-static new
 .SUFFIXES:
 
-all: banner $(OUT)/index.html $(OUT_POSTS) $(OUT_SECTIONS) $(OUT_XML) \
+all: check-tools banner $(OUT)/index.html $(OUT_POSTS) $(OUT_SECTIONS) $(OUT_XML) \
      $(OUT)/404.html copy-static
 	@echo
 	@printf '%s pages, %s feeds, 1 sitemap into %s/\n' \
@@ -79,7 +83,7 @@ all: banner $(OUT)/index.html $(OUT_POSTS) $(OUT_SECTIONS) $(OUT_XML) \
 	  "$$(find $(OUT) -name '*.xml' ! -name sitemap.xml | wc -l | tr -d ' ')" "$(OUT)"
 
 banner:
-	@echo "pandoc $$(pandoc --version | head -1 | cut -d' ' -f2), $(MODE) build into $(OUT)/"
+	@echo "pandoc $$($(PANDOC) --version | head -1 | cut -d' ' -f2), $(MODE) build into $(OUT)/"
 	@printf '%s content files' "$$(echo $(SRCS) | wc -w | tr -d ' ')"
 	@if [ "$(MODE)" = prod ]; then \
 	  printf ', %s skipped as draft or future\n' \
@@ -87,11 +91,26 @@ banner:
 	else printf ', drafts and future posts included\n'; fi
 	@echo
 
-build:
-	@$(MAKE) --no-print-directory MODE=prod clean-out all
-	@touch docs/.nojekyll
+check-tools:
+	@command -v $(PANDOC) >/dev/null || { echo "pandoc is required" >&2; exit 127; }
+
+build: check-tools
+	@rm -rf .build/docs
+	@$(MAKE) --no-print-directory MODE=prod OUT=.build/docs all
+	@touch .build/docs/.nojekyll
+	@python3 scripts/check_site.py .build/docs
+	@rm -rf docs
+	@mv .build/docs docs
 	@echo
 	@echo "Built to docs/. Commit it: GitHub Pages serves this tree."
+
+check: check-tools
+	@tmp=$$(mktemp -d); trap 'rm -rf "$$tmp"' EXIT; \
+	  $(MAKE) --no-print-directory MODE=prod OUT="$$tmp/site" all; \
+	  python3 scripts/check_site.py "$$tmp/site"; \
+	  if $(MAKE) --no-print-directory OUT="$$tmp/fail" PANDOC=false all >/dev/null 2>&1; then \
+	    echo "a failing pandoc command returned success" >&2; exit 1; \
+	  fi
 
 serve: all
 	@echo
@@ -120,10 +139,10 @@ $(OUT)/%/index.html: content/%/_index.md $(SRCS) $(DEPS)
 	  --lua-filter=lua/listing.lua --lua-filter=lua/page.lua $(FLAGS) \
 	  -M url=/$*/ -M kind=section -o $@ $<)
 
-$(OUT)/index.html: $(SRCS) $(DEPS)
+$(OUT)/index.html: content/_index.md $(SRCS) $(DEPS)
 	$(call run,home,$(PD) --template=templates/home.html \
-	  --lua-filter=lua/listing.lua --lua-filter=lua/page.lua $(FLAGS) \
-	  -M url=/ -M kind=home -o $@ /dev/null)
+	  $(NOTES) --lua-filter=lua/listing.lua --lua-filter=lua/page.lua $(FLAGS) \
+	  -M url=/ -M kind=home -o $@ content/_index.md)
 
 $(OUT)/404.html: content/404.md $(DEPS)
 	$(call run,404,$(PD) --template=templates/page.html $(NOTES) \
@@ -143,10 +162,4 @@ $(OUT)/sitemap.xml: $(SRCS) $(DEPS)
 	  --lua-filter=lua/sitemap.lua $(FLAGS) -o $@ /dev/null)
 
 new:
-	@test -n "$(t)" || { echo 'usage: make new t="Some Post"' >&2; exit 2; }
-	@slug=$$(echo "$(t)" | tr 'A-Z' 'a-z' | tr -cs 'a-z0-9' '-' | sed 's/^-//;s/-$$//'); \
-	  f="content/blog/$$slug.md"; \
-	  test ! -e "$$f" || { echo "$$f exists" >&2; exit 1; }; \
-	  printf -- '---\ntitle: %s\ndate: %s\ndraft: true\n---\n\n' \
-	    "$(t)" "$$(date -u +%Y-%m-%d)" > "$$f"; \
-	  echo "$$f"
+	@python3 scripts/new_post.py

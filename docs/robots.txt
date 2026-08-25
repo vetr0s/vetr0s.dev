@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://vetr0s.dev/sitemap.xml

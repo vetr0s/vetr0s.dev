@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mach and mach.h · vetr0s.dev</title>
+<meta name="description" content="A factory game and the single-header C engine that grew out of it. A paused experiment in owning a game stack from the renderer up.">
+<meta name="author" content="Nathan Tebbs">
+<link rel="canonical" href="https://vetr0s.dev/projects/mach/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="vetr0s.dev">
+<meta property="og:locale" content="en-us">
+<meta property="og:title" content="Mach and mach.h">
+<meta property="og:description" content="A factory game and the single-header C engine that grew out of it. A paused experiment in owning a game stack from the renderer up.">
+<meta property="og:url" content="https://vetr0s.dev/projects/mach/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Mach and mach.h">
+<meta name="twitter:description" content="A factory game and the single-header C engine that grew out of it. A paused experiment in owning a game stack from the renderer up.">
+<script>
+  (function () {
+    var t = localStorage.getItem('theme');
+    if (t === 'light' || t === 'dark') {
+      document.documentElement.setAttribute('data-theme', t);
+    }
+  })();
+</script>
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<!-- The roman cut starts downloading here, during HTML parse, rather than
+     after the stylesheet is parsed and a glyph is first wanted. font-display
+     is optional, so being ready by first paint is the difference between the
+     page being set in ET Book and being set in Palatino. crossorigin is
+     required on a font preload even same-origin, or the fetch is made twice. -->
+<link rel="preload" href="/font/et-book-roman-line-figures.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/css/reset.css">
+<link rel="stylesheet" href="/css/style.css">
+<script src="/js/theme.js" defer></script>
+</head><body>
+  <header>
+<nav class="crumbs" aria-label="Breadcrumb">
+  <p class="trail">
+    <a href="/">vetr0s<span class="accent">.dev</span></a>
+    <span class="sep">/</span>
+    <a href="/projects/">projects</a>
+  </p>
+  <button id="theme-toggle" type="button" aria-label="Toggle color theme"></button>
+</nav>
+  </header>
+  <main>
+<article>
+  <h1>Mach and mach.h</h1>
+<p>Mach is an isometric factory game written in C. Droppers create ore, conveyors
+route it, upgraders raise its value, and furnaces turn it into money for the
+next expansion. I built the game to learn what changes when an engine and its
+first real user grow together.</p>
+<p>The engine became <a href="https://github.com/vetr0s/mach.h">mach.h</a>, a single-header
+library with an OpenGL 3.3 batch renderer, sprite atlases, bitmap text, arena
+allocation, input, audio, and immediate-mode UI layout. The game keeps a copy of
+the header in its source tree and builds with a C compiler and system OpenGL.</p>
+<p>This project is paused. It was an experiment, and it taught me a great deal
+about renderer design, data layout, build systems, and the cost of owning every
+layer.</p>
+<h2>What I worked on</h2>
+<ul>
+<li>A 2D batch renderer and an isometric view built as a coordinate transform</li>
+<li>A simulation made from typed structs in flat arrays inside one arena</li>
+<li>Hot reloading through a host-owned state block and a reloadable game library</li>
+<li>A unity build driven by a small build program written in C</li>
+<li>Release builds for macOS, Linux, and Windows through GitHub Actions</li>
+</ul>
+<p>The engine never names a game type. The game owns its loop and calls the engine
+directly. That boundary survived the project growing from a renderer experiment
+into a playable factory loop.</p>
+<ul>
+<li><a href="https://github.com/vetr0s/mach">Game source</a></li>
+<li><a href="https://github.com/vetr0s/mach.h">Engine source</a></li>
+<li><a href="https://github.com/vetr0s/mach/releases">Releases</a></li>
+</ul>
+</article>
+  </main>
+</body>
+</html>

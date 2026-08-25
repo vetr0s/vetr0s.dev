@@ -11,11 +11,12 @@ local LONG = {'January', 'February', 'March', 'April', 'May', 'June', 'July',
 local ABBR = {'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
               'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'}
 
--- os.time reads its table as local time, so the resulting epoch is offset by
--- the machine's zone. Noon keeps that offset from crossing a day boundary,
--- which is all the weekday name needs.
 local function weekday(y, m, d)
-  return os.date('!%a', os.time{year = y, month = m, day = d, hour = 12})
+  local offsets = {0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4}
+  if m < 3 then y = y - 1 end
+  local i = (y + math.floor(y / 4) - math.floor(y / 100)
+          + math.floor(y / 400) + offsets[m] + d) % 7
+  return ({'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'})[i + 1]
 end
 
 --- Split a front matter stamp into its parts.

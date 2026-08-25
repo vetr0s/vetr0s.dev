@@ -3,6 +3,9 @@ title: "Kitchen Sink"
 description: "Every content feature the site knows how to render, on one page."
 date: 2026-07-12
 draft: true
+tags:
+  - test
+  - design
 ---
 
 This post exists to be looked at, not read. It uses every feature the layouts
@@ -12,13 +15,11 @@ It is a draft, so it never reaches the built site. `./dev` shows it, and
 
 ## Prose, and what it can carry
 
-Body text is held to a `68ch` measure, and beside it there is a gutter. An
-aside is a margin note[^a-margin-note], so the note sits out there next to the
-line that raised it rather than waiting at the bottom of the page.
+Body text fills the sheet. An aside is an inline disclosure,[^an-aside] so it
+waits behind its marker until the reader opens it.
 
-[^a-margin-note]: A margin note. The marker is set where the claim is, and this
-    text sits in the gutter at the height of that marker. There is nothing to
-    click and nowhere to come back from.
+[^an-aside]: The marker stays beside the claim. This text opens below the
+    sentence at every window width.
 
 Numbering runs down the page in order and comes from a CSS
 counter[^numbering-is-css], not from the generator.
@@ -27,8 +28,7 @@ counter[^numbering-is-css], not from the generator.
     like any other prose. Because the number is a counter, the markup holds no
     numbers at all and the marker and its note cannot drift apart.
 
-Narrow the window past about `63em` and every note on this page folds: the
-markers become toggles and the notes open inline where they are tapped.
+The interaction does not change when the window narrows.
 
 Inline, prose can carry **bold**, *italic*, `inline_code()`, a
 [link to another site](https://andrewkelley.me/), a [link back
@@ -81,11 +81,11 @@ pub fn main() !void {
 ./dev --build    # production build into public/
 ```
 
-A block wide enough to overflow the measure scrolls inside its own box rather
+A block wide enough to overflow the page scrolls inside its own box rather
 than pushing the page sideways:
 
 ```text
-this line is deliberately far too long to fit inside the measure and should produce a horizontal scrollbar on the block itself, never on the page
+this line is deliberately far too long to fit inside the page and should produce a horizontal scrollbar on the block itself, never on the page
 ```
 
 ## Quotes
@@ -103,7 +103,7 @@ this line is deliberately far too long to fit inside the measure and should prod
 
 ## Images
 
-A picture sits in the flow, capped well short of the measure, with its caption
+A picture sits in the flow, capped well short of the page, with its caption
 under it:
 
 <figure>

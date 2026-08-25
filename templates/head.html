@@ -6,11 +6,22 @@
 <title>$pagetitle$</title>
 <meta name="description" content="$pagedesc$">
 <meta name="author" content="$site.author$">
+<link rel="canonical" href="$pageurl$">
 <meta property="og:type" content="$ogtype$">
-<meta property="og:title" content="$pagetitle$">
+<meta property="og:site_name" content="$site.title$">
+<meta property="og:locale" content="$site.locale$">
+<meta property="og:title" content="$socialtitle$">
 <meta property="og:description" content="$pagedesc$">
 <meta property="og:url" content="$pageurl$">
-$if(feed)$<link rel="alternate" type="application/rss+xml" href="$feed$" title="$pagetitle$">
+$if(socialimage)$<meta property="og:image" content="$socialimage$">
+<meta property="og:image:alt" content="$image_alt$">
+$endif$$for(tags)$<meta property="article:tag" content="$it$">
+$endfor$<meta name="twitter:card" content="$if(socialimage)$summary_large_image$else$summary$endif$">
+<meta name="twitter:title" content="$socialtitle$">
+<meta name="twitter:description" content="$pagedesc$">
+$if(socialimage)$<meta name="twitter:image" content="$socialimage$">
+<meta name="twitter:image:alt" content="$image_alt$">
+$endif$$if(feed)$<link rel="alternate" type="application/rss+xml" href="$feed$" title="$pagetitle$">
 $endif$<script>
   (function () {
     var t = localStorage.getItem('theme');
@@ -33,15 +44,4 @@ $endif$<script>
 <link rel="stylesheet" href="/css/reset.css">
 <link rel="stylesheet" href="/css/style.css">
 <script src="/js/theme.js" defer></script>
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    document.querySelectorAll('a[href]').forEach(function (a) {
-      if (a.hostname && a.hostname !== location.hostname) {
-        a.target = '_blank';
-        a.rel = 'noopener noreferrer';
-      }
-    });
-  });
-</script>
 </head>
-

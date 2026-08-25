@@ -6,16 +6,20 @@ The tools, themes, and influences behind this site.
 
 ## Built with
 
-- [pandoc](https://pandoc.org/) and `make`. The page shapes are pandoc
+- [pandoc](https://pandoc.org/) and `make`.[^pandoc-make] The page shapes are pandoc
   templates. What a template cannot express is a Lua filter
 - Hand-written CSS. No theme, no framework, no JavaScript beyond a theme toggle
 - Built by hand and committed, then served from `main:/docs` by [GitHub
   Pages](https://pages.github.com/)
 - An [RSS feed](/index.xml) of the posts
 
+[^pandoc-make]: Pandoc turns Markdown into HTML. Make records which source files
+    each output needs and rebuilds the affected files.
+
 The site's identity lives in one `site.yaml`: title, base URL, author, locale,
-and the brand split. The front page is a template written out whole, with a loop
-where the recent posts go. Changing the shape of any page means editing an HTML
+and the brand split. The front-page introduction lives in `content/_index.md`.
+Project metadata selects the work shown below it. Recent posts appear only when
+there is something published. Changing the shape of a page means editing an HTML
 file rather than recompiling anything.
 
 Until August 2026 this site was built by [ostat](/projects/ostat/), a static
@@ -27,9 +31,12 @@ lot of friction. ostat is archived now.
 
 ## Typography
 
-The site is set in [ET Book](https://edwardtufte.github.io/et-book/), the
+The site is set in [ET Book](https://edwardtufte.github.io/et-book/),[^et-book] the
 typeface from Edward Tufte's books, served from this domain in three cuts:
 roman, bold, and display italic.
+
+[^et-book]: ET Book is a free digitization of the Bembo-style typeface used in
+    many of Tufte's books.
 
 This is a change. The site used to load no web fonts at all and set everything
 in `system-ui`. Serving a face costs a download that a system font does not, so
@@ -45,46 +52,27 @@ them sets smaller than the prose. The body runs `1.25rem` at every width, with
 no step up on large screens. The page should read like a document, not a
 poster.
 
-Every length is font-relative. The measure is in `ch` and the spacing is in
-`rem`, so one number at the root scales the whole layout the way your browser's
-zoom does.
+The sheet and spacing use `rem`, so browser zoom scales the whole layout.
 
 ## Layout
 
-The page is a sheet, centered in the window, with a band of the page showing at
-either side. Inside it nothing is centered: the text is left aligned and stops
-at its measure, the way it always was.
+The page is a `60rem` sheet centered in the window, with a band of the page
+showing at either side. Text stays left aligned and uses the sheet's full inner
+width.
 
 This used to be the other way around. The page hugged the left margin and
 nothing was centered at all, on the argument that a centered column asks your
 eye to find the text while a left-aligned one puts it where the eye already is.
-That argument holds on a narrow window. On a wide one it strands the column
+That argument holds on a narrow window. On a wide one it strands the sheet
 against one edge and leaves the rest of the display reading as spill. Centering
-the sheet rather than the text keeps both: the column has an edge to sit
-against, and the eye still lands on the first word.
+the sheet gives the text an edge and puts the page where the eye expects it.
 
-Prose is held to a `68ch` measure, and beside it there is a gutter.
+An aside is an inline disclosure. A small number marks the claim. Activating it
+opens the note below the sentence. The behavior does not change with window
+width. Notes are smaller and muted. Their markers and links use a dimmed form of
+the link color.
 
-An aside is a margin note. A small number marks the claim, and the note itself
-sits in the gutter beside it, at the height of the line that raised it. No
-click, no jump to the bottom of the page, and no trip back.
-
-This is the second time these have changed. They began as margin notes, became
-footnotes collected under a rule at the end, and are margin notes again. The
-argument for footnotes was that a note beside a paragraph is a second thing to
-look at while you are still reading the first. The argument against was that the
-trip to the bottom of the page and back costs more attention than the glance
-ever did.
-
-Below about `63em` of window there is no room for a gutter. The note folds: the
-marker becomes a toggle, and tapping it opens the note inline underneath.
-Nothing is lost on a phone. It waits to be asked for.
-
-Notes are set smaller and muted. Links inside them keep the underline without
-the color. A note is apparatus. It should read as a gloss on the page rather
-than as more page.
-
-Photographs sit in the flow. Each one is capped well short of the measure and
+Photographs sit in the flow. Each one is capped well short of the page and
 placed after the passage it illustrates. A picture interrupts the prose without
 becoming the page.
 
@@ -106,20 +94,24 @@ Headings use the `yellow-warmer`, `magenta`, and `cyan` accents from the same
 palettes. Syntax highlighting is drawn from the same set. A code block is tinted
 like the rest of the page instead of carrying a theme of its own.
 
-Highlighting is pandoc's, which lexes about two hundred languages properly. Its
-token names are translated to the Chroma names the stylesheet already carried,
-so the palette above is what colors the code. A token the stylesheet has no rule
-for is left unclassed rather than given a color it never chose.
+Highlighting is pandoc's, which lexes about two hundred languages
+properly.[^lexer] Its token names are translated to the Chroma names the
+stylesheet already carried, so the palette above is what colors the code. A
+token the stylesheet has no rule for is left unclassed rather than given a color
+it never chose.
+
+[^lexer]: A lexer identifies parts of source code such as keywords, strings,
+    and comments. The stylesheet assigns colors to those categories.
 
 Both schemes follow your system preference by default. The toggle overrides it.
 The choice persists in `localStorage`.
 
 ## Design influence
 
-- [Tufte CSS](https://edwardtufte.github.io/tufte-css/): the margin note, and
-  the typeface
-- [gingerBill.org](https://github.com/gingerBill/gingerBill.org): the margin
-  note markup, and the case for a site you assemble yourself
+- [Tufte CSS](https://edwardtufte.github.io/tufte-css/): the typeface and the
+  original note treatment
+- [gingerBill.org](https://github.com/gingerBill/gingerBill.org): the note
+  markup and the case for a site you assemble yourself
 - [andrewkelley.me](https://andrewkelley.me/): the plainness. Left-aligned,
   underlined links, a document rather than a layout
 - [protesilaos.com](https://protesilaos.com/): the Modus palettes above
@@ -131,9 +123,10 @@ it. There is no menu and no banner. A menu on every page is furniture standing
 in front of the thing you came to read. A banner on the home page is the same
 furniture in a bigger typeface.
 
-That makes the home page the way in. It carries where to find me, a short list
-of everywhere else, and the most recent posts. It is one click from anywhere. A
-post climbs to its section. A section climbs home. Home has the rest.
+That makes the home page the way in. It carries an introduction, projects,
+contact details, and a short list of everywhere else. Recent posts appear when
+there are published posts to list. A post climbs to its section. A section
+climbs home. Home has the rest.
 
 ## The feed
 

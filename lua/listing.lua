@@ -1,9 +1,7 @@
 -- Fills a section listing, or the home page's recent list, from the tree.
 --
--- Which one it builds is decided by the `kind` metadata the Makefile passes,
--- because both read the same page set and differ only in what they show. A
--- section listing carries summaries. The home list is five titles under two
--- other sections and carries none.
+-- Which one it builds is decided by the `kind` metadata the Makefile passes.
+-- Sections list their pages. Home selects featured projects and recent posts.
 
 package.path = 'lua/?.lua;' .. package.path
 local content = require 'content'
@@ -17,6 +15,13 @@ local function entry(p, summaries)
   -- who wrote none gets no line rather than an arbitrary one.
   if summaries and p.description then
     e.summary = pandoc.MetaString(p.description)
+  end
+  if p.status then e.status = pandoc.MetaString(p.status) end
+  if p.source then e.source = pandoc.MetaString(p.source) end
+  if p.tags and #p.tags > 0 then
+    local tags = {}
+    for _, tag in ipairs(p.tags) do tags[#tags + 1] = pandoc.MetaString(tag) end
+    e.tags = pandoc.MetaList(tags)
   end
   return pandoc.MetaMap(e)
 end
@@ -32,8 +37,12 @@ function Pandoc(doc)
   local list, summaries = {}, kind == 'section'
   if kind == 'home' then
     local posts = content.section_pages(pages, 'blog')
-    for i = 1, math.min(HOME_RECENT, #posts) do list[i] = entry(posts[i], false) end
-    m.emptytext = pandoc.MetaString('Nothing published yet.')
+    for i = 1, math.min(HOME_RECENT, #posts) do list[i] = entry(posts[i], true) end
+    local projects = {}
+    for _, p in ipairs(content.featured_projects(pages)) do
+      projects[#projects + 1] = entry(p, true)
+    end
+    if #projects > 0 then m.featured_projects = pandoc.MetaList(projects) end
   else
     local section = pandoc.utils.stringify(m.url):match('^/([^/]+)/')
     for _, p in ipairs(content.section_pages(pages, section)) do
@@ -42,11 +51,14 @@ function Pandoc(doc)
     m.emptytext = pandoc.MetaString('Nothing published here yet.')
   end
 
-  if #list == 0 then
+  if #list == 0 and kind ~= 'home' then
     m.empty = pandoc.MetaString('1')
   else
-    m.entries = pandoc.MetaList(list)
-    m.recent = pandoc.MetaList(list)
+    if kind == 'home' then
+      if #list > 0 then m.recent = pandoc.MetaList(list) end
+    else
+      m.entries = pandoc.MetaList(list)
+    end
   end
 
   doc.meta = m

@@ -12,7 +12,7 @@ make                  # build with drafts, into public/
 make serve            # the same, then serve on localhost:1313
 make build            # the published build, into docs/
 make clean            # discard both output trees
-make new t="A Title"  # start a post under content/blog/
+make new              # prompt for a post title
 ```
 
 `PORT` overrides the port. `V=1` prints each pandoc command line instead of a
@@ -47,14 +47,17 @@ builder. Publishing is `make build`, then commit `docs/` and push.
 Changing the shape of a page means editing an HTML file in `templates/`.
 Changing what a page knows about itself means editing `lua/page.lua`.
 
-`templates/home.html` is the front page, written out whole, with a
-`$for(recent)$` loop where the recent posts go.
+`content/_index.md` holds the front-page introduction. `templates/home.html`
+adds featured projects from project front matter and recent posts when any are
+published.
 
 ## Writing a post
 
 ```bash
-make new t="Some Post"
+make new
 ```
+
+The command prompts for the title.
 
 Every post starts as a draft. Front matter is YAML.
 
@@ -63,6 +66,9 @@ Every post starts as a draft. Front matter is YAML.
 title: "Some Post"
 date: 2026-07-12
 draft: true
+tags:
+  - programming
+  - tools
 ---
 ```
 
@@ -71,23 +77,26 @@ draft: true
 | `title` | Required |
 | `date` | Rendered under the title. Required for a post under `blog/`. May carry a time, so a day can hold two posts |
 | `description` | Used for the meta description and for the summary line in a section listing. Falls back to the opening paragraph for the meta tag only |
-| `slug` | Overrides the URL, which otherwise comes from the filename |
 | `draft` | `true` keeps it out of `make build`. `make` shows it anyway |
+| `tags` | A YAML list used beneath article titles. Keep each tag short and lowercase |
+
+The filename owns the URL. Rename the file before publishing if the generated
+slug is not the address you want.
 
 ## Asides
 
-An aside is a margin note, written as a standard Markdown footnote: a marker
-where the claim is, and a definition anywhere in the file.
+An aside is an inline disclosure, written as a standard Markdown footnote. The
+marker stays in the sentence and the definition may live anywhere in the file.
 
 ```markdown
-The measure is `68ch`.[^measure]
+The page uses one reading column.[^column]
 
-[^measure]: Which is wide. It suits a document.
+[^column]: Notes wait behind their numbered markers until the reader opens them.
 ```
 
 The generator emits no numbers. The visible number comes from a CSS counter, so
-the marker and its note cannot drift apart. Below about `63em` of window there
-is no gutter to float into, and the note folds inline behind a toggle.
+the marker and its note cannot drift apart. The same disclosure works at every
+window width.
 
 Note ids are `sn-1`, `sn-2`, numbered by first appearance. Pandoc's reader
 discards the label before a filter can see it, and the id only binds a label to
@@ -113,8 +122,8 @@ absolute, because a feed item is read away from the page it came from.
 ## The look
 
 Set in [ET Book](https://edwardtufte.github.io/et-book/), left aligned inside a
-sheet that is centered in the window, held to a `68ch` measure with a gutter
-beside it for margin notes. Colors come from Protesilaos Stavrou's [Modus
+`60rem` sheet centered in the window. Text fills the sheet's inner width. Colors
+come from Protesilaos Stavrou's [Modus
 themes](https://protesilaos.com/emacs/modus-themes-colors), `modus-operandi` for
 light and `modus-vivendi` for dark, and they carry through to syntax
 highlighting.

@@ -4,12 +4,18 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>vetr0s.dev</title>
-<meta name="description" content="Nathan Tebbs, software engineer. Writing, projects, and a page about who I am.">
+<meta name="description" content="Software engineer interested in systems, tools, and infrastructure.">
 <meta name="author" content="Nathan Tebbs">
+<link rel="canonical" href="https://vetr0s.dev/">
 <meta property="og:type" content="website">
-<meta property="og:title" content="vetr0s.dev">
-<meta property="og:description" content="Nathan Tebbs, software engineer. Writing, projects, and a page about who I am.">
+<meta property="og:site_name" content="vetr0s.dev">
+<meta property="og:locale" content="en-us">
+<meta property="og:title" content="Nathan Tebbs">
+<meta property="og:description" content="Software engineer interested in systems, tools, and infrastructure.">
 <meta property="og:url" content="https://vetr0s.dev/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Nathan Tebbs">
+<meta name="twitter:description" content="Software engineer interested in systems, tools, and infrastructure.">
 <link rel="alternate" type="application/rss+xml" href="https://vetr0s.dev/index.xml" title="vetr0s.dev">
 <script>
   (function () {
@@ -33,18 +39,7 @@
 <link rel="stylesheet" href="/css/reset.css">
 <link rel="stylesheet" href="/css/style.css">
 <script src="/js/theme.js" defer></script>
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    document.querySelectorAll('a[href]').forEach(function (a) {
-      if (a.hostname && a.hostname !== location.hostname) {
-        a.target = '_blank';
-        a.rel = 'noopener noreferrer';
-      }
-    });
-  });
-</script>
-</head>
-<body>
+</head><body>
   <header>
 <nav class="crumbs" aria-label="Breadcrumb">
   <p class="trail">
@@ -54,40 +49,76 @@
 </nav>
   </header>
   <main>
-<section id="find-me">
-  <h1>Find Me</h1>
-  <div class="portrait">
-    <img src="/img/gh_profile.jpg" alt="Nathan Tebbs" width="553" height="553" />
+<section class="home-intro">
+  <h1>Nathan Tebbs</h1>
+  <div class="contact-panel" aria-label="Contact details">
+    <div class="portrait">
+      <img src="/img/gh_profile.jpg" alt="Nathan Tebbs" width="553" height="553" />
+    </div>
+    <dl class="contact-list">
+      <dt>email</dt>
+      <dd><a href="mailto:vetr0s.dev@gmail.com">vetr0s.dev@gmail.com</a></dd>
+      <dt>github</dt>
+      <dd><a rel="me" href="https://github.com/vetr0s">github.com/vetr0s</a></dd>
+      <dt>linkedin</dt>
+      <dd><a rel="me" href="https://www.linkedin.com/in/ntebbs">linkedin.com/in/ntebbs</a></dd>
+      <dt>resume</dt>
+      <dd><a href="/resume.pdf">resume.pdf</a></dd>
+    </dl>
   </div>
-  <dl class="contact-list">
-    <dt>email</dt>
-    <dd><a href="mailto:vetr0s.dev@gmail.com">vetr0s.dev@gmail.com</a></dd>
-    <dt>github</dt>
-    <dd><a href="https://github.com/vetr0s">github.com/vetr0s</a></dd>
-    <dt>linkedin</dt>
-    <dd><a href="https://www.linkedin.com/in/ntebbs">linkedin.com/in/ntebbs</a></dd>
-    <dt>resume</dt>
-    <dd><a href="/resume.pdf">resume.pdf</a></dd>
-  </dl>
+<p>I am a software engineer interested in systems, developer tools, and the
+infrastructure around them. I learn by building small things from first
+principles,<input type="checkbox" id="sn-1" class="margin-toggle" aria-label="Toggle sidenote 1" aria-controls="sn-body-1"><label for="sn-1" class="margin-toggle sidenote-number"></label><span id="sn-body-1" class="sidenote">Recent examples include a C game engine, a TCP relay, and the static-site generator that used to build this page.</span> then writing down which choices held up and which
+did not.</p>
+<p>The work below is a record of those experiments. Some projects are complete.
+Some are paused. Each one taught me something I still use.</p>
+<p><a href="/about/">More about me</a> and <a href="/colophon/">how this site is built</a>.</p>
 </section>
 
-<section id="elsewhere">
-  <h1>Elsewhere</h1>
-  <ul>
-    <li><a href="/about/">about</a></li>
-    <li><a href="/blog/">articles</a></li>
-    <li><a href="/projects/">projects</a></li>
-    <li><a href="/colophon/">colophon</a></li>
-  </ul>
-</section>
-
-<section id="recent">
+<section id="articles">
   <div class="section-head">
-    <h1>Recent Articles</h1>
+    <h1>Articles</h1>
     <a class="rss-badge" href="/index.xml" title="RSS feed">RSS</a>
   </div>
-  <p class="empty">Nothing published yet.</p>
+  <p class="section-intro">Technical notes, side interests, and anything else worth writing down.</p>
+  <article class="post-entry">
+    <h2><a href="/blog/static-site-generator-hell/">Static Site Generator Hell</a></h2>
+    <ul class="tag-list" aria-label="Tags">
+      <li>programming</li>
+      <li>web</li>
+      <li>tools</li>
+    </ul>
+    <p class="entry-summary">I wrote a static site generator in Odin, used it for this site, and replaced it when maintaining the generator displaced the writing.</p>
+    <time datetime="2026-08-25">2026-08-25</time>
+  </article>
+  <p><a href="/blog/">All articles</a></p>
 </section>
+
+<section id="projects">
+  <h1>Projects</h1>
+  <article class="project-entry">
+    <h2><a href="/projects/mach/">Mach and mach.h</a></h2>
+    <p class="project-status">Experiment, paused</p>
+    <p>A factory game and the single-header C engine that grew out of it. A paused experiment in owning a game stack from the renderer up.</p>
+  </article>
+  <article class="project-entry">
+    <h2><a href="/projects/gaterelay/">GateRelay</a></h2>
+    <p class="project-status">Experiment, complete</p>
+    <p>A small TCP relay packaged as a hardened Linux service. The relay was the easy part. The operational envelope was the project.</p>
+  </article>
+  <article class="project-entry">
+    <h2><a href="/projects/difr/">difr</a></h2>
+    <p class="project-status">Experiment, complete</p>
+    <p>A Go command-line tool for golden-file testing. Test cases are folders, expected output is a file, and accepting a change leaves a normal Git diff.</p>
+  </article>
+  <article class="project-entry">
+    <h2><a href="/projects/tucson-crime-analysis/">Tucson crime analysis</a></h2>
+    <p class="project-status">Course project, complete</p>
+    <p>A multivariate study of Tucson crime data, neighborhood income, and streetlight locations. The results showed association, not causation.</p>
+  </article>
+  <p><a href="/projects/">All projects</a></p>
+</section>
+
   </main>
 </body>
 </html>

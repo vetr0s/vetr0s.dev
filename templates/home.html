@@ -4,44 +4,54 @@ $head()$
 $crumbs()$
   </header>
   <main>
-<section id="find-me">
-  <h1>Find Me</h1>
-  <div class="portrait">
-    <img src="/img/gh_profile.jpg" alt="Nathan Tebbs" width="553" height="553" />
+<section class="home-intro">
+  <h1>$title$</h1>
+  <div class="contact-panel" aria-label="Contact details">
+    <div class="portrait">
+      <img src="/img/gh_profile.jpg" alt="Nathan Tebbs" width="553" height="553" />
+    </div>
+    <dl class="contact-list">
+      <dt>email</dt>
+      <dd><a href="mailto:vetr0s.dev@gmail.com">vetr0s.dev@gmail.com</a></dd>
+      <dt>github</dt>
+      <dd><a rel="me" href="https://github.com/vetr0s">github.com/vetr0s</a></dd>
+      <dt>linkedin</dt>
+      <dd><a rel="me" href="https://www.linkedin.com/in/ntebbs">linkedin.com/in/ntebbs</a></dd>
+      <dt>resume</dt>
+      <dd><a href="/resume.pdf">resume.pdf</a></dd>
+    </dl>
   </div>
-  <dl class="contact-list">
-    <dt>email</dt>
-    <dd><a href="mailto:vetr0s.dev@gmail.com">vetr0s.dev@gmail.com</a></dd>
-    <dt>github</dt>
-    <dd><a href="https://github.com/vetr0s">github.com/vetr0s</a></dd>
-    <dt>linkedin</dt>
-    <dd><a href="https://www.linkedin.com/in/ntebbs">linkedin.com/in/ntebbs</a></dd>
-    <dt>resume</dt>
-    <dd><a href="/resume.pdf">resume.pdf</a></dd>
-  </dl>
+$body$
 </section>
 
-<section id="elsewhere">
-  <h1>Elsewhere</h1>
-  <ul>
-    <li><a href="/about/">about</a></li>
-    <li><a href="/blog/">articles</a></li>
-    <li><a href="/projects/">projects</a></li>
-    <li><a href="/colophon/">colophon</a></li>
-  </ul>
-</section>
-
-<section id="recent">
+<section id="articles">
   <div class="section-head">
-    <h1>Recent Articles</h1>
+    <h1>Articles</h1>
     <a class="rss-badge" href="/index.xml" title="RSS feed">RSS</a>
   </div>
-$for(recent)$  <article class="post-entry">
-    <a href="$it.url$">$it.title$</a>
-$if(it.date)$    <time datetime="$it.date$">$it.date$</time>
+  <p class="section-intro">Technical notes, side interests, and anything else worth writing down.</p>
+$if(recent)$$for(recent)$  <article class="post-entry">
+    <h2><a href="$it.url$">$it.title$</a></h2>
+$if(it.tags)$    <ul class="tag-list" aria-label="Tags">
+$for(it.tags)$      <li>$it$</li>
+$endfor$    </ul>
+$endif$$if(it.summary)$    <p class="entry-summary">$it.summary$</p>
+$endif$$if(it.date)$    <time datetime="$it.date$">$it.date$</time>
 $endif$  </article>
-$endfor$$if(empty)$  <p class="empty">$emptytext$</p>
-$endif$</section>
+$endfor$$else$  <p class="empty">The first article is in progress.</p>
+$endif$  <p><a href="/blog/">All articles</a></p>
+</section>
+
+$if(featured_projects)$<section id="projects">
+  <h1>Projects</h1>
+$for(featured_projects)$  <article class="project-entry">
+    <h2><a href="$it.url$">$it.title$</a></h2>
+$if(it.status)$    <p class="project-status">$it.status$</p>
+$endif$$if(it.summary)$    <p>$it.summary$</p>
+$endif$  </article>
+$endfor$  <p><a href="/projects/">All projects</a></p>
+</section>
+$endif$
   </main>
 </body>
 </html>

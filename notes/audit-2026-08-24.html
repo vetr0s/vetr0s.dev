@@ -1,0 +1,433 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Website audit</title>
+<style>
+/* ============================================================
+   Standard HTML house style for plans, audits, and design docs.
+   Deliberately project-agnostic: this never adopts a project's theme.
+   Plain document on a plain background. Legibility over decoration.
+   ============================================================ */
+
+:root {
+  --bg:        #fbfbf9;
+  --fg:        #1a1a1a;
+  --fg-muted:  #5c5c5c;
+  --rule:      #d4d4cf;
+  --surface:   #f0f0ec;
+  --link:      #0b4fa8;
+  --visited:   #6b3fa0;
+  --accent:    #8a5a00;
+  --good:      #1c6b2e;
+  --bad:       #a11b1b;
+  --measure:   72em;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg:       #101010;
+    --fg:       #e6e6e3;
+    --fg-muted: #9a9a95;
+    --rule:     #3a3a3a;
+    --surface:  #1c1c1c;
+    --link:     #89a6ff;
+    --visited:  #d98cff;
+    --accent:   #e0a33a;
+    --good:     #52c96a;
+    --bad:      #ff6b52;
+  }
+}
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--fg);
+  background: var(--bg);
+  margin: 0;
+  padding: 2.5rem 1.25rem 6rem;
+}
+
+/* Left-justified, not centered: the document hugs the left gutter and simply
+   stops at the measure. */
+main, .doc {
+  max-width: var(--measure);
+  margin: 0;
+}
+
+/* --- headings ------------------------------------------------ */
+
+h1, h2, h3, h4 {
+  line-height: 1.25;
+  font-weight: 600;
+  margin: 2.2em 0 0.6em;
+}
+h1 {
+  font-size: 1.9rem;
+  margin-top: 0;
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid var(--rule);
+}
+h2 { font-size: 1.35rem; }
+h3 { font-size: 1.1rem; }
+h4 { font-size: 1rem; color: var(--fg-muted); }
+
+/* Byline directly under the h1: date, repo, commit, author. */
+.meta {
+  color: var(--fg-muted);
+  font-size: 0.875rem;
+  margin: -0.2em 0 2.5em;
+}
+.meta > * + *::before { content: " · "; }
+
+/* --- prose --------------------------------------------------- */
+
+p, ul, ol, dl, table, pre, blockquote { margin: 0 0 1.1em; }
+
+a          { color: var(--link); }
+a:visited  { color: var(--visited); }
+
+strong { font-weight: 600; }
+
+small, .muted { color: var(--fg-muted); font-size: 0.875rem; }
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--rule);
+  margin: 2.5em 0;
+}
+
+blockquote {
+  margin-left: 0;
+  padding: 0.1em 0 0.1em 1em;
+  border-left: 3px solid var(--rule);
+  color: var(--fg-muted);
+}
+
+ul, ol { padding-left: 1.4em; }
+li { margin: 0.25em 0; }
+li > ul, li > ol { margin: 0.25em 0; }
+
+/* --- code ---------------------------------------------------- */
+
+code, kbd, samp, .path {
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.875em;
+}
+
+code {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  padding: 0.1em 0.3em;
+}
+
+/* File paths and identifiers: mono, but no box. */
+.path { color: var(--fg-muted); }
+
+pre {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  padding: 0.75em 0.9em;
+  overflow-x: auto;
+  line-height: 1.45;
+}
+pre code {
+  background: none;
+  border: 0;
+  padding: 0;
+  font-size: 0.8125rem;
+}
+
+/* --- tables -------------------------------------------------- */
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 0.9375rem;
+}
+th, td {
+  border: 1px solid var(--rule);
+  padding: 0.45em 0.7em;
+  text-align: left;
+  vertical-align: top;
+}
+th {
+  background: var(--surface);
+  font-weight: 600;
+}
+
+/* Wide tables scroll inside their own box; the page never scrolls sideways. */
+.scroll { overflow-x: auto; margin: 0 0 1.1em; }
+.scroll table { margin: 0; }
+
+/* --- callouts ------------------------------------------------ */
+
+.note, .warn, .ok {
+  border: 1px solid var(--rule);
+  border-left: 4px solid var(--fg-muted);
+  background: var(--surface);
+  padding: 0.7em 0.9em;
+  margin: 0 0 1.1em;
+}
+.note > :last-child, .warn > :last-child, .ok > :last-child { margin-bottom: 0; }
+.warn { border-left-color: var(--accent); }
+.ok   { border-left-color: var(--good); }
+
+.note-label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+  margin-bottom: 0.3em;
+}
+
+/* --- status tags --------------------------------------------- */
+
+.tag {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.75rem;
+  border: 1px solid currentColor;
+  border-radius: 3px;
+  padding: 0.05em 0.4em;
+  white-space: nowrap;
+  color: var(--fg-muted);
+}
+.tag-good { color: var(--good); }
+.tag-warn { color: var(--accent); }
+.tag-bad  { color: var(--bad); }
+
+/* --- task lists ---------------------------------------------- */
+
+/* <ul class="tasks"> with <li data-state="done|wip|todo"> */
+ul.tasks { list-style: none; padding-left: 0; }
+ul.tasks li {
+  padding-left: 1.9em;
+  position: relative;
+  margin: 0.4em 0;
+}
+ul.tasks li::before {
+  position: absolute;
+  left: 0;
+  font-family: ui-monospace, Menlo, monospace;
+  color: var(--fg-muted);
+  content: "[ ]";
+}
+ul.tasks li[data-state="done"]::before { content: "[x]"; color: var(--good); }
+ul.tasks li[data-state="wip"]::before  { content: "[~]"; color: var(--accent); }
+ul.tasks li[data-state="done"] { color: var(--fg-muted); }
+
+/* --- definition list (decisions, key/value facts) ------------- */
+
+dl { display: grid; grid-template-columns: minmax(8rem, max-content) 1fr; gap: 0.4em 1.2em; }
+dt { font-weight: 600; }
+dd { margin: 0; }
+
+/* --- table of contents --------------------------------------- */
+
+/* <nav class="toc"> wrapping a nested <ol> or <ul> of in-page links. */
+.toc {
+  border: 1px solid var(--rule);
+  background: var(--surface);
+  padding: 0.9em 1.1em;
+  margin: 0 0 2.2em;
+}
+.toc ol, .toc ul { list-style: none; padding-left: 0; margin: 0; }
+.toc li { margin: 0.15em 0; }
+.toc ol ol, .toc ul ul { padding-left: 1.1em; }
+.toc ol ol li, .toc ul ul li { font-size: 0.9375rem; }
+.toc a { text-decoration: none; }
+.toc a:hover { text-decoration: underline; }
+
+/* A long flat contents list reads better in columns once there is room. */
+@media (min-width: 52rem) {
+  .toc > ol, .toc > ul { columns: 2; column-gap: 2.5em; }
+  .toc > ol > li, .toc > ul > li { break-inside: avoid; }
+}
+
+/* Back-to-contents link at the foot of a section. */
+.backtotoc { font-size: 0.8125rem; color: var(--fg-muted); }
+
+/* --- footnotes / source trail -------------------------------- */
+
+.footer {
+  margin-top: 4rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--rule);
+  color: var(--fg-muted);
+  font-size: 0.8125rem;
+}
+
+@media (max-width: 34rem) {
+  body { font-size: 16px; padding: 1.5rem 1rem 4rem; }
+  dl { grid-template-columns: 1fr; gap: 0.15em; }
+  dd { margin-bottom: 0.6em; }
+}
+
+@media print {
+  :root { --bg: #fff; --fg: #000; }
+  body { font-size: 11pt; }
+  a { color: #000; }
+}
+</style>
+</head>
+<body>
+<main>
+
+<h1>Website audit</h1>
+<p class="meta"><span>2026-08-24</span><span>vetr0s.dev @ 347cb40</span><span>Audit</span></p>
+
+<p>The site has a coherent reading experience and a clear visual point of view. Its main weakness is not design polish. It is the gap between Nathan's current engineering work and what the public pages show. Fix the broken build failure handling before the next publish. Then give the homepage a professional introduction and expose two to four current projects.</p>
+
+<nav class="toc">
+  <ol>
+    <li><a href="#scope">Scope</a></li>
+    <li><a href="#solid">What's solid</a></li>
+    <li><a href="#findings">Findings</a></li>
+    <li><a href="#drift">Documentation drift</a></li>
+    <li><a href="#order">Recommended order</a></li>
+    <li><a href="#verification">Verification</a></li>
+  </ol>
+</nav>
+
+<h2 id="scope">Scope</h2>
+
+<p>The audit covered authored content, templates, Lua filters, CSS, JavaScript, metadata, build tooling, and the committed published output. It reviewed content strategy, homepage flow, visual hierarchy, accessibility, navigation, SEO, correctness, and release safety. Generated files under <span class="path">docs/</span> were tested as published output. They were not treated as authored source. Dependencies and third-party font files were excluded. The existing <span class="path">TODO.md</span> was read for context and left untouched.</p>
+
+<div class="warn">
+  <span class="note-label">Visual verification limit</span>
+  The in-app browser was unavailable. The audit checked rendered HTML and responsive CSS rules. It did not complete a live visual pass at desktop and mobile widths.
+</div>
+
+<h2 id="solid">What's solid</h2>
+
+<ul>
+  <li>The 68ch measure, spacing, self-hosted ET Book font, responsive sheet, margin-note gutter, and light and dark palettes form one coherent document aesthetic. See <span class="path">static/css/style.css:49</span>.</li>
+  <li>Typography respects browser zoom and keeps a readable 1.25rem body size. See <span class="path">static/css/style.css:81</span> and <span class="path">static/css/style.css:151</span>.</li>
+  <li>Navigation is sparse and internally consistent. The home page links every main section. Breadcrumbs provide the return path. See <span class="path">templates/home.html:24</span> and <span class="path">templates/crumbs.html:1</span>.</li>
+  <li>The About page has a distinctive story with quantified work and leadership. This is strong personal material. See <span class="path">content/about.md:29</span>.</li>
+  <li>Semantic basics are good. Pages use headings, lists, definition lists, time elements, labeled navigation, image alt text, and descriptive metadata.</li>
+  <li>All 87 root-relative links and asset references in the published HTML resolve. The feeds and sitemap are well-formed XML.</li>
+  <li>The codebase has clear boundaries between content discovery, page metadata, listings, feeds, syntax highlighting, and templates.</li>
+</ul>
+
+<h2 id="findings">Findings</h2>
+
+<div class="scroll">
+<table>
+  <thead>
+    <tr><th>Severity</th><th>Finding</th><th>Where</th><th>Cost and direction</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><span class="tag tag-bad">release blocker</span></td>
+      <td>The build wrapper discards Pandoc's exit status.</td>
+      <td><span class="path">Makefile:63</span><br><span class="path">Makefile:90</span></td>
+      <td>A failed production build can delete the published pages, copy only static assets, print a success-style footer, and exit zero. Preserve the command status and fail immediately. Add a smoke check for expected HTML and XML before a publish can succeed.</td>
+    </tr>
+    <tr>
+      <td><span class="tag tag-warn">high</span></td>
+      <td>The site hides the strongest evidence of current engineering work.</td>
+      <td><span class="path">templates/home.html:7</span><br><span class="path">content/projects/ostat.md:1</span></td>
+      <td>The homepage shows contact links and navigation. The projects section shows one archived tool. The resume names current work that has no site page. Publish two to four current case studies. Put a compact Selected work section on the homepage.</td>
+    </tr>
+    <tr>
+      <td><span class="tag tag-warn">high</span></td>
+      <td>The homepage asks for contact before it explains Nathan's professional focus.</td>
+      <td><span class="path">templates/home.html:7</span><br><span class="path">site.yaml:6</span></td>
+      <td>A new visitor cannot quickly tell what Nathan builds or what role he wants. Lead with a short introduction that names the role, current focus, and one differentiator. Follow it with selected work. Move contact details lower.</td>
+    </tr>
+    <tr>
+      <td><span class="tag tag-warn">medium</span></td>
+      <td>Mobile sidenotes cannot be opened from a keyboard.</td>
+      <td><span class="path">lua/sidenotes.lua:10</span><br><span class="path">static/css/style.css:464</span><br><span class="path">static/css/style.css:504</span></td>
+      <td>The empty label has no accessible name. The checkbox uses <code>display: none</code>. Keyboard and switch users cannot focus the control. Use a real button with expanded-state semantics, or keep a named checkbox visually hidden and focusable. Preserve a readable no-script fallback.</td>
+    </tr>
+    <tr>
+      <td><span class="tag tag-warn">medium</span></td>
+      <td>The documented slug override builds one URL and links another.</td>
+      <td><span class="path">lua/content.lua:49</span><br><span class="path">Makefile:114</span><br><span class="path">README.md:74</span></td>
+      <td>A file named <code>foo.md</code> with <code>slug: bar</code> is listed at <code>/blog/bar/</code> but written to <code>/blog/foo/</code>. Share one canonical slug calculation between output routing and metadata. Remove the documented feature if that shape is not worth the build complexity.</td>
+    </tr>
+    <tr>
+      <td><span class="tag tag-warn">medium</span></td>
+      <td>The homepage promotes an empty articles inventory twice.</td>
+      <td><span class="path">templates/home.html:34</span><br><span class="path">content/blog/_index.md:1</span></td>
+      <td>The home page ends with "Nothing published yet." The primary Articles link reaches the same empty state. Hide Recent Articles until one ships, or replace it with Selected work or a short Now section.</td>
+    </tr>
+    <tr>
+      <td><span class="tag tag-warn">medium</span></td>
+      <td>Every external link is forced into a new tab after load.</td>
+      <td><span class="path">templates/head.html:36</span></td>
+      <td>This overrides normal browser behavior and gives no warning. Keep ordinary prose links in the same tab. Author rare new-tab links explicitly and disclose their behavior.</td>
+    </tr>
+    <tr>
+      <td><span class="tag tag-warn">medium</span></td>
+      <td>There is no active verification for the current generator.</td>
+      <td><span class="path">.github/workflows/deploy.yml.disabled:1</span><br><span class="path">Makefile:74</span></td>
+      <td>The disabled workflow still targets the retired Odin generator. Lua filters, routing, feeds, the sitemap, and build failure behavior have no automated check. Add a small fixture build and verify expected files, local links, XML parsing, draft filtering, and a forced Pandoc failure.</td>
+    </tr>
+    <tr>
+      <td><span class="tag tag-warn">medium</span></td>
+      <td>Complex footnote content disappears without an error.</td>
+      <td><span class="path">lua/sidenotes.lua:18</span><br><span class="path">lua/feed.lua:52</span></td>
+      <td>Only paragraph and plain blocks survive conversion. Lists, code blocks, and block quotes vanish. Reject unsupported note shapes during the build or define a transformation that preserves them.</td>
+    </tr>
+    <tr>
+      <td><span class="tag tag-warn">medium</span></td>
+      <td><code>make new</code> reparses the title as shell syntax.</td>
+      <td><span class="path">Makefile:145</span></td>
+      <td>A title containing a quote can break the command. Shell metacharacters can execute locally. Pass the title through an argument boundary that does not reparse it, or move post creation to a small script.</td>
+    </tr>
+    <tr>
+      <td><span class="tag tag-warn">low</span></td>
+      <td>Shared links lack a deliberate preview image and canonical link.</td>
+      <td><span class="path">templates/head.html:6</span></td>
+      <td>Basic Open Graph metadata is present, but shared pages can render as plain cards. Add a default social image and per-project override after the core content exists. Add a canonical link from the existing page URL.</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h2 id="drift">Documentation drift</h2>
+
+<p><span class="path">static/about.txt:1</span> describes the old Open Sans favicon. The visible site now uses ET Book. The file also leaves the favicon author and license undefined. Update or remove this metadata when the favicon work begins.</p>
+
+<p><span class="path">README.md:20</span> says Pandoc 3 is required but gives no installation path or tested version. This environment did not have Pandoc. The rest of the README matches the current build and publishing model.</p>
+
+<p>The social manifest issue already recorded at <span class="path">TODO.md:100</span> is real. <span class="path">static/site.webmanifest:1</span> has empty names and hardcoded white colors. This audit does not duplicate it as new work.</p>
+
+<h2 id="order">Recommended order of work</h2>
+
+<ul class="tasks">
+  <li data-state="todo">Fix build failure propagation and add output smoke checks.</li>
+  <li data-state="todo">Define the homepage promise in two or three sentences.</li>
+  <li data-state="todo">Publish two to four current project case studies and feature them on home.</li>
+  <li data-state="todo">Remove or replace the empty Recent Articles block until an article ships.</li>
+  <li data-state="todo">Make mobile sidenotes keyboard accessible and stop forcing external links into new tabs.</li>
+  <li data-state="todo">Fix slug routing and harden <code>make new</code>.</li>
+  <li data-state="todo">Add a small build fixture and CI check.</li>
+  <li data-state="todo">Then return to the existing layout, stylesheet, favicon, and writing TODO entries.</li>
+</ul>
+
+<h2 id="verification">Verification</h2>
+
+<p>The audit ran the current build, parsed all published XML, checked local published references, compared copied assets with source assets, and inspected authored and generated markup. The build could not complete because Pandoc is absent. This command still exited zero:</p>
+
+<pre><code>sh: line 1: pandoc: command not found
+...
+0 pages, 0 feeds, 1 sitemap into public/</code></pre>
+
+<p>The committed output had no broken root-relative links. The sitemap contained six published URLs. Both feeds were valid and empty because the only article is a draft. Live browser inspection was not available.</p>
+
+<p class="footer">Sources: authored files under <span class="path">content/</span>, <span class="path">templates/</span>, <span class="path">lua/</span>, and <span class="path">static/</span>; <span class="path">Makefile</span>, <span class="path">README.md</span>, <span class="path">site.yaml</span>, <span class="path">TODO.md</span>, hidden workflow files, and committed output under <span class="path">docs/</span>.</p>
+
+</main>
+</body>
+</html>

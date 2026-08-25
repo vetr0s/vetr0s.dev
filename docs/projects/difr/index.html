@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>difr · vetr0s.dev</title>
+<meta name="description" content="A Go command-line tool for golden-file testing. Test cases are folders, expected output is a file, and accepting a change leaves a normal Git diff.">
+<meta name="author" content="Nathan Tebbs">
+<link rel="canonical" href="https://vetr0s.dev/projects/difr/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="vetr0s.dev">
+<meta property="og:locale" content="en-us">
+<meta property="og:title" content="difr">
+<meta property="og:description" content="A Go command-line tool for golden-file testing. Test cases are folders, expected output is a file, and accepting a change leaves a normal Git diff.">
+<meta property="og:url" content="https://vetr0s.dev/projects/difr/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="difr">
+<meta name="twitter:description" content="A Go command-line tool for golden-file testing. Test cases are folders, expected output is a file, and accepting a change leaves a normal Git diff.">
+<script>
+  (function () {
+    var t = localStorage.getItem('theme');
+    if (t === 'light' || t === 'dark') {
+      document.documentElement.setAttribute('data-theme', t);
+    }
+  })();
+</script>
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<!-- The roman cut starts downloading here, during HTML parse, rather than
+     after the stylesheet is parsed and a glyph is first wanted. font-display
+     is optional, so being ready by first paint is the difference between the
+     page being set in ET Book and being set in Palatino. crossorigin is
+     required on a font preload even same-origin, or the fetch is made twice. -->
+<link rel="preload" href="/font/et-book-roman-line-figures.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/css/reset.css">
+<link rel="stylesheet" href="/css/style.css">
+<script src="/js/theme.js" defer></script>
+</head><body>
+  <header>
+<nav class="crumbs" aria-label="Breadcrumb">
+  <p class="trail">
+    <a href="/">vetr0s<span class="accent">.dev</span></a>
+    <span class="sep">/</span>
+    <a href="/projects/">projects</a>
+  </p>
+  <button id="theme-toggle" type="button" aria-label="Toggle color theme"></button>
+</nav>
+  </header>
+  <main>
+<article>
+  <h1>difr</h1>
+<p>difr is a golden-file test runner for command-line programs. A test case names a
+command, optional standard input, and the output it should produce. difr runs the
+command and shows a line diff when the result changes.</p>
+<p>The update command replaces expected files with actual output. Review then
+happens in version control, where it is visible and reversible. The tool does
+not add an approval database or hide accepted changes in its own format.</p>
+<p>This was a focused experiment in command-line interface design and small Go
+package boundaries. Version 1 is complete. I am not actively extending it.</p>
+<h2>What I worked on</h2>
+<ul>
+<li>Folder-convention test discovery with nested groups and local fixture files</li>
+<li>A longest-common-subsequence line diff with terminal color support</li>
+<li>Separate exit codes for test failures and runner errors</li>
+<li>Interfaces at the two intended extension points: case loading and comparison</li>
+<li>Golden tests for the tool’s own command output</li>
+</ul>
+<p>The small scope was deliberate. Exact standard-output comparison is useful on
+its own, and the package layout leaves room for other comparators without making
+version 1 carry them.</p>
+<ul>
+<li><a href="https://github.com/vetr0s/difr">Source</a></li>
+<li><a href="https://github.com/vetr0s/difr#quickstart">Install and usage</a></li>
+</ul>
+</article>
+  </main>
+</body>
+</html>

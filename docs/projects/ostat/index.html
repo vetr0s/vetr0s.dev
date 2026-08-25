@@ -6,10 +6,16 @@
 <title>ostat · vetr0s.dev</title>
 <meta name="description" content="A static site generator written in Odin. An experiment in building the whole pipeline myself. Archived.">
 <meta name="author" content="Nathan Tebbs">
-<meta property="og:type" content="article">
-<meta property="og:title" content="ostat · vetr0s.dev">
+<link rel="canonical" href="https://vetr0s.dev/projects/ostat/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="vetr0s.dev">
+<meta property="og:locale" content="en-us">
+<meta property="og:title" content="ostat">
 <meta property="og:description" content="A static site generator written in Odin. An experiment in building the whole pipeline myself. Archived.">
 <meta property="og:url" content="https://vetr0s.dev/projects/ostat/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ostat">
+<meta name="twitter:description" content="A static site generator written in Odin. An experiment in building the whole pipeline myself. Archived.">
 <script>
   (function () {
     var t = localStorage.getItem('theme');
@@ -32,18 +38,7 @@
 <link rel="stylesheet" href="/css/reset.css">
 <link rel="stylesheet" href="/css/style.css">
 <script src="/js/theme.js" defer></script>
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    document.querySelectorAll('a[href]').forEach(function (a) {
-      if (a.hostname && a.hostname !== location.hostname) {
-        a.target = '_blank';
-        a.rel = 'noopener noreferrer';
-      }
-    });
-  });
-</script>
-</head>
-<body>
+</head><body>
   <header>
 <nav class="crumbs" aria-label="Breadcrumb">
   <p class="trail">
@@ -84,7 +79,7 @@ output, and a hundred-odd unit tests.</p>
 <p>There was no template language. Every layout was a procedure that wrote HTML
 with <code>write_string</code> and <code>sbprintf</code>, which meant no partials to thread and no
 syntax to learn, and it meant moving a heading was a recompile rather than an
-edit. That was the trade, made deliberately<label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle"><span class="sidenote">The compiler checks the whole thing, which a template language cannot do. Whether that is worth a recompile depends entirely on how often you move headings.</span>.</p>
+edit. That was the trade, made deliberately<input type="checkbox" id="sn-1" class="margin-toggle" aria-label="Toggle sidenote 1" aria-controls="sn-body-1"><label for="sn-1" class="margin-toggle sidenote-number"></label><span id="sn-body-1" class="sidenote">The compiler checks the whole thing, which a template language cannot do. Whether that is worth a recompile depends entirely on how often you move headings.</span>.</p>
 <p>There was no theme system and no plugin API. Everything about the shape of a
 page lived in the generator.</p>
 <h2>Why I wrote it</h2>

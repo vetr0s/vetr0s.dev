@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GateRelay · vetr0s.dev</title>
+<meta name="description" content="A small TCP relay packaged as a hardened Linux service. The relay was the easy part. The operational envelope was the project.">
+<meta name="author" content="Nathan Tebbs">
+<link rel="canonical" href="https://vetr0s.dev/projects/gaterelay/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="vetr0s.dev">
+<meta property="og:locale" content="en-us">
+<meta property="og:title" content="GateRelay">
+<meta property="og:description" content="A small TCP relay packaged as a hardened Linux service. The relay was the easy part. The operational envelope was the project.">
+<meta property="og:url" content="https://vetr0s.dev/projects/gaterelay/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="GateRelay">
+<meta name="twitter:description" content="A small TCP relay packaged as a hardened Linux service. The relay was the easy part. The operational envelope was the project.">
+<script>
+  (function () {
+    var t = localStorage.getItem('theme');
+    if (t === 'light' || t === 'dark') {
+      document.documentElement.setAttribute('data-theme', t);
+    }
+  })();
+</script>
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<!-- The roman cut starts downloading here, during HTML parse, rather than
+     after the stylesheet is parsed and a glyph is first wanted. font-display
+     is optional, so being ready by first paint is the difference between the
+     page being set in ET Book and being set in Palatino. crossorigin is
+     required on a font preload even same-origin, or the fetch is made twice. -->
+<link rel="preload" href="/font/et-book-roman-line-figures.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/css/reset.css">
+<link rel="stylesheet" href="/css/style.css">
+<script src="/js/theme.js" defer></script>
+</head><body>
+  <header>
+<nav class="crumbs" aria-label="Breadcrumb">
+  <p class="trail">
+    <a href="/">vetr0s<span class="accent">.dev</span></a>
+    <span class="sep">/</span>
+    <a href="/projects/">projects</a>
+  </p>
+  <button id="theme-toggle" type="button" aria-label="Toggle color theme"></button>
+</nav>
+  </header>
+  <main>
+<article>
+  <h1>GateRelay</h1>
+<p>GateRelay forwards TCP connections from one public port to one backend target.
+I built it to practice the parts of running a service that a toy program skips.
+Those parts included least privilege, repeatable deployment, useful logs, and a
+runbook for failures.</p>
+<p>The relay is intentionally narrow. It does not terminate TLS, balance traffic,
+or inspect the bytes it carries. Go handles each direction in its own copy loop.
+Connection limits, idle deadlines, graceful shutdown, and structured logs make
+the behavior explicit at the edges.</p>
+<p>This was a completed infrastructure experiment. It is not a service I am
+actively developing.</p>
+<h2>What I worked on</h2>
+<ul>
+<li>Configuration validation that fails before the service starts</li>
+<li>A hard connection cap claimed before work moves to a goroutine</li>
+<li>Activity-based timeouts that move forward on reads and writes</li>
+<li>A dedicated systemd user with capability and syscall restrictions</li>
+<li>Default-deny firewall rules and SSH key-only access</li>
+<li>Deployment, operations, hardening, and threat-model documentation</li>
+</ul>
+<p>The main lesson was that the network loop is a small part of a reliable service.
+Installation, permissions, observability, recovery, and clear limits take most
+of the design work.</p>
+<ul>
+<li><a href="https://github.com/vetr0s/gaterelay">Source</a></li>
+<li><a href="https://github.com/vetr0s/gaterelay/blob/main/deploy/docs/ARCHITECTURE.md">Architecture and threat model</a></li>
+<li><a href="https://github.com/vetr0s/gaterelay/blob/main/deploy/docs/OPERATIONS.md">Operations runbook</a></li>
+</ul>
+</article>
+  </main>
+</body>
+</html>

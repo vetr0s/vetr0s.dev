@@ -9,9 +9,13 @@ $crumbs()$
 $if(feedpath)$    <a class="rss-badge" href="$feedpath$" title="RSS feed">RSS</a>
 $endif$  </div>
 $body$$for(entries)$  <article class="post-entry">
-    <a href="$it.url$">$it.title$</a>
-$if(it.date)$    <time datetime="$it.date$">$it.date$</time>
+    <h2><a href="$it.url$">$it.title$</a></h2>
+$if(it.tags)$    <ul class="tag-list" aria-label="Tags">
+$for(it.tags)$      <li>$it$</li>
+$endfor$    </ul>
+$endif$$if(it.status)$    <p class="entry-status">$it.status$</p>
 $endif$$if(it.summary)$    <p class="entry-summary">$it.summary$</p>
+$endif$$if(it.date)$    <time datetime="$it.date$">$it.date$</time>
 $endif$  </article>
 $endfor$$if(empty)$  <p class="empty">$emptytext$</p>
 $endif$  </main>

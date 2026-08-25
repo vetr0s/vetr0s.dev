@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tucson crime analysis · vetr0s.dev</title>
+<meta name="description" content="A multivariate study of Tucson crime data, neighborhood income, and streetlight locations. The results showed association, not causation.">
+<meta name="author" content="Nathan Tebbs">
+<link rel="canonical" href="https://vetr0s.dev/projects/tucson-crime-analysis/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="vetr0s.dev">
+<meta property="og:locale" content="en-us">
+<meta property="og:title" content="Tucson crime analysis">
+<meta property="og:description" content="A multivariate study of Tucson crime data, neighborhood income, and streetlight locations. The results showed association, not causation.">
+<meta property="og:url" content="https://vetr0s.dev/projects/tucson-crime-analysis/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Tucson crime analysis">
+<meta name="twitter:description" content="A multivariate study of Tucson crime data, neighborhood income, and streetlight locations. The results showed association, not causation.">
+<script>
+  (function () {
+    var t = localStorage.getItem('theme');
+    if (t === 'light' || t === 'dark') {
+      document.documentElement.setAttribute('data-theme', t);
+    }
+  })();
+</script>
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<!-- The roman cut starts downloading here, during HTML parse, rather than
+     after the stylesheet is parsed and a glyph is first wanted. font-display
+     is optional, so being ready by first paint is the difference between the
+     page being set in ET Book and being set in Palatino. crossorigin is
+     required on a font preload even same-origin, or the fetch is made twice. -->
+<link rel="preload" href="/font/et-book-roman-line-figures.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/css/reset.css">
+<link rel="stylesheet" href="/css/style.css">
+<script src="/js/theme.js" defer></script>
+</head><body>
+  <header>
+<nav class="crumbs" aria-label="Breadcrumb">
+  <p class="trail">
+    <a href="/">vetr0s<span class="accent">.dev</span></a>
+    <span class="sep">/</span>
+    <a href="/projects/">projects</a>
+  </p>
+  <button id="theme-toggle" type="button" aria-label="Toggle color theme"></button>
+</nav>
+  </header>
+  <main>
+<article>
+  <h1>Tucson crime analysis</h1>
+<p>This project tested how reported crime in Tucson relates to neighborhood income
+and city streetlight locations. Our team combined four public datasets and used
+regression and classification models to examine two hypotheses.</p>
+<p>Lower median household income was associated with higher crime counts in the
+data. Streetlight count was also positively associated with crime. That second
+result ran against our starting hypothesis. A likely explanation is that lights
+are installed in response to crime or alongside other features of dense areas.
+The data cannot establish cause.</p>
+<h2>What I worked on</h2>
+<ul>
+<li>Cleaning and joining crime, arrest, income, and geospatial datasets</li>
+<li>Exploratory analysis across Tucson police divisions and wards</li>
+<li>Ridge regression, logistic regression, Random Forest, and OLS models</li>
+<li>A written review of reporting bias, sample size, and causal limits</li>
+<li>A reproducible repository with the source datasets and report</li>
+</ul>
+<p>The strongest result was methodological. A model can produce a clear number and
+still support only a narrow claim. The final report separates predictive fit
+from causal interpretation and records where the data is too weak to decide.</p>
+<ul>
+<li><a href="https://github.com/vetr0s/tucson-crime-analysis">Source and methodology</a></li>
+<li><a href="https://github.com/vetr0s/tucson-crime-analysis/blob/main/report/final.pdf">Final report</a></li>
+</ul>
+</article>
+  </main>
+</body>
+</html>

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Static Site Generator Hell · vetr0s.dev</title>
+<meta name="description" content="I wrote a static site generator in Odin, used it for this site, and replaced it when maintaining the generator displaced the writing.">
+<meta name="author" content="Nathan Tebbs">
+<link rel="canonical" href="https://vetr0s.dev/blog/static-site-generator-hell/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="vetr0s.dev">
+<meta property="og:locale" content="en-us">
+<meta property="og:title" content="Static Site Generator Hell">
+<meta property="og:description" content="I wrote a static site generator in Odin, used it for this site, and replaced it when maintaining the generator displaced the writing.">
+<meta property="og:url" content="https://vetr0s.dev/blog/static-site-generator-hell/">
+<meta property="og:image" content="https://vetr0s.dev/static-site-generator-hell.png">
+<meta property="og:image:alt" content="A complex printing machine beside a small press, an empty frame, and a simple binding tool.">
+<meta property="article:tag" content="programming">
+<meta property="article:tag" content="web">
+<meta property="article:tag" content="tools">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Static Site Generator Hell">
+<meta name="twitter:description" content="I wrote a static site generator in Odin, used it for this site, and replaced it when maintaining the generator displaced the writing.">
+<meta name="twitter:image" content="https://vetr0s.dev/static-site-generator-hell.png">
+<meta name="twitter:image:alt" content="A complex printing machine beside a small press, an empty frame, and a simple binding tool.">
+<script>
+  (function () {
+    var t = localStorage.getItem('theme');
+    if (t === 'light' || t === 'dark') {
+      document.documentElement.setAttribute('data-theme', t);
+    }
+  })();
+</script>
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<!-- The roman cut starts downloading here, during HTML parse, rather than
+     after the stylesheet is parsed and a glyph is first wanted. font-display
+     is optional, so being ready by first paint is the difference between the
+     page being set in ET Book and being set in Palatino. crossorigin is
+     required on a font preload even same-origin, or the fetch is made twice. -->
+<link rel="preload" href="/font/et-book-roman-line-figures.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/css/reset.css">
+<link rel="stylesheet" href="/css/style.css">
+<script src="/js/theme.js" defer></script>
+</head><body>
+  <header>
+<nav class="crumbs" aria-label="Breadcrumb">
+  <p class="trail">
+    <a href="/">vetr0s<span class="accent">.dev</span></a>
+    <span class="sep">/</span>
+    <a href="/blog/">articles</a>
+  </p>
+  <button id="theme-toggle" type="button" aria-label="Toggle color theme"></button>
+</nav>
+  </header>
+  <main>
+<article>
+  <h1>Static Site Generator Hell</h1>
+  <time datetime="2026-08-25">August 25, 2026</time>
+  <ul class="tag-list" aria-label="Tags">
+    <li>programming</li>
+    <li>web</li>
+    <li>tools</li>
+  </ul>
+  <figure class="article-hero">
+    <img src="/static-site-generator-hell.png" alt="A complex printing machine beside a small press, an empty frame, and a simple binding tool." width="1942" height="809">
+  </figure>
+<h2>Foreword</h2>
+<p>This site used to be built by a static site generator I wrote in Odin. It
+reached about three thousand lines, had more than a hundred tests, and produced
+every page, feed, and sitemap here. Then I replaced it with Pandoc and Make.</p>
+<p>A static site generator reads source files and writes the finished HTML files a
+web server sends to visitors. It does this work before anyone opens the site.
+There is no application server assembling a page for each request.</p>
+<p>The generator worked. That was not enough reason to keep it.</p>
+<h2>Motivation</h2>
+<p>Hugo built the first version of this site. It was fast and dependable. It was
+also a large program with a template language, a theme system, and a plugin
+model. My site had fewer than ten pages. I could describe every page it needed
+to produce.</p>
+<p>I also wanted to learn Odin through a real project. Odin is a systems programming
+language aimed at direct control over data and memory. A static site generator
+was a good fit. It had file traversal, parsing, allocation, sorting, date
+handling, HTML generation, and enough edge cases to punish a weak design. The
+program ran as one batch job, so two arenas and no individual frees covered
+almost the whole memory strategy.<input type="checkbox" id="sn-1" class="margin-toggle" aria-label="Toggle sidenote 1" aria-controls="sn-body-1"><label for="sn-1" class="margin-toggle sidenote-number"></label><span id="sn-body-1" class="sidenote">One arena held data that lived for the full build. The other was cleared between pages. An arena reserves a region of memory and releases it all at once. The operating system reclaimed both arenas when the process exited.</span></p>
+<p>The goal was not to make a general replacement for Hugo. The goal was to own
+the exact path from my Markdown to the bytes served at vetr0s.dev.</p>
+<h2>What ostat owned</h2>
+<p>The content folders determined the public addresses. A file named <code>_index.md</code>
+became its directory’s section page. Every other Markdown file became a regular
+page. The same scan supplied section listings and the home page. It also built
+the RSS feeds that notify feed readers about new posts. The sitemap listed the
+site’s public pages for search engines.</p>
+<p>The generator also handled notes, syntax highlighting, draft and future
+post filtering, summaries, and dates with enough precision to order two posts
+on one day. A small example site acted as a fixture. Its expected output caught
+changes to the generated files. Unit tests covered the pieces underneath it.</p>
+<p>There was no template language. A template language normally lets a page mix
+HTML with placeholders and loops. Each layout was instead an Odin function that
+wrote HTML. That made page structure explicit. The compiler caught programming
+mistakes in the layout code before the generator ran. It also meant moving a
+heading required changing and rebuilding the generator.<input type="checkbox" id="sn-2" class="margin-toggle" aria-label="Toggle sidenote 2" aria-controls="sn-body-2"><label for="sn-2" class="margin-toggle sidenote-number"></label><span id="sn-body-2" class="sidenote">This trade felt good while the generator was the project. It felt different once I wanted the site itself to be the project.</span></p>
+<h2>What ostat’s ownership model bought</h2>
+<p>The whole system fit in my head. When a URL was wrong, I knew which function had
+made it. When a note needed different markup, I changed the procedure
+that wrote it. There was no framework behavior to discover and no extension
+point to work around.</p>
+<p>That clarity made the generator a useful systems exercise. I learned Odin well
+enough to make design choices instead of translating habits from another
+language. I learned how much simpler allocation becomes when every object has
+the same lifetime. I learned where a static site stops being a set of pages and
+starts being a build graph. A build graph records which outputs depend on which
+inputs. That relationship decides what must be rebuilt after a file changes.</p>
+<p>The project answered the questions I had asked of it.</p>
+<h2>The tradeoffs changed</h2>
+<p>The cost appeared when I tried to work on the site. A new presentation detail
+often meant generator work. A page-level idea crossed into compiled layout code.
+Small changes asked me to reload the whole implementation in my head before I
+could make them confidently.</p>
+<p>None of that made the design wrong. The compiler still checked the layouts.
+The generator still produced the right files. Its benefits had stopped matching
+the work I wanted to do.</p>
+<p>I had written more generator than site. Keeping that ratio would have meant
+spending more time maintaining the path to the writing than writing anything.</p>
+<h2>Replacing ostat</h2>
+<p>Pandoc now turns Markdown into HTML. HTML templates hold the page shapes. Small
+programs written in Lua change the parts that templates cannot express. Make
+records which outputs depend on which source files, then rebuilds only what
+changed.</p>
+<p>The core of the article template is plain HTML with Pandoc placeholders:</p>
+<pre><code class="chroma language-html"><span class="kt">&lt;</span><span class="k">article</span><span class="kt">&gt;</span>
+  <span class="kt">&lt;</span><span class="k">h1</span><span class="kt">&gt;</span>$title$<span class="kt">&lt;/</span><span class="k">h1</span><span class="kt">&gt;</span>
+  $body$
+<span class="kt">&lt;/</span><span class="k">article</span><span class="kt">&gt;</span>
+</code></pre>
+<p>The Makefile connects a Markdown source file to its HTML output. This shortened
+rule shows the relationship:</p>
+<pre><code class="chroma language-makefile"><span class="m">$(OUT)/%/index.html:</span><span class="kt"> content/%.md </span><span class="s">$(</span><span class="kt">DEPS</span><span class="s">)</span>
+<span class="err">    </span>pandoc --template=templates/page.html -o <span class="s">$@</span> <span class="s">$&lt;</span>
+</code></pre>
+<p>Make replaces <code>$&lt;</code> with the source filename and <code>$@</code> with the output filename.
+The rule says that a page must be rebuilt when its Markdown file, template, or
+filter changes.</p>
+<p>This setup is less mine. That is the point. Pandoc owns Markdown parsing and
+syntax highlighting. Make owns incremental builds. I own the content, the HTML,
+the filters specific to this site, and the stylesheet.</p>
+<p>The split puts each change where I expect to find it. Moving a heading means
+editing a template. Changing a note means editing one Lua filter.
+Changing the page width means editing one CSS token. A full production build
+takes a few seconds.</p>
+<h2>What survived</h2>
+<p>The URLs did not change. The content folders still define them. The document
+layout, notes, syntax colors, full-text feeds, and restrained navigation
+all survived. Those were site decisions rather than generator decisions.</p>
+<p>The generator survives too. Its source and releases remain available, and the
+project page records how it worked. I stopped using it because the experiment
+was complete, not because the work was wasted.</p>
+<p>Building a layer yourself can be the right way to learn it. Keeping that layer
+forever is a separate decision.</p>
+</article>
+  </main>
+</body>
+</html>

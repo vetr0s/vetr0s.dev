@@ -32,6 +32,19 @@ local function meta_str(m, k)
   return m[k] and pandoc.utils.stringify(m[k]) or nil
 end
 
+local function meta_list(m, k, src)
+  if not m[k] then return nil end
+  if pandoc.utils.type(m[k]) ~= 'List' then
+    error(src .. ': ' .. k .. ' must be a YAML list, found '
+      .. pandoc.utils.type(m[k]))
+  end
+  local values = {}
+  for _, value in ipairs(m[k]) do
+    values[#values + 1] = pandoc.utils.stringify(value)
+  end
+  return values
+end
+
 local function first_paragraph(blocks)
   for _, b in ipairs(blocks) do
     if b.tag == 'Para' then return pandoc.utils.stringify(b) end
@@ -46,7 +59,10 @@ local function load(src, section)
   local doc = pandoc.read(text, FORMAT)
   local name = src:match('([^/]+)%.md$')
   local is_section = name == '_index'
-  local slug = meta_str(doc.meta, 'slug') or name
+  if doc.meta.slug then
+    error(src .. ': slug is not supported; the filename owns the URL')
+  end
+  local slug = name
 
   local url
   if is_section then
@@ -70,6 +86,10 @@ local function load(src, section)
     date = date,
     sort = date and dates.sortkey(date) or 0,
     draft = doc.meta.draft == true,
+    featured = tonumber(meta_str(doc.meta, 'featured')),
+    status = meta_str(doc.meta, 'status'),
+    source = meta_str(doc.meta, 'source'),
+    tags = meta_list(doc.meta, 'tags', src),
     blocks = doc.blocks,
   }
 end
@@ -97,7 +117,7 @@ function M.all(opts)
       for _, f in ipairs(pandoc.system.list_directory(path)) do
         if f:match('%.md$') then add(path .. '/' .. f, entry) end
       end
-    elseif entry:match('%.md$') and entry ~= '404.md' then
+    elseif entry:match('%.md$') and entry ~= '404.md' and entry ~= '_index.md' then
       -- 404 renders to /404.html, not a directory, and is not a page of the
       -- site. It is built on its own and listed nowhere.
       add(path, nil)
@@ -120,6 +140,19 @@ function M.section_pages(pages, section)
       return a.slug < b.slug
     end)
   end
+  return out
+end
+
+--- Featured projects, in the order chosen in front matter.
+function M.featured_projects(pages)
+  local out = {}
+  for _, p in ipairs(pages) do
+    if p.section == 'projects' and p.featured then out[#out + 1] = p end
+  end
+  table.sort(out, function(a, b)
+    if a.featured ~= b.featured then return a.featured < b.featured end
+    return a.slug < b.slug
+  end)
   return out
 end
 

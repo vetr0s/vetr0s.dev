@@ -65,6 +65,8 @@ function Pandoc(doc)
 
   local title = meta_str(m, 'title') or sitetitle
   local is_home = kind == 'home'
+  local section = url:match('^/([^/]+)/[^/]+/')
+  local own_section = url:match('^/([^/]+)/')
 
   m.pagetitle = pandoc.MetaString(
     is_home and sitetitle or (title .. ' \u{b7} ' .. sitetitle))
@@ -74,12 +76,18 @@ function Pandoc(doc)
              or pandoc.utils.stringify(site.description)
   m.pagedesc = pandoc.MetaString(truncate(desc, DESCRIPTION_LIMIT))
 
-  m.ogtype = pandoc.MetaString(kind == 'page' and 'article' or 'website')
+  m.ogtype = pandoc.MetaString(section == 'blog' and 'article' or 'website')
   m.pageurl = pandoc.MetaString(pandoc.utils.stringify(site.base_url) .. url)
+  m.socialtitle = pandoc.MetaString(title)
+
+  local image = meta_str(m, 'image')
+  if image then
+    if not meta_str(m, 'image_alt') then error('image requires image_alt') end
+    if image:sub(1, 1) == '/' then image = pandoc.utils.stringify(site.base_url) .. image end
+    m.socialimage = pandoc.MetaString(image)
+  end
 
   -- Only the blog publishes a feed, and the home page advertises the same one.
-  local section = url:match('^/([^/]+)/[^/]+/')
-  local own_section = url:match('^/([^/]+)/')
   if is_home then
     m.feed = pandoc.MetaString(pandoc.utils.stringify(site.base_url) .. '/index.xml')
     m.feedpath = pandoc.MetaString('/index.xml')

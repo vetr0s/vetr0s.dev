@@ -10,12 +10,28 @@
     <loc>https://vetr0s.dev/blog/</loc>
   </url>
   <url>
+    <loc>https://vetr0s.dev/blog/static-site-generator-hell/</loc>
+    <lastmod>2026-08-25</lastmod>
+  </url>
+  <url>
     <loc>https://vetr0s.dev/colophon/</loc>
   </url>
   <url>
     <loc>https://vetr0s.dev/projects/</loc>
   </url>
   <url>
+    <loc>https://vetr0s.dev/projects/difr/</loc>
+  </url>
+  <url>
+    <loc>https://vetr0s.dev/projects/gaterelay/</loc>
+  </url>
+  <url>
+    <loc>https://vetr0s.dev/projects/mach/</loc>
+  </url>
+  <url>
     <loc>https://vetr0s.dev/projects/ostat/</loc>
+  </url>
+  <url>
+    <loc>https://vetr0s.dev/projects/tucson-crime-analysis/</loc>
   </url>
 </urlset>

@@ -1,6 +1,7 @@
 ---
 title: "ostat"
 description: "A static site generator written in Odin. An experiment in building the whole pipeline myself. Archived."
+status: "Archived"
 ---
 
 A static site generator written in [Odin](https://odin-lang.org/), modeled

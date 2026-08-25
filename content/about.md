@@ -52,7 +52,7 @@ Award](https://www.firstinspires.org/resources/library/frc/fia-resources).
     where teams build 120-pound robots in 6 weeks.
 
 <figure>
-<img src="/img/cairo_kids.webp" alt="Myself and the teams co-captain at the Cairo STEM school working on FTC robotics kits with our group" />
+<img src="/img/cairo_kids.webp" alt="Myself and the teams co-captain at the Cairo STEM school working on FTC robotics kits with our group" width="1600" height="1200" loading="lazy" decoding="async" />
 <figcaption>Myself and the teams co-captain at the Cairo STEM school working on
 FTC robotics kits with our group.</figcaption>
 </figure>
@@ -64,7 +64,7 @@ put me in charge of all shop, robot, and event safety. In my final year I also
 led the robot build team into the FRC World Championship.
 
 <figure>
-<img src="/img/huston_pit.webp" alt="Our team's pit at the FRC World Championships in Houston" />
+<img src="/img/huston_pit.webp" alt="Our team's pit at the FRC World Championships in Houston" width="1600" height="1200" loading="lazy" decoding="async" />
 <figcaption>Our pit at the FRC World Championships.</figcaption>
 </figure>
 

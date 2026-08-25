@@ -1,8 +1,8 @@
 -- The RSS feed. Blog posts only, each carrying its whole content.
 --
 -- A feed item is read a long way from the page it came from, so the second
--- render differs from the page in two ways: notes become numbered endnotes
--- rather than margin notes, and every site-relative URL is made absolute.
+-- render differs from the page in two ways: disclosures become endnotes, and
+-- every site-relative URL is made absolute.
 -- Absolutising walks the tree rather than rewriting emitted HTML, so it cannot
 -- reach inside a code span and corrupt it.
 
@@ -52,9 +52,10 @@ end
 local function inline_html(blocks)
   local inlines = {}
   for _, b in ipairs(blocks) do
-    if b.tag == 'Para' or b.tag == 'Plain' then
-      for _, i in ipairs(b.content) do inlines[#inlines + 1] = i end
+    if b.tag ~= 'Para' and b.tag ~= 'Plain' then
+      error('feed notes support paragraph content only, found ' .. b.tag)
     end
+    for _, i in ipairs(b.content) do inlines[#inlines + 1] = i end
   end
   return pandoc.write(pandoc.Pandoc({pandoc.Plain(inlines)}), 'html',
     pandoc.WriterOptions{wrap_text = 'wrap-none'}):gsub('%s+$', '')
@@ -109,13 +110,19 @@ function Pandoc(doc)
   local items = {}
   for _, p in ipairs(posts) do
     local permalink = base .. p.url
-    items[#items + 1] = pandoc.MetaMap{
+    local item = {
       title = pandoc.MetaString(p.title),
       link = pandoc.MetaString(permalink),
       pubdate = pandoc.MetaString(dates.rfc822(p.date)),
       body = pandoc.MetaBlocks{
         pandoc.RawBlock('html', xml_escape(item_html(p, permalink, base)))},
     }
+    if p.tags and #p.tags > 0 then
+      local tags = {}
+      for _, tag in ipairs(p.tags) do tags[#tags + 1] = pandoc.MetaString(tag) end
+      item.tags = pandoc.MetaList(tags)
+    end
+    items[#items + 1] = pandoc.MetaMap(item)
   end
 
   if #items > 0 then
