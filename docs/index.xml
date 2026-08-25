@@ -16,7 +16,10 @@
       <category>programming</category>
       <category>web</category>
       <category>tools</category>
-      <description>&lt;h2&gt;Foreword&lt;/h2&gt;
+      <description>&lt;p class=&quot;article-context&quot;&gt;Context: &lt;a href=&quot;https://vetr0s.dev/projects/ostat/&quot;&gt;ostat&lt;/a&gt;, the
+generator this article discusses, and &lt;a href=&quot;https://gohugo.io/&quot;&gt;Hugo&lt;/a&gt;,
+the generator it replaced.&lt;/p&gt;
+&lt;h2&gt;Foreword&lt;/h2&gt;
 &lt;p&gt;This site used to be built by a static site generator I wrote in Odin. It
 reached about three thousand lines, had more than a hundred tests, and produced
 every page, feed, and sitemap here. Then I replaced it with Pandoc and Make.&lt;/p&gt;

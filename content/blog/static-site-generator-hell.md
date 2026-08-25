@@ -9,9 +9,13 @@ tags:
   - tools
 image: /static-site-generator-hell.png
 image_alt: "A complex printing machine beside a small press, an empty frame, and a simple binding tool."
-image_width: 1942
-image_height: 809
+image_width: 1400
+image_height: 583
 ---
+
+<p class="article-context">Context: <a href="/projects/ostat/">ostat</a>, the
+generator this article discusses, and <a href="https://gohugo.io/">Hugo</a>,
+the generator it replaced.</p>
 
 ## Foreword
 

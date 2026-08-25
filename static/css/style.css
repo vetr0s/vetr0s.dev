@@ -399,12 +399,20 @@ main p > img { height: auto; }
 main p > img { max-width: 24rem; }
 
 .article-hero {
-    max-width: none;
+    max-width: 42rem;
+    margin-inline: auto;
 }
 
 .article-hero img {
     width: 100%;
     height: auto;
+}
+
+.article-context {
+    max-width: 42rem;
+    margin-inline: auto;
+    color: var(--color-muted);
+    font-size: 0.85em;
 }
 
 figcaption {
