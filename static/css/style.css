@@ -481,6 +481,24 @@ figcaption {
 .contact-list dd          { margin: 0; }
 .contact-list a           { overflow-wrap: anywhere; }
 
+@media (max-width: 32em) {
+    .contact-panel {
+        grid-template-columns: 1fr;
+        justify-items: center;
+        gap: var(--space-sm);
+    }
+
+    .contact-list {
+        grid-template-columns: 1fr;
+        width: 100%;
+        gap: 0.1em;
+    }
+
+    .contact-list dd {
+        margin-block-end: var(--space-xs);
+    }
+}
+
 /* Tables */
 
 table {
