@@ -36,7 +36,7 @@ function Pandoc(doc)
 
   local list, summaries = {}, kind == 'section'
   if kind == 'home' then
-    local posts = content.section_pages(pages, 'blog')
+    local posts = content.section_pages(pages, 'articles')
     for i = 1, math.min(HOME_RECENT, #posts) do list[i] = entry(posts[i], true) end
     local projects = {}
     for _, p in ipairs(content.featured_projects(pages)) do

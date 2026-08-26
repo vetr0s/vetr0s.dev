@@ -31,7 +31,7 @@ local function first_paragraph(blocks)
   return nil
 end
 
--- A section's crumb is its title, not its directory. /blog/ reads "articles".
+-- A section's crumb is its title, not its directory name.
 local function section_title(section)
   local f = io.open('content/' .. section .. '/_index.md')
   if not f then return section end
@@ -76,7 +76,7 @@ function Pandoc(doc)
              or pandoc.utils.stringify(site.description)
   m.pagedesc = pandoc.MetaString(truncate(desc, DESCRIPTION_LIMIT))
 
-  m.ogtype = pandoc.MetaString(section == 'blog' and 'article' or 'website')
+  m.ogtype = pandoc.MetaString(section == 'articles' and 'article' or 'website')
   m.pageurl = pandoc.MetaString(pandoc.utils.stringify(site.base_url) .. url)
   m.socialtitle = pandoc.MetaString(title)
 
@@ -87,13 +87,13 @@ function Pandoc(doc)
     m.socialimage = pandoc.MetaString(image)
   end
 
-  -- Only the blog publishes a feed, and the home page advertises the same one.
+  -- Only articles publishes a feed, and the home page advertises the same one.
   if is_home then
     m.feed = pandoc.MetaString(pandoc.utils.stringify(site.base_url) .. '/index.xml')
     m.feedpath = pandoc.MetaString('/index.xml')
-  elseif own_section == 'blog' and kind == 'section' then
-    m.feed = pandoc.MetaString(pandoc.utils.stringify(site.base_url) .. '/blog/index.xml')
-    m.feedpath = pandoc.MetaString('/blog/index.xml')
+  elseif own_section == 'articles' and kind == 'section' then
+    m.feed = pandoc.MetaString(pandoc.utils.stringify(site.base_url) .. '/articles/index.xml')
+    m.feedpath = pandoc.MetaString('/articles/index.xml')
   end
 
   if is_home then

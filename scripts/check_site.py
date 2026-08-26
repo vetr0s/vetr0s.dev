@@ -56,14 +56,14 @@ required = [
     "projects/difr/index.html",
     "projects/tucson-crime-analysis/index.html",
     "index.xml",
-    "blog/index.xml",
+    "articles/index.xml",
     "sitemap.xml",
 ]
 for relative in required:
     if not (root / relative).is_file():
         fail(f"missing output: {relative}")
 
-for xml in ("index.xml", "blog/index.xml", "sitemap.xml"):
+for xml in ("index.xml", "articles/index.xml", "sitemap.xml"):
     ET.parse(root / xml)
 
 for page in root.rglob("*.html"):
@@ -99,7 +99,7 @@ if "Recent Articles" in home:
     fail("home page promotes an empty articles section")
 if ">Articles<" not in home:
     fail("home page has no articles section")
-for tag in ("programming", "web", "tools"):
+for tag in ("meta",):
     if f"<li>{tag}</li>" not in home:
         fail(f"home page is missing article tag: {tag}")
 title_at = home.index("<h1>Nathan Tebbs</h1>")
@@ -110,13 +110,13 @@ if not title_at < contact_at < intro_at:
 if "Find Me" in home or 'id="find-me"' in home:
     fail("home page still has a Find Me section")
 
-article = root / "blog/static-site-generator-hell/index.html"
+article = root / "articles/hello-world/index.html"
 article_html = article.read_text(encoding="utf-8")
 if article_html.count('<pre><code class="chroma language-') < 2:
     fail("published article is missing its code examples")
 if 'class="article-hero"' not in article_html:
     fail("published article is missing its header image")
-if 'content="https://vetr0s.dev/static-site-generator-hell.png"' not in article_html:
+if 'content="https://vetr0s.dev/hello-world.png"' not in article_html:
     fail("published article is missing image metadata")
 
 css = (root / "css/style.css").read_text(encoding="utf-8")

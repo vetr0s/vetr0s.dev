@@ -2,7 +2,7 @@
 title: "Static Site Generator Hell"
 description: "I wrote a static site generator in Odin, used it for this site, and replaced it when maintaining the generator displaced the writing."
 date: 2026-08-25
-draft: false
+draft: true
 tags:
   - programming
   - web

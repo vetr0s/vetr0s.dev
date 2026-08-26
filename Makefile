@@ -3,7 +3,7 @@
 #   make            build with drafts and future posts into public/, serve
 #   make build      the published build, into docs/
 #   make clean      discard both output trees
-#   make new        start a post under content/blog/
+#   make new        start a post under content/articles/
 #
 # PORT overrides the port, default 1313. V=1 prints each pandoc command line
 # instead of a label.
@@ -43,7 +43,7 @@ SECTIONS := $(filter %/_index.md,$(LIVE))
 
 OUT_POSTS    := $(patsubst content/%.md,$(OUT)/%/index.html,$(POSTS))
 OUT_SECTIONS := $(patsubst content/%/_index.md,$(OUT)/%/index.html,$(SECTIONS))
-OUT_XML      := $(OUT)/index.xml $(OUT)/blog/index.xml $(OUT)/sitemap.xml
+OUT_XML      := $(OUT)/index.xml $(OUT)/articles/index.xml $(OUT)/sitemap.xml
 
 TEMPLATES := $(wildcard templates/*.html templates/*.xml)
 FILTERS   := $(wildcard lua/*.lua)
@@ -153,9 +153,9 @@ $(OUT)/index.xml: $(SRCS) $(DEPS)
 	  --lua-filter=lua/feed.lua $(FLAGS) -M selfpath=/index.xml -o $@ /dev/null)
 
 # The same document, advertised at both addresses, so the self link differs.
-$(OUT)/blog/index.xml: $(SRCS) $(DEPS)
+$(OUT)/articles/index.xml: $(SRCS) $(DEPS)
 	$(call run,feed,$(PD) --template=templates/rss.xml \
-	  --lua-filter=lua/feed.lua $(FLAGS) -M selfpath=/blog/index.xml -o $@ /dev/null)
+	  --lua-filter=lua/feed.lua $(FLAGS) -M selfpath=/articles/index.xml -o $@ /dev/null)
 
 $(OUT)/sitemap.xml: $(SRCS) $(DEPS)
 	$(call run,map,$(PD) --template=templates/sitemap.xml \

@@ -13,7 +13,7 @@ slug = re.sub(r"[^a-z0-9]+", "-", title.lower()).strip("-")
 if not slug:
     raise SystemExit("title does not contain a URL character")
 
-path = Path("content/blog") / f"{slug}.md"
+path = Path("content/articles") / f"{slug}.md"
 if path.exists():
     raise SystemExit(f"{path} exists")
 

@@ -7,11 +7,11 @@
     <loc>https://vetr0s.dev/about/</loc>
   </url>
   <url>
-    <loc>https://vetr0s.dev/blog/</loc>
+    <loc>https://vetr0s.dev/articles/</loc>
   </url>
   <url>
-    <loc>https://vetr0s.dev/blog/static-site-generator-hell/</loc>
-    <lastmod>2026-08-25</lastmod>
+    <loc>https://vetr0s.dev/articles/hello-world/</loc>
+    <lastmod>2026-08-26</lastmod>
   </url>
   <url>
     <loc>https://vetr0s.dev/colophon/</loc>

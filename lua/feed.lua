@@ -105,7 +105,7 @@ function Pandoc(doc)
   local site = m.site
   local base = pandoc.utils.stringify(site.base_url)
   local pages = content.all{drafts = m.drafts ~= nil, future = m.future ~= nil}
-  local posts = content.section_pages(pages, 'blog')
+  local posts = content.section_pages(pages, 'articles')
 
   local items = {}
   for _, p in ipairs(posts) do

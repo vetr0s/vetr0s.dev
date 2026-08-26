@@ -127,14 +127,14 @@ function M.all(opts)
   return pages
 end
 
---- The pages a section lists. Only the blog is dated, so only it sorts by
+--- The pages a section lists. Only articles are dated, so only they sort by
 --- date. Anything else keeps discovery order, which is alphabetical.
 function M.section_pages(pages, section)
   local out = {}
   for _, p in ipairs(pages) do
     if p.section == section and not p.is_section then out[#out + 1] = p end
   end
-  if section == 'blog' then
+  if section == 'articles' then
     table.sort(out, function(a, b)
       if a.sort ~= b.sort then return a.sort > b.sort end
       return a.slug < b.slug

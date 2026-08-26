@@ -131,7 +131,7 @@ climbs home. Home has the rest.
 ## The feed
 
 [`/index.xml`](/index.xml) carries the posts.
-[`/blog/index.xml`](/blog/index.xml) carries the same ones, so either address
+[`/articles/index.xml`](/articles/index.xml) carries the same ones, so either address
 works in a reader.
 
 An item carries the whole post rather than an excerpt. A feed has no margin and
