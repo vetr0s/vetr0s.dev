@@ -43,7 +43,9 @@ amounted to fixing typos, forgetting to
 [scp](https://en.wikipedia.org/wiki/Secure_copy_protocol) the most recent
 local changes made to the EC2 server, or helping students set up their
 development environments. So overall pretty small potatoes technically
-speaking. But each week I had to do the assignments myself, which was a joy in
+speaking.
+
+But each week I had to do the assignments myself, which was a joy in
 and of itself since the curriculum was pretty different than when I had taken
 it a year prior as a student myself. For example, our capstone project in the
 course when I was a student was an Instagram clone combining AWS EC2, S3, and
@@ -51,6 +53,57 @@ Lambda (or their equivalents). And while the course outcomes stayed the same,
 when I became a TA for the course my students had a bit more of a
 choose-your-own-adventure-style project, where they could opt to build
 something like a Minecraft server on EC2 among a multitude of options.
+
+## HackAZ 2026
+
+In April 2026 I spent 24 hours with three teammates building **GridWise
+Energy**[^gridwise] at [Hack Arizona](https://hack.arizona.edu)[^hackaz], the
+University of Arizona's flagship hackathon, on the AI Environmental
+Sustainability track.
+
+[^hackaz]: Hack Arizona, often shortened to HackAZ, is a 24-hour student-run
+    hackathon held every spring at UofA.
+
+[^gridwise]: The project lives at
+    [github.com/JHGN-ORG/Gridwise-Energy](https://github.com/JHGN-ORG/Gridwise-Energy).
+
+GridWise Energy is a personal electricity carbon footprint tracker for
+Arizona residents. You log usage on your heavy appliances: HVAC, EV charger,
+pool pump, dryer. The app estimates the CO2 those habits cost against the
+local grid mix, tracks real-time grid carbon intensity, and nudges you to
+shift heavy loads to whenever solar and Palo Verde's nuclear baseload are
+carrying more of the load. We shipped it as **Griddaddy** at
+[griddaddy.us](https://griddaddy.us).
+
+The stack is React, TypeScript, and Vite on the frontend, Tailwind and
+shadcn/ui for styling, Vercel serverless functions on the backend, a Neon
+Postgres database, and Auth0 for auth. For the AI half of the track, we wired
+in a Gemini-backed chatbot for usage insights and trained a small ridge
+regression model to forecast grid carbon intensity.
+
+I built it with [Heng-Pok](https://github.com/Heng-Pok), [John
+Imanishimwe](https://github.com/JohnVianme), and
+[Garret](https://github.com/gsw2019).
+
+Please enjoy this picture of us, extremely exhausted after presenting our
+project live in front of the judges and getting little sleep the night
+before.
+
+<figure>
+<img src="/img/hackaz_team.webp" alt="Myself and my three GridWise Energy teammates smiling in front of the Hack Arizona 2026 judging countdown screens, with our project dashboard open on a laptop in front of us" width="1600" height="1200" loading="lazy" decoding="async" />
+<figcaption>The GridWise Energy team at Hack Arizona 2026.</figcaption>
+</figure>
+
+On a more personal note, this experience was amazing, and I hope to do more
+hackathons in the future. All of us were graduating seniors with similar
+technical capabilities, which made working on the team an awesome experience
+where I got to sharpen my communication and project management skills. I
+also got the chance to contribute most of the work on setting up our
+development environment for the project, something I love to do. But I'd say
+the most valuable part of this experience was getting to just prototype,
+iterate, and ship a product in a limited amount of time with a small team.
+This brought me back to high school more than I expected. "Why high school?"
+you ask. Well, keep reading!
 
 ## High School Robotics
 
