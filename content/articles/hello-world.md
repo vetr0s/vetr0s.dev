@@ -50,6 +50,8 @@ int main(int argc, char *argv[])
 }
 ```
 
+ooo... ahhh...
+
 And here's the "modern" C++ version, for anyone who thinks classic C looks a little too
 easy to read:
 
@@ -63,8 +65,6 @@ int main() {
 
 Thirty-some years of committee meetings to get back to one line and a function call.
 Progress!
-
-ooo... ahhh...
 
 ## What's next
 

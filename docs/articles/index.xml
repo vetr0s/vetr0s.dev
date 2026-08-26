@@ -42,6 +42,7 @@ decisions hold up outside a demo. But if you wanna know more check out the
     &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;;
 }
 &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;ooo… ahhh…&lt;/p&gt;
 &lt;p&gt;And here’s the “modern” C++ version, for anyone who thinks classic C looks a little too
 easy to read:&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;chroma language-cpp&quot;&gt;&lt;span class=&quot;k&quot;&gt;import&lt;/span&gt; std;
@@ -52,7 +53,6 @@ easy to read:&lt;/p&gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Thirty-some years of committee meetings to get back to one line and a function call.
 Progress!&lt;/p&gt;
-&lt;p&gt;ooo… ahhh…&lt;/p&gt;
 &lt;h2&gt;What’s next&lt;/h2&gt;
 &lt;p&gt;More articles under &lt;code&gt;/articles/&lt;/code&gt;, written as projects finish rather than
 batched up after the fact. I would rather publish something short and
