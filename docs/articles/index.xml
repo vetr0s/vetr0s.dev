@@ -14,17 +14,52 @@
       <pubDate>Wed, 26 Aug 2026 00:00:00 +0000</pubDate>
       <guid>https://vetr0s.dev/articles/hello-world/</guid>
       <category>meta</category>
-      <description>&lt;p&gt;This is the first published article under &lt;code&gt;/articles/&lt;/code&gt;. Every generator I have
-used for this site starts the same way: a program that prints two words and
-exits.&lt;/p&gt;
-&lt;h2&gt;Python&lt;/h2&gt;
-&lt;pre&gt;&lt;code class=&quot;chroma language-python&quot;&gt;&lt;span class=&quot;nb&quot;&gt;print&lt;/span&gt;(&lt;span class=&quot;s&quot;&gt;&amp;quot;Hello, World&amp;quot;&lt;/span&gt;)
+      <description>&lt;p&gt;This is the &lt;strong&gt;first&lt;/strong&gt; published article under &lt;code&gt;/articles/&lt;/code&gt;. Yippee!&lt;/p&gt;
+&lt;h2&gt;Why I built this site&lt;/h2&gt;
+&lt;p&gt;I wanted one place that points at everything I have made, without a platform
+sitting between the reader and the work. I chose to host it on GitHub mainly
+because I already do most of my public work on there and they have a convenient little thing called GitHub Pages that lets me host the static website publicly under my domain vetr0s.dev. This site’s primary function is to hold the reasoning behind: why a project exists, what it cost, and what I would do differently next time. However, I plan on documenting literally anything that I am nerdy about, not just Computer Science topics… like Music or hiking for example.&lt;/p&gt;
+&lt;p&gt;The site’s build system itself has already gone through a couple different rewrites. It started on Hugo,
+moved to &lt;a href=&quot;https://vetr0s.dev/projects/ostat/&quot;&gt;ostat&lt;/a&gt;, a static site generator I wrote in Odin,
+and now runs on Pandoc and Make. Each move traded one set of tradeoffs for
+another. The &lt;a href=&quot;https://vetr0s.dev/colophon/&quot;&gt;colophon&lt;/a&gt; covers what it runs on today. And, knock on wood, this will be the final iteration of the build system since I actually want to start writing instead of toying around with static site generation, which can be fatiguing after awhile.&lt;/p&gt;
+&lt;h2&gt;What I’m working on&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&quot;https://vetr0s.dev/projects/&quot;&gt;Projects&lt;/a&gt; lists the finished and paused work: &lt;a href=&quot;https://vetr0s.dev/projects/difr/&quot;&gt;&lt;code&gt;difr&lt;/code&gt;&lt;/a&gt;, a
+golden-file test runner; &lt;a href=&quot;https://vetr0s.dev/projects/gaterelay/&quot;&gt;GateRelay&lt;/a&gt;, a hardened TCP relay; Mach, a factory game
+with its own single-header engine; and a crime-data analysis from a data science course I took at University of Arizona that I am particularly proud of.&lt;/p&gt;
+&lt;p&gt;Mach is the one still open, although I am still deciding whether or not to jump ship since the wonders of SDL3 are quite enticing. The engine, &lt;a href=&quot;https://github.com/vetr0s/mach.h&quot;&gt;mach.h&lt;/a&gt;,
+handles rendering, input, audio, and UI. The game is what tests whether those
+decisions hold up outside a demo. But if you wanna know more check out the
+&lt;a href=&quot;https://vetr0s.dev/projects/mach/&quot;&gt;projects page&lt;/a&gt; for it or &lt;a href=&quot;https://github.com/vetr0s/mach&quot;&gt;the github itself&lt;/a&gt;.&lt;/p&gt;
+&lt;h2&gt;Wow! Look at these code blocks!&lt;/h2&gt;
+&lt;p&gt;I spent (too much) time on getting a minimal code block highlighting system to work on the website since I hate the idea of a dependency for just highlighting code on my website. So, dear reader, here you may gaze upon these glorious code blocks, and as a bonus the example fits this article quite well!&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;chroma language-c&quot;&gt;&lt;span class=&quot;kn&quot;&gt;#include &lt;/span&gt;&lt;span class=&quot;kn&quot;&gt;&amp;lt;stdio.h&amp;gt;&lt;/span&gt;
+
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; main(&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; argc, &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; *argv[])
+{
+    printf(&lt;span class=&quot;s&quot;&gt;&amp;quot;Hello, World!&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;&lt;/span&gt;);
+
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;;
+}
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2&gt;Bash&lt;/h2&gt;
-&lt;pre&gt;&lt;code class=&quot;chroma language-bash&quot;&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;Hello, World&amp;quot;&lt;/span&gt;
+&lt;p&gt;And here’s the “modern” C++ version, for anyone who thinks classic C looks a little too
+easy to read:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;chroma language-cpp&quot;&gt;&lt;span class=&quot;k&quot;&gt;import&lt;/span&gt; std;
+
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; main() {
+    &lt;span class=&quot;nb&quot;&gt;std::&lt;/span&gt;print(&lt;span class=&quot;s&quot;&gt;&amp;quot;Hello, World!&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;&lt;/span&gt;);
+}
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Two languages, two runtimes, one output. That is as complicated as this post
-gets.&lt;/p&gt;</description>
+&lt;p&gt;Thirty-some years of committee meetings to get back to one line and a function call.
+Progress!&lt;/p&gt;
+&lt;p&gt;ooo… ahhh…&lt;/p&gt;
+&lt;h2&gt;What’s next&lt;/h2&gt;
+&lt;p&gt;More articles under &lt;code&gt;/articles/&lt;/code&gt;, written as projects finish rather than
+batched up after the fact. I would rather publish something short and
+specific than sit on a long post until it feels finished.&lt;/p&gt;
+&lt;p&gt;I am playing around with a couple ideas for articles. Currently leaning towards a deeper dive into the static site generation stuff since I definitely learned a whole lot!&lt;/p&gt;
+&lt;h2&gt;A closing note&lt;/h2&gt;
+&lt;p&gt;Thanks for reading the first thing published here. There will be more… I promise!&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>
