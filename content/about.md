@@ -2,9 +2,8 @@
 title: "About"
 ---
 
-Hi! I'm Nathan. Thank you for checking out my site. The majority of the content
-I publish here is technical, so this page is your chance to learn a little more
-about me.
+Hi! You made it past the home page! I really appreciate your interest. As a reward,
+I give you this page, which is your opportunity to learn a *little* more about me.
 
 ## Education
 
@@ -19,12 +18,39 @@ program.
 [^running-start]: Running Start lets Washington high schoolers take community
     college classes for joint credit, tuition-free.
 
+Notably, this is where I took my first real-deal programming courses, which
+eventually allowed me to skip CSc 110 and 120 (the basic intro courses at UofA).
+
+### Undergraduate Teaching Assistantship
+
 During Spring 2025 I worked as a Teaching Assistant for CSc 346: Cloud
 Computing[^csc-346] at the [University of Arizona](https://www.cs.arizona.edu/).
 
 [^csc-346]: CSc 346 covers [cloud
     computing](https://en.wikipedia.org/wiki/Cloud_computing) fundamentals:
     IaaS, PaaS, SaaS, and hands-on work with major providers.
+
+This not only strengthened my experience working with cloud technologies and
+providers, but it also taught me how to communicate better. Every week that
+semester, I had the chance to host office hours for students who needed help
+either understanding the content of the course or debugging issues within
+their projects. During these sessions, I would help around 2-4 students in a
+2-hour time window. Funnily enough, my office hours were held the day before
+the weekly homework was due, so they became each student's last-ditch effort
+to get a decent grade on that week's homework. That was an interesting
+experience, to say the least. But I loved doing it. Most of the debugging work
+amounted to fixing typos, forgetting to
+[scp](https://en.wikipedia.org/wiki/Secure_copy_protocol) the most recent
+local changes made to the EC2 server, or helping students set up their
+development environments. So overall pretty small potatoes technically
+speaking. But each week I had to do the assignments myself, which was a joy in
+and of itself since the curriculum was pretty different than when I had taken
+it a year prior as a student myself. For example, our capstone project in the
+course when I was a student was an Instagram clone combining AWS EC2, S3, and
+Lambda (or their equivalents). And while the course outcomes stayed the same,
+when I became a TA for the course my students had a bit more of a
+choose-your-own-adventure-style project, where they could opt to build
+something like a Minecraft server on EC2 among a multitude of options.
 
 ## High School Robotics
 
