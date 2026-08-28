@@ -137,11 +137,5 @@ building things.
 "glass" or "windowpane."
 
 The `0` is [leet](https://en.wikipedia.org/wiki/Leet), because hackers have cool
-nicknames with numbers in them.
-
-The plural is also a small nod to [open-source
-software](https://opensource.org/). This site is a collection of windows into
-the things I build.
-
-As a bonus, I get the same username everywhere and don't have to pay for a
-popular domain name.
+nicknames with numbers in them. As a bonus, I get the same username everywhere
+and don't have to pay for a popular domain name.
