@@ -22,19 +22,20 @@ time. However, I plan on documenting anything I find myself getting nerdy about,
 like music or hiking.
 
 The site's build system has already gone through a couple of rewrites. It
-started on Hugo, moved to [ostat](/projects/ostat/), a static site
-generator I wrote in Odin, and now runs on Pandoc and Make. The
-[colophon](/colophon/) explains how the site is built today. I hope this is the
-final build-system rewrite because I want to write instead of tinkering with
-static-site generation.
+started on Hugo, moved to [ostat](/projects/ostat/), a static site generator I
+wrote in Odin, and now runs on Pandoc and Make. The [colophon](/colophon/)
+explains how the site is built today. I hope this is the final build-system
+rewrite because I want to write instead of tinkering with static-site
+generation.
 
 ## What I'm working on
 
 [Projects](/projects/) lists the finished and paused work:
 [`difr`](/projects/difr/), a golden-file test runner;
-[GateRelay](/projects/gaterelay/), a hardened TCP relay; [Mach](/projects/mach/), a factory game
-with its own single-header engine; and a crime-data analysis from a data science
-course I took at the University of Arizona that I am particularly proud of.
+[GateRelay](/projects/gaterelay/), a hardened TCP relay;
+[Mach](/projects/mach/), a factory game with its own single-header engine; and a
+crime-data analysis from a data science course I took at the University of
+Arizona that I am particularly proud of.
 
 Mach is still active, though I may switch it to SDL3. Its engine,
 [mach.h](https://github.com/vetr0s/mach.h), handles rendering, input, audio, and
@@ -44,10 +45,9 @@ repository](https://github.com/vetr0s/mach).
 
 ## Wow! Look at these code blocks!
 
-That's about it for this blog post. I still want to show off at least one visual
-feature. I spent too much time getting a minimal code-block highlighting system
-to work. So... here you may gaze upon these glorious code blocks. As a bonus,
-the example fits this article quite well!
+I spent too much time getting a minimal code-block
+highlighting system to work. So... here you may gaze upon these glorious code
+blocks. As a bonus, the example fits this article quite well!
 
 ```c
 #include <stdio.h>

@@ -22,27 +22,27 @@ explain why a project exists, what it cost, and what I would do differently next
 time. However, I plan on documenting anything I find myself getting nerdy about,
 like music or hiking.&lt;/p&gt;
 &lt;p&gt;The site’s build system has already gone through a couple of rewrites. It
-started on Hugo, moved to &lt;a href=&quot;https://vetr0s.dev/projects/ostat/&quot;&gt;ostat&lt;/a&gt;, a static site
-generator I wrote in Odin, and now runs on Pandoc and Make. The
-&lt;a href=&quot;https://vetr0s.dev/colophon/&quot;&gt;colophon&lt;/a&gt; explains how the site is built today. I hope this is the
-final build-system rewrite because I want to write instead of tinkering with
-static-site generation.&lt;/p&gt;
+started on Hugo, moved to &lt;a href=&quot;https://vetr0s.dev/projects/ostat/&quot;&gt;ostat&lt;/a&gt;, a static site generator I
+wrote in Odin, and now runs on Pandoc and Make. The &lt;a href=&quot;https://vetr0s.dev/colophon/&quot;&gt;colophon&lt;/a&gt;
+explains how the site is built today. I hope this is the final build-system
+rewrite because I want to write instead of tinkering with static-site
+generation.&lt;/p&gt;
 &lt;h2&gt;What I’m working on&lt;/h2&gt;
 &lt;p&gt;&lt;a href=&quot;https://vetr0s.dev/projects/&quot;&gt;Projects&lt;/a&gt; lists the finished and paused work:
 &lt;a href=&quot;https://vetr0s.dev/projects/difr/&quot;&gt;&lt;code&gt;difr&lt;/code&gt;&lt;/a&gt;, a golden-file test runner;
-&lt;a href=&quot;https://vetr0s.dev/projects/gaterelay/&quot;&gt;GateRelay&lt;/a&gt;, a hardened TCP relay; &lt;a href=&quot;https://vetr0s.dev/projects/mach/&quot;&gt;Mach&lt;/a&gt;, a factory game
-with its own single-header engine; and a crime-data analysis from a data science
-course I took at the University of Arizona that I am particularly proud of.&lt;/p&gt;
+&lt;a href=&quot;https://vetr0s.dev/projects/gaterelay/&quot;&gt;GateRelay&lt;/a&gt;, a hardened TCP relay;
+&lt;a href=&quot;https://vetr0s.dev/projects/mach/&quot;&gt;Mach&lt;/a&gt;, a factory game with its own single-header engine; and a
+crime-data analysis from a data science course I took at the University of
+Arizona that I am particularly proud of.&lt;/p&gt;
 &lt;p&gt;Mach is still active, though I may switch it to SDL3. Its engine,
 &lt;a href=&quot;https://github.com/vetr0s/mach.h&quot;&gt;mach.h&lt;/a&gt;, handles rendering, input, audio, and
 UI. The game tests those decisions outside a demo. For more, see the &lt;a href=&quot;https://vetr0s.dev/projects/mach/&quot;&gt;Mach
 project page&lt;/a&gt; or &lt;a href=&quot;https://github.com/vetr0s/mach&quot;&gt;GitHub
 repository&lt;/a&gt;.&lt;/p&gt;
 &lt;h2&gt;Wow! Look at these code blocks!&lt;/h2&gt;
-&lt;p&gt;That’s about it for this blog post. I still want to show off at least one visual
-feature. I spent too much time getting a minimal code-block highlighting system
-to work. So… here you may gaze upon these glorious code blocks. As a bonus,
-the example fits this article quite well!&lt;/p&gt;
+&lt;p&gt;I spent too much time getting a minimal code-block
+highlighting system to work. So… here you may gaze upon these glorious code
+blocks. As a bonus, the example fits this article quite well!&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;chroma language-c&quot;&gt;&lt;span class=&quot;kn&quot;&gt;#include &lt;/span&gt;&lt;span class=&quot;kn&quot;&gt;&amp;lt;stdio.h&amp;gt;&lt;/span&gt;
 
 &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; main(&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; argc, &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; *argv[])
