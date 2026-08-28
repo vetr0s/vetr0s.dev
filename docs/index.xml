@@ -14,25 +14,35 @@
       <pubDate>Wed, 26 Aug 2026 00:00:00 +0000</pubDate>
       <guid>https://vetr0s.dev/articles/hello-world/</guid>
       <category>meta</category>
-      <description>&lt;p&gt;This is the &lt;strong&gt;first&lt;/strong&gt; published article under &lt;code&gt;/articles/&lt;/code&gt;. Yippee!&lt;/p&gt;
+      <description>&lt;p&gt;This is the &lt;strong&gt;first&lt;/strong&gt; published article under &lt;code&gt;/articles/&lt;/code&gt;. Hooray!&lt;/p&gt;
 &lt;h2&gt;Why I built this site&lt;/h2&gt;
 &lt;p&gt;I wanted one place that points at everything I have made, without a platform
-sitting between the reader and the work. I chose to host it on GitHub mainly
-because I already do most of my public work there, and they have a convenient little thing called GitHub Pages that lets me host the static website publicly under my domain vetr0s.dev. This site’s primary function is to hold the reasoning behind: why a project exists, what it cost, and what I would do differently next time. However, I plan on documenting literally anything that I am nerdy about, not just Computer Science topics… like music or hiking, for example.&lt;/p&gt;
-&lt;p&gt;The site’s build system itself has already gone through a couple different rewrites. It started on Hugo,
-moved to &lt;a href=&quot;https://vetr0s.dev/projects/ostat/&quot;&gt;ostat&lt;/a&gt;, a static site generator I wrote in Odin,
-and now runs on Pandoc and Make. Each move traded one set of tradeoffs for
-another. The &lt;a href=&quot;https://vetr0s.dev/colophon/&quot;&gt;colophon&lt;/a&gt; covers what it runs on today. And, knock on wood, this will be the final iteration of the build system since I actually want to start writing instead of toying around with static site generation, which can be fatiguing after a while.&lt;/p&gt;
+sitting between the reader and the work. This site’s primary function is to
+explain why a project exists, what it cost, and what I would do differently next
+time. However, I plan on documenting anything I find myself getting nerdy about,
+like music or hiking.&lt;/p&gt;
+&lt;p&gt;The site’s build system has already gone through a couple of rewrites. It
+started on Hugo, moved to &lt;a href=&quot;https://vetr0s.dev/projects/ostat/&quot;&gt;ostat&lt;/a&gt;, a static site
+generator I wrote in Odin, and now runs on Pandoc and Make. The
+&lt;a href=&quot;https://vetr0s.dev/colophon/&quot;&gt;colophon&lt;/a&gt; explains how the site is built today. I hope this is the
+final build-system rewrite because I want to write instead of tinkering with
+static-site generation.&lt;/p&gt;
 &lt;h2&gt;What I’m working on&lt;/h2&gt;
-&lt;p&gt;&lt;a href=&quot;https://vetr0s.dev/projects/&quot;&gt;Projects&lt;/a&gt; lists the finished and paused work: &lt;a href=&quot;https://vetr0s.dev/projects/difr/&quot;&gt;&lt;code&gt;difr&lt;/code&gt;&lt;/a&gt;, a
-golden-file test runner; &lt;a href=&quot;https://vetr0s.dev/projects/gaterelay/&quot;&gt;GateRelay&lt;/a&gt;, a hardened TCP relay; Mach, a factory game
-with its own single-header engine; and a crime-data analysis from a data science course I took at University of Arizona that I am particularly proud of.&lt;/p&gt;
-&lt;p&gt;Mach is the one still open, although I am still deciding whether or not to jump ship since the wonders of SDL3 are quite enticing. The engine, &lt;a href=&quot;https://github.com/vetr0s/mach.h&quot;&gt;mach.h&lt;/a&gt;,
-handles rendering, input, audio, and UI. The game is what tests whether those
-decisions hold up outside a demo. But if you wanna know more, check out the
-&lt;a href=&quot;https://vetr0s.dev/projects/mach/&quot;&gt;projects page&lt;/a&gt; for it or &lt;a href=&quot;https://github.com/vetr0s/mach&quot;&gt;the github itself&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://vetr0s.dev/projects/&quot;&gt;Projects&lt;/a&gt; lists the finished and paused work:
+&lt;a href=&quot;https://vetr0s.dev/projects/difr/&quot;&gt;&lt;code&gt;difr&lt;/code&gt;&lt;/a&gt;, a golden-file test runner;
+&lt;a href=&quot;https://vetr0s.dev/projects/gaterelay/&quot;&gt;GateRelay&lt;/a&gt;, a hardened TCP relay; &lt;a href=&quot;https://vetr0s.dev/projects/mach/&quot;&gt;Mach&lt;/a&gt;, a factory game
+with its own single-header engine; and a crime-data analysis from a data science
+course I took at the University of Arizona that I am particularly proud of.&lt;/p&gt;
+&lt;p&gt;Mach is still active, though I may switch it to SDL3. Its engine,
+&lt;a href=&quot;https://github.com/vetr0s/mach.h&quot;&gt;mach.h&lt;/a&gt;, handles rendering, input, audio, and
+UI. The game tests those decisions outside a demo. For more, see the &lt;a href=&quot;https://vetr0s.dev/projects/mach/&quot;&gt;Mach
+project page&lt;/a&gt; or &lt;a href=&quot;https://github.com/vetr0s/mach&quot;&gt;GitHub
+repository&lt;/a&gt;.&lt;/p&gt;
 &lt;h2&gt;Wow! Look at these code blocks!&lt;/h2&gt;
-&lt;p&gt;I spent (too much) time getting a minimal code block highlighting system to work on the website since I hate the idea of a dependency for just highlighting code on my website. So, dear reader, here you may gaze upon these glorious code blocks, and as a bonus the example fits this article quite well!&lt;/p&gt;
+&lt;p&gt;That’s about it for this blog post. I still want to show off at least one visual
+feature. I spent too much time getting a minimal code-block highlighting system
+to work. So… here you may gaze upon these glorious code blocks. As a bonus,
+the example fits this article quite well!&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;chroma language-c&quot;&gt;&lt;span class=&quot;kn&quot;&gt;#include &lt;/span&gt;&lt;span class=&quot;kn&quot;&gt;&amp;lt;stdio.h&amp;gt;&lt;/span&gt;
 
 &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; main(&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; argc, &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; *argv[])
@@ -42,24 +52,22 @@ decisions hold up outside a demo. But if you wanna know more, check out the
     &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;;
 }
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;ooo… ahhh…&lt;/p&gt;
-&lt;p&gt;And here’s the “modern” C++ version, for anyone who thinks classic C looks a little too
-easy to read:&lt;/p&gt;
+&lt;p&gt;Ooh. Ahh.&lt;/p&gt;
+&lt;p&gt;And here’s the “modern” C++ version:&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;chroma language-cpp&quot;&gt;&lt;span class=&quot;k&quot;&gt;import&lt;/span&gt; std;
 
 &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; main() {
     &lt;span class=&quot;nb&quot;&gt;std::&lt;/span&gt;print(&lt;span class=&quot;s&quot;&gt;&amp;quot;Hello, World!&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;&lt;/span&gt;);
 }
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Thirty-some years of committee meetings to get back to one line and a function call.
-Progress!&lt;/p&gt;
+&lt;p&gt;Thirty-some years of committee meetings to get back to one line and a function
+call. Progress!&lt;/p&gt;
 &lt;h2&gt;What’s next&lt;/h2&gt;
-&lt;p&gt;More articles under &lt;code&gt;/articles/&lt;/code&gt;, written as projects finish rather than
-batched up after the fact. I would rather publish something short and
-specific than sit on a long post until it feels finished.&lt;/p&gt;
-&lt;p&gt;I am playing around with a couple ideas for articles. I’m currently leaning towards a deeper dive into the static site generation stuff since I definitely learned a whole lot!&lt;/p&gt;
+&lt;p&gt;More articles are on the way! I am playing around with a couple of ideas. I’m
+leaning toward a deeper dive into static-site generation or the work I did this
+summer on Mach. I learned a lot from both projects. We shall see!&lt;/p&gt;
 &lt;h2&gt;A closing note&lt;/h2&gt;
-&lt;p&gt;Thanks for reading the first thing published here. There will be more… I promise!&lt;/p&gt;</description>
+&lt;p&gt;Thanks for reading the first thing published here.&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>
