@@ -1,6 +1,6 @@
 ---
 title: "Hello, World"
-description: "The first published article on the rebuilt site."
+description: "The first published article on site."
 date: 2026-08-26
 draft: false
 tags:
