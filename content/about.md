@@ -14,10 +14,6 @@ Start](https://en.wikipedia.org/wiki/Running_Start)[^running-start] program.
     community college courses for both high school and college credit,
     tuition-free.
 
-I took my first real programming courses at [SPSCC](https://spscc.edu/). Those
-courses later let me skip CSc 110 and 120, Arizona's introductory programming
-sequence. Both courses used Java.
-
 ### Undergraduate teaching assistant
 
 In Spring 2025, I worked as a Teaching Assistant for CSc 346: Cloud Computing at
@@ -56,7 +52,7 @@ of the grid.
 We shipped it at [griddaddy.us](https://griddaddy.us).
 
 > We chose a less serious name because one of the hackathon prizes was for the
-> most creative or funny name. We decided to take a page from [Scrub
+> most creative or funny name. So we decided to take inspiration from [Scrub
 > Daddy](https://scrubdaddy.com/).
 
 The stack included [React](https://react.dev/),
