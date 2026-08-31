@@ -14,6 +14,7 @@
 MODE ?= dev
 PORT ?= 1313
 PANDOC ?= pandoc
+CSS_REPO ?= ../vetr0s-css
 
 ifeq ($(MODE),prod)
   OUT   := docs
@@ -24,6 +25,7 @@ else
 endif
 
 SRCS := $(wildcard content/*.md content/*/*.md)
+CSS_FILES := css/reset.css css/style.css js/theme.js
 
 # A published build skips drafts and posts dated ahead of today. A dev build
 # shows both, because it is for looking at the thing rather than for checking
@@ -72,7 +74,7 @@ define run
   rm -f "$$err_file"
 endef
 
-.PHONY: all banner build check check-tools serve clean clean-out copy-static new
+.PHONY: all banner build check check-tools serve clean clean-out copy-static new sync-css
 .SUFFIXES:
 
 all: check-tools banner $(OUT)/index.html $(OUT_POSTS) $(OUT_SECTIONS) $(OUT_XML) \
@@ -129,6 +131,13 @@ copy-static:
 	@printf '  %-6s %s files from static/\n' copy \
 	  "$$(find static -type f | wc -l | tr -d ' ')"
 	@cp -R static/. $(OUT)/
+
+sync-css:
+	@for file in $(CSS_FILES); do \
+	  test -f "$(CSS_REPO)/$$file" || { echo "missing $(CSS_REPO)/$$file" >&2; exit 1; }; \
+	done
+	@for file in $(CSS_FILES); do cp "$(CSS_REPO)/$$file" "static/$$file"; done
+	@printf 'synced %s files from %s\n' "$$(echo $(CSS_FILES) | wc -w | tr -d ' ')" "$(CSS_REPO)"
 
 $(OUT)/%/index.html: content/%.md $(DEPS)
 	$(call run,page,$(PD) --template=templates/page.html $(NOTES) \
