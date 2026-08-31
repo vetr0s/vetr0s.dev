@@ -37,10 +37,9 @@ generation.
 crime-data analysis from a data science course I took at the University of
 Arizona that I am particularly proud of.
 
-Mach is still active, though I may switch it to SDL3. Its engine,
-[mach.h](https://github.com/vetr0s/mach.h), handles rendering, input, audio, and
-UI. The game tests those decisions outside a demo. For more, see the [Mach
-project page](/projects/mach/) or [GitHub
+Mach is paused. Its engine, [mach.h](https://github.com/vetr0s/mach.h), handles
+rendering, input, audio, and UI. The game tests those decisions outside a demo.
+For more, see the [Mach project page](/projects/mach/) or [GitHub
 repository](https://github.com/vetr0s/mach).
 
 ## Wow! Look at these code blocks!

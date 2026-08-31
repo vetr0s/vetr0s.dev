@@ -2,6 +2,25 @@
 title: "About"
 ---
 
+## Work
+
+### Sound Psychiatric Services
+
+I have worked as a contract software engineer for Sound Psychiatric Services
+since January 2021. I started at sixteen with front-end work on the practice's
+public website. The site directs existing patients to its payment and telehealth
+portals and gives prospective patients the information they need before a visit.
+
+Once I started college, the work shifted toward migrations and internal
+software support. I moved the website from a paid Squarespace plan to a static
+site while keeping the existing domain and email in place. I now maintain that
+site, manage small system migrations, and support custom in-house software.
+
+One of those tools reads serial data from medical scale hardware and shows a
+live weight on a PC. I built it after the scale's original display failed. Work
+like this has taught me how to change small systems without disrupting the
+people who depend on them.
+
 ## Education
 
 I graduated from the [University of Arizona](https://www.arizona.edu/) in May

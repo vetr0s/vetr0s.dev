@@ -4,18 +4,18 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Colophon · vetr0s.dev</title>
-<meta name="description" content="The tools, themes, and influences behind this site.">
+<meta name="description" content="The design lineage and publishing system behind this site.">
 <meta name="author" content="Nathan Tebbs">
 <link rel="canonical" href="https://vetr0s.dev/colophon/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="vetr0s.dev">
 <meta property="og:locale" content="en-us">
 <meta property="og:title" content="Colophon">
-<meta property="og:description" content="The tools, themes, and influences behind this site.">
+<meta property="og:description" content="The design lineage and publishing system behind this site.">
 <meta property="og:url" content="https://vetr0s.dev/colophon/">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Colophon">
-<meta name="twitter:description" content="The tools, themes, and influences behind this site.">
+<meta name="twitter:description" content="The design lineage and publishing system behind this site.">
 <script>
   (function () {
     var t = localStorage.getItem('theme');
@@ -54,111 +54,78 @@
   <main>
 <article>
   <h1>Colophon</h1>
-<p>The tools, themes, and influences behind this site.</p>
+<p>The design lineage and publishing system behind this site.</p>
+<h2 id="ginger-bill"><a href="#ginger-bill" class="anchor">Ginger Bill</a></h2>
+<p>This site would not look like this without <a href="https://www.gingerbill.org/">Ginger Bill’s
+website</a>. I have returned to it for years as an
+example of what a personal technical site can be. Its influence reaches past the
+typeface and margin notes. The page geometry here starts with his. So do the
+large headings, section-sign links, bordered code blocks, and the way notes move
+beside the article on a wide screen.</p>
+<p>His influence also changed how I built the site. My old static-site generator,
+<a href="/projects/ostat/">ostat</a>, began as an Odin take on the generator behind
+gingerBill.org. The current site uses pandoc and Make, but I kept the same goal. I
+want the publishing system to stay small enough that I can understand and change
+the whole thing. The <a href="https://github.com/gingerBill/gingerBill.org">gingerBill.org source
+repository</a> made that approach
+concrete for me.</p>
+<p>That debt deserves clear credit. Ginger Bill is the strongest direct design
+influence on this site. <a href="https://edwardtufte.github.io/tufte-css/">Tufte CSS</a> is
+the earlier source for ET Book and the original sidenote pattern. The light and
+dark colors come from Protesilaos Stavrou’s <a href="https://protesilaos.com/emacs/modus-themes-colors">Modus
+themes</a>.</p>
+<h2 id="what-i-carried-over"><a href="#what-i-carried-over" class="anchor">What I carried over</a></h2>
+<p>The current layout uses the same core proportions as gingerBill.org. The body
+takes <code>87.5%</code> of the viewport with <code>12.5%</code> of left padding. The sheet stops
+growing at <code>80rem</code>. The article uses <code>60%</code> of that width and leaves the rest for
+margin notes.</p>
+<p>ET Book sets the body and headings. The body stays at <code>1.25rem</code>. Large neutral
+headings divide the document by size and rules rather than by color. Links on
+second- and third-level headings reveal a section sign in the margin when
+hovered.</p>
+<p>Notes float beside the article on a wide screen. Below the <code>80rem</code> breakpoint,
+the article fills the available width and each note collapses behind its number.
+The same checkbox and label markup supports both layouts without JavaScript.</p>
+<p>Inline code and code blocks sit on a bordered surface. That treatment also
+started with gingerBill.org. Tables use the same surface for alternating rows,
+with an outer border and rules between columns.</p>
+<h2 id="what-changed-here"><a href="#what-changed-here" class="anchor">What changed here</a></h2>
+<p>The page and sheet share one background. One blue accent marks links, the
+wordmark, note numbers, the theme toggle, and heading self-links. The rest of the
+light and dark colors follow the Modus Operandi and Modus Vivendi palettes.
+Syntax highlighting uses colors from the same palettes.</p>
+<p>The breadcrumb, header rule, contact panel, project listings, table treatment,
+and full-post feeds belong to this site. The stylesheet now lives in its own
+<a href="https://github.com/vetr0s/vetr0s.css">vetr0s.css repository</a>. Its <a href="https://css.vetr0s.dev/">specimen
+page</a> renders every selector in both themes. This site
+keeps a local copy so each build remains self-contained.</p>
 <h2 id="built-with"><a href="#built-with" class="anchor">Built with</a></h2>
 <ul>
-<li><a href="https://pandoc.org/">pandoc</a> and <code>make</code>.<input type="checkbox" id="sn-1" class="margin-toggle" aria-label="Toggle sidenote 1" aria-controls="sn-body-1"><label for="sn-1" class="margin-toggle sidenote-number"></label><span id="sn-body-1" class="sidenote">Pandoc turns Markdown into HTML. Make records which source files each output needs and rebuilds the affected files.</span> The page shapes are pandoc
-templates. What a template cannot express is a Lua filter</li>
-<li>Hand-written CSS. No theme, no framework, no JavaScript beyond a theme toggle</li>
-<li>Built by hand and committed, then served from <code>main:/docs</code> by <a href="https://pages.github.com/">GitHub
-Pages</a></li>
-<li>An <a href="/index.xml">RSS feed</a> of the posts</li>
+<li><a href="https://pandoc.org/">pandoc</a> turns Markdown into HTML</li>
+<li>GNU Make records dependencies and builds the site</li>
+<li>HTML templates hold page structure</li>
+<li>Lua filters handle notes, code highlighting, listings, dates, and page metadata</li>
+<li>Hand-written CSS controls the presentation</li>
+<li>One small script stores the light or dark theme choice</li>
+<li><a href="https://pages.github.com/">GitHub Pages</a> serves the committed <code>docs/</code> tree</li>
+<li>An <a href="/index.xml">RSS feed</a> carries the complete articles</li>
 </ul>
-<p>The site’s identity lives in one <code>site.yaml</code>: title, base URL, author, locale,
-and the brand split. The front-page introduction lives in <code>content/_index.md</code>.
-Project metadata selects the work shown below it. Recent posts appear only when
-there is something published. Changing the shape of a page means editing an HTML
-file rather than recompiling anything.</p>
-<p>Until August 2026 this site was built by <a href="/projects/ostat/">ostat</a>, a static
-site generator I wrote in <a href="https://odin-lang.org/">Odin</a>. It was an experiment
-in owning the whole pipeline, and as an experiment it worked. Keeping it was the
-part that stopped making sense. A compiler checking the whole site is worth
-little at six pages, and rebuilding that compiler to move a heading is worth a
-lot of friction. ostat is archived now.</p>
-<h2 id="typography"><a href="#typography" class="anchor">Typography</a></h2>
-<p>The site is set in <a href="https://edwardtufte.github.io/et-book/">ET Book</a>,<input type="checkbox" id="sn-2" class="margin-toggle" aria-label="Toggle sidenote 2" aria-controls="sn-body-2"><label for="sn-2" class="margin-toggle sidenote-number"></label><span id="sn-body-2" class="sidenote">ET Book is a free digitization of the Bembo-style typeface used in many of Tufte’s books.</span> the
-typeface from Edward Tufte’s books, served from this domain in three cuts:
-roman, bold, and display italic.</p>
-<p>This is a change. The site used to load no web fonts at all and set everything
-in <code>system-ui</code>. Serving a face costs a download that a system font does not, so
-the roman cut is preloaded during HTML parse and is ready by first paint.
-<code>font-display</code> is <code>optional</code>, which means a cold first visit renders in Palatino
-rather than waiting on the network or swapping the text out mid-read.</p>
-<ul>
-<li>Body and headings: ET Book, falling back to Palatino and then Georgia</li>
-<li>Code: <code>ui-monospace</code>, then <code>Hack</code>, <code>DejaVu Sans Mono</code></li>
-</ul>
-<p>Headings run on a 1.15 modular scale, anchored to the body size so that none of
-them sets smaller than the prose. The body runs <code>1.25rem</code> at every width, with
-no step up on large screens. The page should read like a document, not a
-poster.</p>
-<p>The sheet and spacing use <code>rem</code>, so browser zoom scales the whole layout.</p>
-<h2 id="layout"><a href="#layout" class="anchor">Layout</a></h2>
-<p>The page is a <code>60rem</code> sheet centered in the window, with a band of the page
-showing at either side. Text stays left aligned and uses the sheet’s full inner
-width.</p>
-<p>This used to be the other way around. The page hugged the left margin and
-nothing was centered at all, on the argument that a centered column asks your
-eye to find the text while a left-aligned one puts it where the eye already is.
-That argument holds on a narrow window. On a wide one it strands the sheet
-against one edge and leaves the rest of the display reading as spill. Centering
-the sheet gives the text an edge and puts the page where the eye expects it.</p>
-<p>An aside is an inline disclosure. A small number marks the claim. Activating it
-opens the note below the sentence. The behavior does not change with window
-width. Notes are smaller and muted. Their markers and links use a dimmed form of
-the link color.</p>
-<p>Photographs sit in the flow. Each one is capped well short of the page and
-placed after the passage it illustrates. A picture interrupts the prose without
-becoming the page.</p>
-<h2 id="colors"><a href="#colors" class="anchor">Colors</a></h2>
-<p>The light and dark color schemes are based on the <a href="https://protesilaos.com/emacs/modus-themes-colors">Modus
-themes</a> by Protesilaos
-Stavrou:</p>
-<ul>
-<li><code>modus-operandi</code>: light</li>
-<li><code>modus-vivendi</code>: dark</li>
-</ul>
-<p>The sheet is divided from the page behind it by one step of tone and a hairline
-rule. Light dims the page away from a white sheet. Dark cannot dim below black,
-so it does the reverse and lifts the sheet off a page that takes the black. The
-rule is what actually reads as the edge, which lets both tones stay quiet.</p>
-<p>Headings use the <code>yellow-warmer</code>, <code>magenta</code>, and <code>cyan</code> accents from the same
-palettes. Syntax highlighting is drawn from the same set. A code block is tinted
-like the rest of the page instead of carrying a theme of its own.</p>
-<p>Highlighting is pandoc’s, which lexes about two hundred languages
-properly.<input type="checkbox" id="sn-3" class="margin-toggle" aria-label="Toggle sidenote 3" aria-controls="sn-body-3"><label for="sn-3" class="margin-toggle sidenote-number"></label><span id="sn-body-3" class="sidenote">A lexer identifies parts of source code such as keywords, strings, and comments. The stylesheet assigns colors to those categories.</span> Its token names are translated to the Chroma names the
-stylesheet already carried, so the palette above is what colors the code. A
-token the stylesheet has no rule for is left unclassed rather than given a color
-it never chose.</p>
-<p>Both schemes follow your system preference by default. The toggle overrides it.
-The choice persists in <code>localStorage</code>.</p>
-<h2 id="design-influence"><a href="#design-influence" class="anchor">Design influence</a></h2>
-<ul>
-<li><a href="https://edwardtufte.github.io/tufte-css/">Tufte CSS</a>: the typeface and the
-original note treatment</li>
-<li><a href="https://github.com/gingerBill/gingerBill.org">gingerBill.org</a>: the note
-markup and the case for a site you assemble yourself</li>
-<li><a href="https://andrewkelley.me/">andrewkelley.me</a>: the plainness. Left-aligned,
-underlined links, a document rather than a layout</li>
-<li><a href="https://protesilaos.com/">protesilaos.com</a>: the Modus palettes above</li>
-</ul>
-<h2 id="navigation"><a href="#navigation" class="anchor">Navigation</a></h2>
-<p>Every page opens the same way. One line says where you are and links back out of
-it. There is no menu and no banner. A menu on every page is furniture standing
-in front of the thing you came to read. A banner on the home page is the same
-furniture in a bigger typeface.</p>
-<p>That makes the home page the way in. It carries an introduction, projects,
-contact details, and a short list of everywhere else. Recent posts appear when
-there are published posts to list. A post climbs to its section. A section
-climbs home. Home has the rest.</p>
-<h2 id="the-feed"><a href="#the-feed" class="anchor">The feed</a></h2>
-<p><a href="/index.xml"><code>/index.xml</code></a> carries the posts.
-<a href="/articles/index.xml"><code>/articles/index.xml</code></a> carries the same ones, so either address
-works in a reader.</p>
-<p>An item carries the whole post rather than an excerpt. A feed has no margin and
-no stylesheet, so each post is rendered a second time with its notes as numbered
-endnotes and every anchor absolute. Nothing here asks you to click through to
-finish reading.</p>
+<p>The site’s identity lives in <code>site.yaml</code>. Content lives under <code>content/</code>.
+Templates live under <code>templates/</code>. The canonical stylesheet can be copied from
+the sibling repository with <code>make sync-css</code>. A production build validates the
+generated links, markup, metadata, and required pages before replacing <code>docs/</code>.</p>
+<p>Until August 2026, ostat built this site. It reached about three thousand lines
+and more than a hundred tests. It worked, and it taught me Odin and static-site
+architecture. Maintaining the generator eventually displaced the writing, so I
+replaced it with pandoc and Make and archived the project.</p>
+<h2 id="navigation-and-feeds"><a href="#navigation-and-feeds" class="anchor">Navigation and feeds</a></h2>
+<p>Every page starts with a breadcrumb. A post links to its section. A section links
+home. The home page points to recent articles, featured projects, contact
+details, and the complete section indexes.</p>
+<p><a href="/index.xml"><code>/index.xml</code></a> and
+<a href="/articles/index.xml"><code>/articles/index.xml</code></a> carry the same articles. Each item
+contains the complete post. Notes become numbered endnotes because a feed has no
+page margin. Local links become absolute so they still work in a feed reader.</p>
 </article>
   </main>
 <footer>

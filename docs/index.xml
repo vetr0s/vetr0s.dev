@@ -34,10 +34,9 @@ generation.&lt;/p&gt;
 &lt;a href=&quot;https://vetr0s.dev/projects/mach/&quot;&gt;Mach&lt;/a&gt;, a factory game with its own single-header engine; and a
 crime-data analysis from a data science course I took at the University of
 Arizona that I am particularly proud of.&lt;/p&gt;
-&lt;p&gt;Mach is still active, though I may switch it to SDL3. Its engine,
-&lt;a href=&quot;https://github.com/vetr0s/mach.h&quot;&gt;mach.h&lt;/a&gt;, handles rendering, input, audio, and
-UI. The game tests those decisions outside a demo. For more, see the &lt;a href=&quot;https://vetr0s.dev/projects/mach/&quot;&gt;Mach
-project page&lt;/a&gt; or &lt;a href=&quot;https://github.com/vetr0s/mach&quot;&gt;GitHub
+&lt;p&gt;Mach is paused. Its engine, &lt;a href=&quot;https://github.com/vetr0s/mach.h&quot;&gt;mach.h&lt;/a&gt;, handles
+rendering, input, audio, and UI. The game tests those decisions outside a demo.
+For more, see the &lt;a href=&quot;https://vetr0s.dev/projects/mach/&quot;&gt;Mach project page&lt;/a&gt; or &lt;a href=&quot;https://github.com/vetr0s/mach&quot;&gt;GitHub
 repository&lt;/a&gt;.&lt;/p&gt;
 &lt;h2&gt;Wow! Look at these code blocks!&lt;/h2&gt;
 &lt;p&gt;I spent too much time getting a minimal code-block
