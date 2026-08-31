@@ -474,8 +474,11 @@ main p > img { max-width: 24rem; }
 }
 
 .article-hero img {
-    width: 100%;
+    display: block;
+    width: auto;
+    max-width: 100%;
     height: auto;
+    margin-inline: auto;
 }
 
 .article-context {

@@ -192,6 +192,7 @@ for required in (
     ".sidenote {\n    float: right;",
     "@media (max-width: 80rem)",
     "input.margin-toggle:checked + .sidenote-number + .sidenote",
+    ".article-hero img {\n    display: block;\n    width: auto;\n    max-width: 100%;",
 ):
     if required not in css:
         fail(f"new sheet layout rule is missing: {required}")
