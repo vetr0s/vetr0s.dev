@@ -56,6 +56,20 @@ function Table(t)
   return t
 end
 
+function Header(h)
+  if h.level ~= 2 and h.level ~= 3 then return nil end
+  if h.identifier == '' then error('h2 and h3 headings require an identifier') end
+
+  h:walk({ Link = function()
+    error('h2 and h3 headings cannot contain links')
+  end })
+  h.content = {
+    pandoc.Link(h.content, '#' .. h.identifier, '',
+      pandoc.Attr('', {'anchor'}))
+  }
+  return h
+end
+
 function Pandoc(doc)
   local m = doc.meta
   local url = meta_str(m, 'url') or '/'

@@ -64,7 +64,7 @@ nothing runs it any more.</p>
 <li><a href="https://github.com/vetr0s/ostat">Source</a></li>
 <li><a href="https://github.com/vetr0s/ostat/releases">Releases</a></li>
 </ul>
-<h2>What it did</h2>
+<h2 id="what-it-did"><a href="#what-it-did" class="anchor">What it did</a></h2>
 <p>Markdown in, a directory of HTML out. A file named <code>_index.md</code> was its
 directory’s section page and any other <code>.md</code> file was a regular page, so the
 URL structure was the content structure. A build also wrote <code>sitemap.xml</code>, a
@@ -77,14 +77,14 @@ could carry a time so two posts published on one day had an order.</p>
 <p>It reached <a href="https://github.com/vetr0s/ostat/releases">0.5.0</a> at about three
 thousand lines, pinned by a fixture site, a committed tree of its expected
 output, and a hundred-odd unit tests.</p>
-<h2>What it did not do</h2>
+<h2 id="what-it-did-not-do"><a href="#what-it-did-not-do" class="anchor">What it did not do</a></h2>
 <p>There was no template language. Every layout was a procedure that wrote HTML
 with <code>write_string</code> and <code>sbprintf</code>, which meant no partials to thread and no
 syntax to learn, and it meant moving a heading was a recompile rather than an
 edit. That was the trade, made deliberately<input type="checkbox" id="sn-1" class="margin-toggle" aria-label="Toggle sidenote 1" aria-controls="sn-body-1"><label for="sn-1" class="margin-toggle sidenote-number"></label><span id="sn-body-1" class="sidenote">The compiler checks the whole thing, which a template language cannot do. Whether that is worth a recompile depends entirely on how often you move headings.</span>.</p>
 <p>There was no theme system and no plugin API. Everything about the shape of a
 page lived in the generator.</p>
-<h2>Why I wrote it</h2>
+<h2 id="why-i-wrote-it"><a href="#why-i-wrote-it" class="anchor">Why I wrote it</a></h2>
 <p>Hugo built this site before ostat did, and it worked. It is also a large Go
 program behind a template language and a theme system, in service of eight pages
 of HTML I could describe exactly. Writing the generator meant the whole pipeline
@@ -93,7 +93,7 @@ I made rather than one I configured around.</p>
 <p>Odin because I wanted to write something real in it, and because a generator is
 a good fit for a language with arena allocation: a build is a batch job with a
 clear end, so two arenas and no frees is the whole memory strategy.</p>
-<h2>Why I stopped</h2>
+<h2 id="why-i-stopped"><a href="#why-i-stopped" class="anchor">Why I stopped</a></h2>
 <p>The trade stopped paying. A compiler checking the whole site is worth very
 little at six pages, and rebuilding that compiler to move a heading is worth a
 lot of friction. I had written more generator than site, which is the wrong way

@@ -112,6 +112,18 @@ if "Find Me" in home or 'id="find-me"' in home:
 
 article = root / "articles/hello-world/index.html"
 article_html = article.read_text(encoding="utf-8")
+article_parser = PageParser()
+article_parser.feed(article_html)
+heading = ("h2", {"id": "why-i-built-this-site"})
+if heading not in article_parser.nodes:
+    fail("published article is missing its heading self-link")
+heading_at = article_parser.nodes.index(heading)
+anchor = article_parser.nodes[heading_at + 1]
+if anchor != ("a", {"href": "#why-i-built-this-site", "class": "anchor"}):
+    fail("published article heading self-link targets the wrong fragment")
+title_at = next(i for i, node in enumerate(article_parser.nodes) if node[0] == "h1")
+if article_parser.nodes[title_at + 1][0] == "a":
+    fail("article title has a heading self-link")
 if article_html.count('<pre><code class="chroma language-') < 2:
     fail("published article is missing its code examples")
 if 'class="article-hero"' not in article_html:

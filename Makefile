@@ -50,9 +50,9 @@ FILTERS   := $(wildcard lua/*.lua)
 DEPS      := site.yaml $(TEMPLATES) $(FILTERS)
 
 # Reader extensions that are each the difference between the intended markup
-# and a diff: heading ids the stylesheet does not use, a raw HTML block pandoc
-# would relayout, and a lone image becoming a captioned <figure>.
-FROM  := markdown-auto_identifiers-markdown_in_html_blocks-implicit_figures
+# and a diff: heading ids used by self-links, a raw HTML block pandoc would
+# relayout, and a lone image becoming a captioned <figure>.
+FROM  := markdown-markdown_in_html_blocks-implicit_figures
 PD    := $(PANDOC) --standalone --metadata-file=site.yaml --wrap=preserve -f $(FROM) -t html5
 NOTES := --lua-filter=lua/sidenotes.lua --lua-filter=lua/highlight.lua
 
@@ -105,7 +105,7 @@ build: check-tools
 	@echo "Built to docs/. Commit it: GitHub Pages serves this tree."
 
 check: check-tools
-	@tmp=$$(mktemp -d); trap 'rm -rf "$$tmp"' EXIT; \
+	@set -e; tmp=$$(mktemp -d); trap 'rm -rf "$$tmp"' EXIT; \
 	  $(MAKE) --no-print-directory MODE=prod OUT="$$tmp/site" all; \
 	  python3 scripts/check_site.py "$$tmp/site"; \
 	  if $(MAKE) --no-print-directory OUT="$$tmp/fail" PANDOC=false all >/dev/null 2>&1; then \
