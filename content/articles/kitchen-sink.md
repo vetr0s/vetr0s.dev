@@ -10,16 +10,17 @@ tags:
 
 This post exists to be looked at, not read. It uses every feature the layouts
 and stylesheet support, so that changing the CSS has somewhere to fail loudly.
-It is a draft, so it never reaches the built site. `./dev` shows it, and
-`./dev --build` does not.
+It is a draft, so it never reaches the built site. `make serve` shows it, and
+`make build` does not.
 
 ## Prose, and what it can carry
 
-Body text fills the sheet. An aside is an inline disclosure,[^an-aside] so it
-waits behind its marker until the reader opens it.
+Body text fills the reading column. An aside becomes a margin note on a wide
+screen.[^an-aside] On a narrow screen, it waits behind its marker until the
+reader opens it.
 
-[^an-aside]: The marker stays beside the claim. This text opens below the
-    sentence at every window width.
+[^an-aside]: The marker stays beside the claim. This text floats in the right
+    margin when the sheet has room for it.
 
 Numbering runs down the page in order and comes from a CSS
 counter[^numbering-is-css], not from the generator.
@@ -28,7 +29,7 @@ counter[^numbering-is-css], not from the generator.
     like any other prose. Because the number is a counter, the markup holds no
     numbers at all and the marker and its note cannot drift apart.
 
-The interaction does not change when the window narrows.
+Below the sheet breakpoint, notes collapse into inline disclosures.
 
 Inline, prose can carry **bold**, *italic*, `inline_code()`, a
 [link to another site](https://andrewkelley.me/), a [link back
@@ -37,8 +38,8 @@ that is what a link looks like when nobody has styled it.
 
 ### A third-level heading
 
-Headings run `h1` warm-yellow, `h2` magenta, `h3` cyan, on a 1.15 scale anchored
-to the body size. Only the `h1` carries a rule under it.
+Headings use the text color. The `h1` is largest, the `h2` carries a rule, and
+second- and third-level headings reveal a section-sign link when hovered.
 
 #### And a fourth
 
@@ -57,8 +58,8 @@ Unordered, with nesting:
 
 Ordered:
 
-1. Install Odin and `libcmark`
-2. Run `./dev`
+1. Install pandoc 3
+2. Run `make serve`
 3. There is no step three
 
 ## Code
@@ -77,8 +78,8 @@ pub fn main() !void {
 ```
 
 ```bash
-./dev            # serve locally, drafts included
-./dev --build    # production build into public/
+make serve       # serve locally, drafts included
+make build       # production build into docs/
 ```
 
 A block wide enough to overflow the page scrolls inside its own box rather
@@ -97,7 +98,7 @@ this line is deliberately far too long to fit inside the page and should produce
 
 | Path | What lives there |
 |---|---|
-| `site.json` | The site's identity: title, brand, contact, home page links |
+| `site.yaml` | The site's identity: title, brand, author, and base URL |
 | `content/` | The markdown, and nothing else |
 | `static/css/style.css` | The whole stylesheet |
 
@@ -119,4 +120,4 @@ A bare markdown image gets the same cap and no caption.
 
 That rule above is an `<hr>`. Below this line there is nothing but the footer,
 and above it the same breadcrumb every page carries: this is a post, so it
-climbs to `blog`, and `blog` climbs home.
+climbs to `articles`, and `articles` climbs home.
