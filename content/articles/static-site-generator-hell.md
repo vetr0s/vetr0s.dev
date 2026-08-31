@@ -143,8 +143,8 @@ takes a few seconds.
 ## What survived
 
 The URLs did not change. The content folders still define them. The document
-layout, notes, syntax colors, full-text feeds, and restrained navigation
-all survived. Those were site decisions rather than generator decisions.
+layout, notes, syntax colors, RSS feeds, and restrained navigation all survived.
+Those were site decisions rather than generator decisions.
 
 The generator survives too. Its source and releases remain available, and the
 project page records how it worked. I stopped using it because the experiment

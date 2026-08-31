@@ -55,7 +55,7 @@ light and dark colors follow the Modus Operandi and Modus Vivendi palettes.
 Syntax highlighting uses colors from the same palettes.
 
 The breadcrumb, header rule, contact panel, project listings, table treatment,
-and full-post feeds belong to this site. The stylesheet now lives in its own
+and feeds belong to this site. The stylesheet now lives in its own
 [vetr0s.css repository](https://github.com/vetr0s/vetr0s.css). Its [specimen
 page](https://css.vetr0s.dev/) renders every selector in both themes. This site
 keeps a local copy so each build remains self-contained.
@@ -69,7 +69,7 @@ keeps a local copy so each build remains self-contained.
 - Hand-written CSS controls the presentation
 - One small script stores the light or dark theme choice
 - [GitHub Pages](https://pages.github.com/) serves the committed `docs/` tree
-- An [RSS feed](/index.xml) carries the complete articles
+- An [RSS feed](/index.xml) carries article descriptions and links
 
 The site's identity lives in `site.yaml`. Content lives under `content/`.
 Templates live under `templates/`. The canonical stylesheet can be copied from
@@ -89,5 +89,4 @@ details, and the complete section indexes.
 
 [`/index.xml`](/index.xml) and
 [`/articles/index.xml`](/articles/index.xml) carry the same articles. Each item
-contains the complete post. Notes become numbered endnotes because a feed has no
-page margin. Local links become absolute so they still work in a feed reader.
+contains the article description and links to the canonical post.

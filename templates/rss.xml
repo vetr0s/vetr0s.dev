@@ -14,7 +14,7 @@ $for(items)$    <item>
       <pubDate>$it.pubdate$</pubDate>
       <guid>$it.link$</guid>
 $for(it.tags)$      <category>$it$</category>
-$endfor$      <description>$it.body$</description>
+$endfor$      <description>$it.description$</description>
     </item>
 $endfor$  </channel>
 </rss>

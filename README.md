@@ -109,15 +109,13 @@ ordinary text more often than it is a note.
 
 ## The feed
 
-`/index.xml` and `/blog/index.xml` are the same document, differing only in the
+`/index.xml` and `/articles/index.xml` are the same document, differing only in the
 address each advertises as its own. Both carry blog posts and nothing else, and
 both are linked from the head. Each is linked from an `.rss-badge` beside the
 heading of the list it feeds. Only a section that publishes a feed draws the
 badge, so the projects page has none.
 
-Items carry the full post. A feed has no margin and no stylesheet, so each post
-is rendered a second time with its notes as numbered endnotes and every anchor
-absolute, because a feed item is read away from the page it came from.
+Each item carries the article description and links to the canonical post.
 
 ## The look
 

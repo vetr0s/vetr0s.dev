@@ -69,6 +69,35 @@ for relative in required:
 for xml in ("index.xml", "articles/index.xml", "sitemap.xml"):
     ET.parse(root / xml)
 
+feed_items = []
+for feed_path in ("index.xml", "articles/index.xml"):
+    feed = ET.parse(root / feed_path)
+    items = feed.findall("./channel/item")
+    if not items:
+        fail(f"{feed_path}: expected an article item")
+    feed_data = []
+    for item in items:
+        description = item.findtext("description")
+        link = item.findtext("link")
+        guid = item.findtext("guid")
+        if not description:
+            fail(f"{feed_path}: item has no description")
+        if not link or guid != link:
+            fail(f"{feed_path}: item does not link to its canonical article")
+        if "<pre>" in description or "<h2" in description:
+            fail(f"{feed_path}: item contains the article body")
+        feed_data.append((description, link, guid))
+    feed_items.append(feed_data)
+if feed_items[0] != feed_items[1]:
+    fail("RSS addresses carry different article data")
+hello_item = next(
+    (item for item in feed_items[0]
+     if item[1] == "https://vetr0s.dev/articles/hello-world/"),
+    None,
+)
+if not hello_item or hello_item[0] != "The first published article on site.":
+    fail("RSS does not carry the Hello, World description")
+
 for page in root.rglob("*.html"):
     parser = PageParser()
     parser.feed(page.read_text(encoding="utf-8"))

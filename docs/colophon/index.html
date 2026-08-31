@@ -95,7 +95,7 @@ wordmark, note numbers, the theme toggle, and heading self-links. The rest of th
 light and dark colors follow the Modus Operandi and Modus Vivendi palettes.
 Syntax highlighting uses colors from the same palettes.</p>
 <p>The breadcrumb, header rule, contact panel, project listings, table treatment,
-and full-post feeds belong to this site. The stylesheet now lives in its own
+and feeds belong to this site. The stylesheet now lives in its own
 <a href="https://github.com/vetr0s/vetr0s.css">vetr0s.css repository</a>. Its <a href="https://css.vetr0s.dev/">specimen
 page</a> renders every selector in both themes. This site
 keeps a local copy so each build remains self-contained.</p>
@@ -108,7 +108,7 @@ keeps a local copy so each build remains self-contained.</p>
 <li>Hand-written CSS controls the presentation</li>
 <li>One small script stores the light or dark theme choice</li>
 <li><a href="https://pages.github.com/">GitHub Pages</a> serves the committed <code>docs/</code> tree</li>
-<li>An <a href="/index.xml">RSS feed</a> carries the complete articles</li>
+<li>An <a href="/index.xml">RSS feed</a> carries article descriptions and links</li>
 </ul>
 <p>The site’s identity lives in <code>site.yaml</code>. Content lives under <code>content/</code>.
 Templates live under <code>templates/</code>. The canonical stylesheet can be copied from
@@ -124,8 +124,7 @@ home. The home page points to recent articles, featured projects, contact
 details, and the complete section indexes.</p>
 <p><a href="/index.xml"><code>/index.xml</code></a> and
 <a href="/articles/index.xml"><code>/articles/index.xml</code></a> carry the same articles. Each item
-contains the complete post. Notes become numbered endnotes because a feed has no
-page margin. Local links become absolute so they still work in a feed reader.</p>
+contains the article description and links to the canonical post.</p>
 </article>
   </main>
 <footer>
