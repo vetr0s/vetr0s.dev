@@ -16,17 +16,25 @@ This is the **first** published article under `/articles/`. Hooray!
 ## Why I built this site
 
 I wanted one place that points at everything I have made, without a platform
-sitting between the reader and the work. This site's primary function is to
-explain why a project exists, what it cost, and what I would do differently next
-time. However, I plan on documenting anything I find myself getting nerdy about,
-like music or hiking.
+sitting between the reader and the work.[^own-site] This site's primary function
+is to explain why a project exists, what it cost, and what I would do differently
+next time. However, I plan on documenting anything I find myself getting nerdy
+about, like music or hiking.
+
+[^own-site]: The site is a set of static files under my domain. It has no
+    account system, recommendation feed, or application server.
 
 The site's build system has already gone through a couple of rewrites. It
 started on Hugo, moved to [ostat](/projects/ostat/), a static site generator I
-wrote in Odin, and now runs on Pandoc and Make. The [colophon](/colophon/)
+wrote in Odin, and now runs on Pandoc and Make.[^build-system] The
+[colophon](/colophon/)
 explains how the site is built today. I hope this is the final build-system
 rewrite because I want to write instead of tinkering with static-site
 generation.
+
+[^build-system]: Pandoc parses the Markdown and renders each page. Make tracks
+    dependencies and rebuilds only the outputs affected by a changed source
+    file.
 
 ## What I'm working on
 
@@ -44,9 +52,12 @@ repository](https://github.com/vetr0s/mach).
 
 ## Wow! Look at these code blocks!
 
-I spent too much time getting a minimal code-block
-highlighting system to work. So... here you may gaze upon these glorious code
-blocks. As a bonus, the example fits this article quite well!
+I spent too much time getting a minimal code-block highlighting system to
+work.[^highlighting] So... here you may gaze upon these glorious code blocks.
+As a bonus, the example fits this article quite well!
+
+[^highlighting]: Pandoc tokenizes each code block. A Lua filter translates its
+    token classes into the names used by the stylesheet.
 
 ```c
 #include <stdio.h>

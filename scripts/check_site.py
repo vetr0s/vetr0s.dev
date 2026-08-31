@@ -148,6 +148,8 @@ article = root / "articles/hello-world/index.html"
 article_html = article.read_text(encoding="utf-8")
 article_parser = PageParser()
 article_parser.feed(article_html)
+if len(article_parser.sidenote_inputs) != 3:
+    fail("published article does not have three margin notes")
 heading = ("h2", {"id": "why-i-built-this-site"})
 if heading not in article_parser.nodes:
     fail("published article is missing its heading self-link")
@@ -164,6 +166,14 @@ if 'class="article-hero"' not in article_html:
     fail("published article is missing its header image")
 if 'content="https://vetr0s.dev/hello-world.png"' not in article_html:
     fail("published article is missing image metadata")
+
+about = (root / "about/index.html").read_text(encoding="utf-8")
+about_title_at = about.index("<h1>About</h1>")
+about_intro_at = about.index("<p>I am a software engineer from Washington.")
+etymology_at = about.index('<h2 id="etymology">')
+work_at = about.index('<h2 id="work">')
+if not about_title_at < about_intro_at < etymology_at < work_at:
+    fail("about introduction and Etymology are in the wrong order")
 
 css = (root / "css/style.css").read_text(encoding="utf-8")
 if "figure img { height: auto; }" not in css:

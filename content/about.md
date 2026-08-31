@@ -2,6 +2,20 @@
 title: "About"
 ---
 
+I am a software engineer from Washington. I build systems, developer tools, and
+small pieces of infrastructure. I currently maintain web and in-house software
+for a psychiatric practice.
+
+## Etymology
+
+**vetr0s** (/ˈvɛt.ri/) comes from the Italian
+[*vetri*](https://en.wiktionary.org/wiki/vetri), plural of *vetro*, meaning
+"glass" or "windowpane."
+
+The `0` is [leet](https://en.wikipedia.org/wiki/Leet), because hackers have cool
+nicknames with numbers in them. As a bonus, I get the same username everywhere
+and don't have to pay for a popular domain name.
+
 ## Work
 
 ### Sound Psychiatric Services
@@ -144,13 +158,3 @@ FRC shaped how I think about engineering more than almost anything else I've
 done. I entered high school wanting to study computer science. I left knowing I
 wanted a career built around difficult technical problems, small teams, and
 building things.
-
-## Etymology
-
-**vetr0s** (/ˈvɛt.ri/) comes from the Italian
-[*vetri*](https://en.wiktionary.org/wiki/vetri), plural of *vetro*, meaning
-"glass" or "windowpane."
-
-The `0` is [leet](https://en.wikipedia.org/wiki/Leet), because hackers have cool
-nicknames with numbers in them. As a bonus, I get the same username everywhere
-and don't have to pay for a popular domain name.
