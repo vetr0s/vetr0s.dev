@@ -5,10 +5,10 @@ date: 2026-08-26
 draft: false
 tags:
   - meta
-image: /hello-world.png
-image_alt: "The words Hello, World in light text on a dark blue-to-brown gradient."
-image_width: 1400
-image_height: 583
+image: /hello-world.gif
+image_alt: "An animated HelloWorld print statement above a gorilla."
+image_width: 238
+image_height: 200
 ---
 
 This is the **first** published article under `/articles/`. Hooray!

@@ -164,7 +164,7 @@ if article_html.count('<pre><code class="chroma language-') < 2:
     fail("published article is missing its code examples")
 if 'class="article-hero"' not in article_html:
     fail("published article is missing its header image")
-if 'content="https://vetr0s.dev/hello-world.png"' not in article_html:
+if 'content="https://vetr0s.dev/hello-world.gif"' not in article_html:
     fail("published article is missing image metadata")
 
 about = (root / "about/index.html").read_text(encoding="utf-8")
