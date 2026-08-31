@@ -1,0 +1,439 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Public copy review</title>
+<style>
+/* ============================================================
+   Standard HTML house style for plans, audits, and design docs.
+   Deliberately project-agnostic: this never adopts a project's theme.
+   Plain document on a plain background. Legibility over decoration.
+   ============================================================ */
+
+:root {
+  --bg:        #fbfbf9;
+  --fg:        #1a1a1a;
+  --fg-muted:  #5c5c5c;
+  --rule:      #d4d4cf;
+  --surface:   #f0f0ec;
+  --link:      #0b4fa8;
+  --visited:   #6b3fa0;
+  --accent:    #8a5a00;
+  --good:      #1c6b2e;
+  --bad:       #a11b1b;
+  --measure:   72em;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg:       #101010;
+    --fg:       #e6e6e3;
+    --fg-muted: #9a9a95;
+    --rule:     #3a3a3a;
+    --surface:  #1c1c1c;
+    --link:     #89a6ff;
+    --visited:  #d98cff;
+    --accent:   #e0a33a;
+    --good:     #52c96a;
+    --bad:      #ff6b52;
+  }
+}
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--fg);
+  background: var(--bg);
+  margin: 0;
+  padding: 2.5rem 1.25rem 6rem;
+}
+
+/* Left-justified, not centered: the document hugs the left gutter and simply
+   stops at the measure. */
+main, .doc {
+  max-width: var(--measure);
+  margin: 0;
+}
+
+/* --- headings ------------------------------------------------ */
+
+h1, h2, h3, h4 {
+  line-height: 1.25;
+  font-weight: 600;
+  margin: 2.2em 0 0.6em;
+}
+h1 {
+  font-size: 1.9rem;
+  margin-top: 0;
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid var(--rule);
+}
+h2 { font-size: 1.35rem; }
+h3 { font-size: 1.1rem; }
+h4 { font-size: 1rem; color: var(--fg-muted); }
+
+/* Byline directly under the h1: date, repo, commit, author. */
+.meta {
+  color: var(--fg-muted);
+  font-size: 0.875rem;
+  margin: -0.2em 0 2.5em;
+}
+.meta > * + *::before { content: " · "; }
+
+/* --- prose --------------------------------------------------- */
+
+p, ul, ol, dl, table, pre, blockquote { margin: 0 0 1.1em; }
+
+a          { color: var(--link); }
+a:visited  { color: var(--visited); }
+
+strong { font-weight: 600; }
+
+small, .muted { color: var(--fg-muted); font-size: 0.875rem; }
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--rule);
+  margin: 2.5em 0;
+}
+
+blockquote {
+  margin-left: 0;
+  padding: 0.1em 0 0.1em 1em;
+  border-left: 3px solid var(--rule);
+  color: var(--fg-muted);
+}
+
+ul, ol { padding-left: 1.4em; }
+li { margin: 0.25em 0; }
+li > ul, li > ol { margin: 0.25em 0; }
+
+/* --- code ---------------------------------------------------- */
+
+code, kbd, samp, .path {
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.875em;
+}
+
+code {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  padding: 0.1em 0.3em;
+}
+
+/* File paths and identifiers: mono, but no box. */
+.path { color: var(--fg-muted); }
+
+pre {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  padding: 0.75em 0.9em;
+  overflow-x: auto;
+  line-height: 1.45;
+}
+pre code {
+  background: none;
+  border: 0;
+  padding: 0;
+  font-size: 0.8125rem;
+}
+
+/* --- tables -------------------------------------------------- */
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 0.9375rem;
+}
+th, td {
+  border: 1px solid var(--rule);
+  padding: 0.45em 0.7em;
+  text-align: left;
+  vertical-align: top;
+}
+th {
+  background: var(--surface);
+  font-weight: 600;
+}
+
+/* Wide tables scroll inside their own box; the page never scrolls sideways. */
+.scroll { overflow-x: auto; margin: 0 0 1.1em; }
+.scroll table { margin: 0; }
+
+/* --- callouts ------------------------------------------------ */
+
+.note, .warn, .ok {
+  border: 1px solid var(--rule);
+  border-left: 4px solid var(--fg-muted);
+  background: var(--surface);
+  padding: 0.7em 0.9em;
+  margin: 0 0 1.1em;
+}
+.note > :last-child, .warn > :last-child, .ok > :last-child { margin-bottom: 0; }
+.warn { border-left-color: var(--accent); }
+.ok   { border-left-color: var(--good); }
+
+.note-label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+  margin-bottom: 0.3em;
+}
+
+/* --- status tags --------------------------------------------- */
+
+.tag {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.75rem;
+  border: 1px solid currentColor;
+  border-radius: 3px;
+  padding: 0.05em 0.4em;
+  white-space: nowrap;
+  color: var(--fg-muted);
+}
+.tag-good { color: var(--good); }
+.tag-warn { color: var(--accent); }
+.tag-bad  { color: var(--bad); }
+
+/* --- task lists ---------------------------------------------- */
+
+/* <ul class="tasks"> with <li data-state="done|wip|todo"> */
+ul.tasks { list-style: none; padding-left: 0; }
+ul.tasks li {
+  padding-left: 1.9em;
+  position: relative;
+  margin: 0.4em 0;
+}
+ul.tasks li::before {
+  position: absolute;
+  left: 0;
+  font-family: ui-monospace, Menlo, monospace;
+  color: var(--fg-muted);
+  content: "[ ]";
+}
+ul.tasks li[data-state="done"]::before { content: "[x]"; color: var(--good); }
+ul.tasks li[data-state="wip"]::before  { content: "[~]"; color: var(--accent); }
+ul.tasks li[data-state="done"] { color: var(--fg-muted); }
+
+/* --- definition list (decisions, key/value facts) ------------- */
+
+dl { display: grid; grid-template-columns: minmax(8rem, max-content) 1fr; gap: 0.4em 1.2em; }
+dt { font-weight: 600; }
+dd { margin: 0; }
+
+/* --- table of contents --------------------------------------- */
+
+/* <nav class="toc"> wrapping a nested <ol> or <ul> of in-page links. */
+.toc {
+  border: 1px solid var(--rule);
+  background: var(--surface);
+  padding: 0.9em 1.1em;
+  margin: 0 0 2.2em;
+}
+.toc ol, .toc ul { list-style: none; padding-left: 0; margin: 0; }
+.toc li { margin: 0.15em 0; }
+.toc ol ol, .toc ul ul { padding-left: 1.1em; }
+.toc ol ol li, .toc ul ul li { font-size: 0.9375rem; }
+.toc a { text-decoration: none; }
+.toc a:hover { text-decoration: underline; }
+
+/* A long flat contents list reads better in columns once there is room. */
+@media (min-width: 52rem) {
+  .toc > ol, .toc > ul { columns: 2; column-gap: 2.5em; }
+  .toc > ol > li, .toc > ul > li { break-inside: avoid; }
+}
+
+/* Back-to-contents link at the foot of a section. */
+.backtotoc { font-size: 0.8125rem; color: var(--fg-muted); }
+
+/* --- footnotes / source trail -------------------------------- */
+
+.footer {
+  margin-top: 4rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--rule);
+  color: var(--fg-muted);
+  font-size: 0.8125rem;
+}
+
+@media (max-width: 34rem) {
+</style>
+</head>
+<body>
+<main>
+
+<h1>Public copy review</h1>
+<p class="meta"><span>2026-08-30</span><span>vetr0s.dev @ 9b18f95</span><span>Content review</span></p>
+
+<p>The colophon should be rewritten before publication. Most of its design description predates the new stylesheet. It also understates Ginger Bill's influence. The rest of the public copy needs three factual corrections and one decision about the About page.</p>
+
+<h2>Bottom line on the colophon</h2>
+
+<div class="warn">
+  <span class="note-label">Publish blocker</span>
+  The current colophon describes a 60rem centered sheet, inline notes at every width, colored headings, and separate page and sheet tones. None of those claims matches the current stylesheet.
+</div>
+
+<p>The new version should lead with direct credit. The current visual design owes more to <a href="https://www.gingerbill.org/">gingerBill.org</a> than to any other single site. That influence is structural. It is not limited to note markup.</p>
+
+<h2>What came from Ginger Bill</h2>
+
+<div class="scroll">
+<table>
+  <thead>
+    <tr><th>Part</th><th>Current implementation</th><th>Credit to state</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Page geometry</td>
+      <td>A content-box body uses 87.5% width and 12.5% left padding. The sheet caps at 80rem. The reading column uses 60%.</td>
+      <td>The geometry and its proportions were adapted from gingerBill.org.</td>
+    </tr>
+    <tr>
+      <td>Typography</td>
+      <td>ET Book sets the body and headings at a 1.25rem reading size.</td>
+      <td>ET Book was discovered through Ginger Bill's site. Tufte CSS remains the upstream font and typesetting source.</td>
+    </tr>
+    <tr>
+      <td>Margin notes</td>
+      <td>Notes float beside the article on wide screens. They collapse behind a tap target below 80rem.</td>
+      <td>The current wide-margin treatment follows Ginger Bill's implementation. Tufte CSS supplied the original sidenote pattern.</td>
+    </tr>
+    <tr>
+      <td>Headings</td>
+      <td>Large neutral headings use an h2 rule. H2 and h3 self-links reveal a section sign on hover.</td>
+      <td>The heading register and section-sign pattern came from Ginger Bill's site.</td>
+    </tr>
+    <tr>
+      <td>Code and tables</td>
+      <td>Inline code and blocks use bordered surfaces. Tables are enclosed and zebra-striped.</td>
+      <td>The code-box treatment follows Ginger Bill's site. The table treatment belongs to the local stylesheet revision.</td>
+    </tr>
+    <tr>
+      <td>Site generator</td>
+      <td>The archived ostat generator was modeled after Ginger Bill's Odin generator.</td>
+      <td>Credit this separately from the CSS. His site influenced both the old build system and the current visual design.</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p>The Modus palettes still belong to Protesilaos Stavrou. The Pandoc and Make pipeline is local. The breadcrumb navigation, project listings, and content structure are also local choices.</p>
+
+<h2>Recommended credit passage</h2>
+
+<blockquote>
+<p>The current design owes more to Ginger Bill's website than to any other single source. I adapted its page geometry, ET Book typography, wide margin notes, heading scale, section-sign links, and code treatment. The old static-site generator behind this site was also modeled after the Odin generator that builds gingerBill.org.</p>
+
+<p>I found ET Book and this style of document layout through Ginger Bill's work. ET Book and the original sidenote pattern come from Tufte CSS. The color palettes come from Protesilaos Stavrou's Modus themes. Those sources are distinct, and each deserves direct credit.</p>
+</blockquote>
+
+<p>This passage should replace the current one-line Ginger Bill bullet. Link both <a href="https://www.gingerbill.org/">the live site</a> and <a href="https://github.com/gingerBill/gingerBill.org">its source repository</a>.</p>
+
+<h2>Stale colophon claims</h2>
+
+<div class="scroll">
+<table>
+  <thead>
+    <tr><th>Location</th><th>Status</th><th>Correction</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><span class="path">content/colophon.md:50</span></td>
+      <td><span class="tag tag-bad">wrong</span></td>
+      <td>Headings no longer use a 1.15 modular scale. They use explicit 2.6rem, 2rem, and 1.6rem sizes.</td>
+    </tr>
+    <tr>
+      <td><span class="path">content/colophon.md:59</span></td>
+      <td><span class="tag tag-bad">wrong</span></td>
+      <td>The sheet caps at 80rem. The reading column uses 60% of it. Text does not fill the sheet.</td>
+    </tr>
+    <tr>
+      <td><span class="path">content/colophon.md:63</span></td>
+      <td><span class="tag tag-bad">wrong</span></td>
+      <td>The historical argument about abandoning a left-hugging layout no longer explains the current geometry.</td>
+    </tr>
+    <tr>
+      <td><span class="path">content/colophon.md:70</span></td>
+      <td><span class="tag tag-bad">wrong</span></td>
+      <td>Notes float in the right margin on wide screens. They collapse only below the 80rem breakpoint.</td>
+    </tr>
+    <tr>
+      <td><span class="path">content/colophon.md:88</span></td>
+      <td><span class="tag tag-bad">wrong</span></td>
+      <td>The page and sheet now share one background. The old tonal band and edge rule are gone.</td>
+    </tr>
+    <tr>
+      <td><span class="path">content/colophon.md:93</span></td>
+      <td><span class="tag tag-bad">wrong</span></td>
+      <td>Headings now use the text color. One blue accent marks links, notes, the wordmark, the toggle, and section signs.</td>
+    </tr>
+    <tr>
+      <td><span class="path">content/colophon.md:113</span></td>
+      <td><span class="tag tag-bad">too narrow</span></td>
+      <td>The Ginger Bill credit names only note markup and self-assembly. It misses most of the visible design and the old generator.</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h2>Other public copy</h2>
+
+<div class="scroll">
+<table>
+  <thead>
+    <tr><th>Location</th><th>Priority</th><th>Finding</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><span class="path">content/articles/hello-world.md:40</span></td>
+      <td><span class="tag tag-bad">high</span></td>
+      <td>Mach is called active. Its project page calls it paused. Choose one current status.</td>
+    </tr>
+    <tr>
+      <td><span class="path">content/about.md</span></td>
+      <td><span class="tag tag-warn">decision</span></td>
+      <td>The page omits current professional work. The shipped resume lists Software Engineer at Sound Psychiatric Services from January 2021 to present.</td>
+    </tr>
+    <tr>
+      <td><span class="path">content/404.md:8</span></td>
+      <td><span class="tag tag-warn">medium</span></td>
+      <td>The front page does not list everything. It lists recent articles and featured projects.</td>
+    </tr>
+    <tr>
+      <td><span class="path">content/articles/hello-world.md:80</span></td>
+      <td><span class="tag tag-warn">confirm</span></td>
+      <td>The article promises more posts soon and names two topics. Keep this only if it still describes the near-term plan.</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h2>Draft-only cleanup</h2>
+
+<p><span class="path">content/articles/kitchen-sink.md</span> does not ship in production. It is still worth fixing because it is the visual regression page. It refers to the removed <code>./dev</code> command, the old <code>site.json</code>, the old heading colors, the old note behavior, the old output directory, and a <code>blog</code> section that is now named <code>articles</code>.</p>
+
+<h2>Recommended edit order</h2>
+
+<ul class="tasks">
+  <li data-state="todo">Rewrite the colophon around current facts and explicit Ginger Bill credit.</li>
+  <li data-state="todo">Resolve Mach's current status across the article and project page.</li>
+  <li data-state="todo">Decide whether the About page should include current work experience.</li>
+  <li data-state="todo">Correct the 404 claim and confirm the article promise.</li>
+  <li data-state="todo">Update the kitchen-sink draft so it tests the current site.</li>
+  <li data-state="todo">Build, render, and read every public page once more.</li>
+</ul>
+
+<p class="footer">Sources: public Markdown under <span class="path">content/</span>, the current Make and Pandoc build, <span class="path">../vetr0s-css/css/style.css</span>, gingerBill.org, and the gingerBill.org source repository.</p>
+
+</main>
+</body>
+</html>
