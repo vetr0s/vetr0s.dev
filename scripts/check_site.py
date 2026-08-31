@@ -125,15 +125,20 @@ if "figure img { height: auto; }" not in css:
 for stale in (
     "--measure",
     "--layout-width",
-    "--sidenote-width",
-    "--sidenote-gap",
     "max-width: 63em",
-    "float: right",
 ):
     if stale in css:
         fail(f"stale gutter rule remains: {stale}")
-if ".sidenote {\n    display: none;" not in css:
-    fail("notes are not collapsed at every width")
+for required in (
+    "--sheet-width: 80rem;",
+    "--main-width: 60%;",
+    ".header-rule {",
+    ".sidenote {\n    float: right;",
+    "@media (max-width: 80rem)",
+    "input.margin-toggle:checked + .sidenote-number + .sidenote",
+):
+    if required not in css:
+        fail(f"new sheet layout rule is missing: {required}")
 if "@media (max-width: 32em)" not in css or "justify-items: start;" not in css:
     fail("contact details do not stack on narrow screens")
 if "grid-template-columns: max-content minmax(0, 1fr);" not in css:
