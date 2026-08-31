@@ -15,6 +15,7 @@ class PageParser(HTMLParser):
         self.external_targets = []
         self.sidenote_inputs = []
         self.nodes = []
+        self.footer_count = 0
 
     def handle_starttag(self, tag, attrs):
         attrs = dict(attrs)
@@ -30,6 +31,8 @@ class PageParser(HTMLParser):
             self.external_targets.append(href)
         if tag == "input" and "margin-toggle" in attrs.get("class", "").split():
             self.sidenote_inputs.append(attrs)
+        if tag == "footer":
+            self.footer_count += 1
 
 
 def target_path(root, value):
@@ -73,6 +76,8 @@ for page in root.rglob("*.html"):
         fail(f"{page}: expected one canonical link")
     if parser.external_targets:
         fail(f"{page}: external links force a new tab")
+    if parser.footer_count != 1:
+        fail(f"{page}: expected one footer")
     for attrs in parser.sidenote_inputs:
         if not attrs.get("aria-label") or not attrs.get("aria-controls"):
             fail(f"{page}: unnamed sidenote control")
