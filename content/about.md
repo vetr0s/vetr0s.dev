@@ -96,10 +96,6 @@ Postgres](https://neon.com/), and [Auth0](https://auth0.com/). For the AI
 portion, we added a Gemini-backed assistant for usage insights and trained a
 small ridge-regression model to forecast grid carbon intensity.
 
-I built it with [Heng-Pok](https://github.com/Heng-Pok), [John
-Imanishimwe](https://github.com/JohnVianme), and
-[Garret](https://github.com/gsw2019).
-
 <figure> <img src="/img/hackaz_team.webp" alt="Myself and my three GridWise
 Energy teammates smiling in front of the Hack Arizona 2026 judging countdown
 screens, with our project dashboard open on a laptop in front of us"
