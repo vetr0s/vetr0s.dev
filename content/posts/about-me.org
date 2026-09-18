@@ -32,6 +32,11 @@ academically and technically.
 This inspired me to research more entry-level paths to programming, which led
 me to learn the basics of HTML, CSS, JavaScript, and Python.
 
+I have not lost my passion for "lower-level" development or game development.
+I still enjoy working close to the machine through projects like
+[[https://github.com/vetr0s/mach][Mach/mach.h]], and I want to spend more time exploring compilers and programming
+language implementation.
+
 * Work experience
 
 ** Cloud Computing Preceptorship
