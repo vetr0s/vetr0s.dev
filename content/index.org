@@ -23,4 +23,5 @@
 #+ATTR_HTML: :class posts
 - [[https://github.com/vetr0s/mach][Mach/mach.h]] - Isometric factory game + single header game engine
 - [[https://github.com/vetr0s/dotfiles][dotfiles]] - My Emacs, shell, and development environment configuration
+- [[https://css.vetr0s.dev][vetr0s.css]] - Live specimen for this website's stylesheet
 - [[https://github.com/vetr0s/vetr0s.dev][vetr0s.dev]] - Source for this website
