@@ -32,6 +32,48 @@ academically and technically.
 This inspired me to research more entry-level paths to programming, which led
 me to learn the basics of HTML, CSS, JavaScript, and Python.
 
+** Work experience
+
+*** Cloud Computing Preceptorship
+
+During spring 2026, I worked as a teaching assistant for CSc 346: Cloud
+Computing at the University of Arizona.
+
+Every week I held office hours where I helped students debug projects and
+development environments. The course covered cloud fundamentals through
+hands-on projects using services like AWS, EC2, S3, and Lambda.
+
+Helping teach the course was just as valuable as taking it myself, if not more
+so. Debugging with students taught me to explain problems clearly and improved
+my technical communication skills.
+
+*** Sound Psychiatric Services
+
+I have worked as a contract software engineer for Sound Psychiatric Services
+since January 2021. I met the business owner through community outreach I was a
+part of in my high school robotics program, and they asked me to build the
+practice's public website. The site directs existing patients to its electronic
+medical record, payment, and telehealth portals. It also gives prospective
+patients the information they need before a visit. The initial design and
+implementation loop took about a month, and then my role shifted toward
+occasional maintenance tasks.
+
+Once I started college, I wanted to do more than just front-end development for
+the practice. Initially, I identified that the practice was subscribed to a
+business web hosting package that was overkill for the simple static site. So I
+moved the website from the paid plan to free static hosting via Cloudflare
+Pages. More importantly, the transition was seamless for the business because
+the migration kept business-critical features such as domain and email services
+in place.
+
+I also support custom in-house software for the practice that deals with
+non-confidential data. For example, I built a tool that reads serial
+data from a medical scale, displaying live weight on the doctor's PC. I built
+this after the scale's original display failed.
+
+Work like this has taught me how to change small systems without disrupting the
+people who depend on them.
+
 * Education
 
 I graduated from the University of Arizona in May 2026 with a B.S. in
@@ -75,48 +117,6 @@ in Egypt.
 #+caption: Our shared pit at the FRC World Championship in Houston.
 #+attr_html: :alt Olympia Robotics Federation and Cairo robotics students pose in their pit
 [[file:../img/huston_pit.webp]]
-
-* Work experience
-
-** Cloud Computing Preceptorship
-
-During spring 2026, I worked as a teaching assistant for CSc 346: Cloud
-Computing at the University of Arizona.
-
-Every week I held office hours where I helped students debug projects and
-development environments. The course covered cloud fundamentals through
-hands-on projects using services like AWS, EC2, S3, and Lambda.
-
-Helping teach the course was just as valuable as taking it myself, if not more
-so. Debugging with students taught me to explain problems clearly and improved
-my technical communication skills.
-
-** Sound Psychiatric Services
-
-I have worked as a contract software engineer for Sound Psychiatric Services
-since January 2021. I met the business owner through community outreach I was a
-part of in my high school robotics program, and they asked me to build the
-practice's public website. The site directs existing patients to its electronic
-medical record, payment, and telehealth portals. It also gives prospective
-patients the information they need before a visit. The initial design and
-implementation loop took about a month, and then my role shifted toward
-occasional maintenance tasks.
-
-Once I started college, I wanted to do more than just front-end development for
-the practice. Initially, I identified that the practice was subscribed to a
-business web hosting package that was overkill for the simple static site. So I
-moved the website from the paid plan to free static hosting via Cloudflare
-Pages. More importantly, the transition was seamless for the business because
-the migration kept business-critical features such as domain and email services
-in place.
-
-I also support custom in-house software for the practice that deals with
-non-confidential data. For example, I built a tool that reads serial
-data from a medical scale, displaying live weight on the doctor's PC. I built
-this after the scale's original display failed.
-
-Work like this has taught me how to change small systems without disrupting the
-people who depend on them.
 
 * HackAZ 2026
 
