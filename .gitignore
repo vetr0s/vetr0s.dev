@@ -1,6 +1,2 @@
-*.zip
-
-# Local dev output. The published tree is docs/, built and committed by hand.
-public/
-.build/
-__pycache__/
+/.org-timestamps/
+/public/

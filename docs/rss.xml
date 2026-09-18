@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Nathan Tebbs</title>
+    <link>https://vetr0s.dev/</link>
+    <description>Notes on software and the things I learn while building.</description>
+    <lastBuildDate>Fri, 18 Sep 2026 00:00:00 -0700</lastBuildDate>
+    <item>
+      <title>Colophon</title>
+      <link>https://vetr0s.dev/posts/colophon.html</link>
+      <guid isPermaLink="true">https://vetr0s.dev/posts/colophon.html</guid>
+      <pubDate>Fri, 18 Sep 2026 00:00:00 -0700</pubDate>
+      <description>How this website is written and built.</description>
+    </item>
+    <item>
+      <title>A zero-dependency static website generator</title>
+      <link>https://vetr0s.dev/posts/zero-dependency-static-site-generator.html</link>
+      <guid isPermaLink="true">https://vetr0s.dev/posts/zero-dependency-static-site-generator.html</guid>
+      <pubDate>Wed, 16 Sep 2026 00:00:00 -0700</pubDate>
+      <description>How Emacs and its built-in Org mode turn this site&apos;s Org files into a static blog.</description>
+    </item>
+    <item>
+      <title>What is this website for anyway?</title>
+      <link>https://vetr0s.dev/posts/what-is-this-website-for-anyway.html</link>
+      <guid isPermaLink="true">https://vetr0s.dev/posts/what-is-this-website-for-anyway.html</guid>
+      <pubDate>Fri, 11 Sep 2026 00:00:00 -0700</pubDate>
+      <description>My motivations and plans going forward.</description>
+    </item>
+    <item>
+      <title>About Me</title>
+      <link>https://vetr0s.dev/posts/about-me.html</link>
+      <guid isPermaLink="true">https://vetr0s.dev/posts/about-me.html</guid>
+      <pubDate>Sun, 23 Aug 2026 00:00:00 -0700</pubDate>
+      <description>A little about my path as an engineer and developer so far.</description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,27 @@
+#+title: Nathan Tebbs
+#+options: title:nil toc:nil num:nil
+
+#+begin_export html
+<header class="home-header">
+  <img class="profile" src="img/gh_profile.jpg" alt="Nathan Tebbs">
+  <div>
+    <h1>Nathan Tebbs</h1>
+    <p>Notes on software and the things I learn while building.</p>
+    <p class="social-links"><a href="mailto:nate@vetr0s.dev">Email</a> | <a href="https://github.com/vetr0s">GitHub</a> | <a href="https://www.linkedin.com/in/ntebbs">LinkedIn</a> | <a href="rss.xml">RSS</a></p>
+  </div>
+</header>
+#+end_export
+
+* Posts
+
+#+ATTR_HTML: :class posts
+- 2026 Sep 18 - [[file:posts/colophon.org][Colophon]]
+- 2026 Sep 16 - [[file:posts/zero-dependency-static-site-generator.org][A zero-dependency static website generator]]
+- 2026 Sep 11 - [[file:posts/what-is-this-website-for-anyway.org][What is this website for anyway?]]
+- 2026 Aug 23 - [[file:posts/about-me.org][About Me]]
+
+* Projects
+#+ATTR_HTML: :class posts
+- [[https://github.com/vetr0s/mach][Mach/mach.h]] - Isometric factory game + single header game engine
+- [[https://github.com/vetr0s/dotfiles][dotfiles]] - My Emacs, shell, and development environment configuration
+- [[https://github.com/vetr0s/vetr0s.dev][vetr0s.dev]] - Source for this website

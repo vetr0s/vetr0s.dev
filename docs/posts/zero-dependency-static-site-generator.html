@@ -3,7 +3,8 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Nathan Tebbs</title>
+<title>A zero-dependency static website generator</title>
+<meta name="description" content="How Emacs and its built-in Org mode turn this site's Org files into a static blog." />
 <meta name="generator" content="Org Mode" />
 <style type="text/css">
   #content { max-width: 60em; margin: auto; }
@@ -194,36 +195,123 @@
 <link rel="alternate" type="application/rss+xml" title="Nathan Tebbs" href="/rss.xml">
 </head>
 <body>
+<div id="preamble" class="status">
+<a class="site-name" href="/">Home</a><hr><h1>A zero-dependency static website generator</h1><p class="published">2026-09-16</p>
+</div>
 <div id="content" class="content">
-<header class="home-header">
-  <img class="profile" src="img/gh_profile.jpg" alt="Nathan Tebbs">
-  <div>
-    <h1>Nathan Tebbs</h1>
-    <p>Notes on software and the things I learn while building.</p>
-    <p class="social-links"><a href="mailto:nate@vetr0s.dev">Email</a> | <a href="https://github.com/vetr0s">GitHub</a> | <a href="https://www.linkedin.com/in/ntebbs">LinkedIn</a> | <a href="rss.xml">RSS</a></p>
-  </div>
-</header>
-<div id="outline-container-org15a535d" class="outline-2">
-<h2 id="org15a535d">Posts</h2>
-<div class="outline-text-2" id="text-org15a535d">
-<ul class="org-ul posts">
-<li>2026 Sep 18 - <a href="posts/colophon.html">Colophon</a></li>
-<li>2026 Sep 16 - <a href="posts/zero-dependency-static-site-generator.html">A zero-dependency static website generator</a></li>
-<li>2026 Sep 11 - <a href="posts/what-is-this-website-for-anyway.html">What is this website for anyway?</a></li>
-<li>2026 Aug 23 - <a href="posts/about-me.html">About Me</a></li>
-</ul>
+<p>
+If Emacs is already your primary editor, you have a static website generator.
+Org mode and its HTML publishing tools ship with Emacs, so there is no separate
+generator to install, package manager to maintain, or application to run in
+production. Compared with adding Hugo or another tool to my setup, this site is
+effectively a zero-dependency build.
+</p>
+
+<p>
+That does not mean the website depends on literally nothing. It means Emacs is
+the only build tool, and I already use it to write the source files.
+</p>
+<div id="outline-container-orga380200" class="outline-2">
+<h2 id="orga380200">Project layout</h2>
+<div class="outline-text-2" id="text-orga380200">
+<p>
+The repository separates source files from generated files:
+</p>
+
+<pre class="example" id="org1de6337">
+content/    Org pages and posts
+static/     CSS and other files copied without changes
+docs/       generated site served by GitHub Pages
+publish.el  Org Publish configuration
+</pre>
+
+<p>
+The files in <code>docs/</code> are generated from <code>content/</code> and <code>static/</code>.
+</p>
 </div>
 </div>
-<div id="outline-container-orga85a0bf" class="outline-2">
-<h2 id="orga85a0bf">Projects</h2>
-<div class="outline-text-2" id="text-orga85a0bf">
-<ul class="org-ul posts">
-<li><a href="https://github.com/vetr0s/mach">Mach/mach.h</a> - Isometric factory game + single header game engine</li>
-<li><a href="https://github.com/vetr0s/dotfiles">dotfiles</a> - My Emacs, shell, and development environment configuration</li>
-<li><a href="https://github.com/vetr0s/vetr0s.dev">vetr0s.dev</a> - Source for this website</li>
-</ul>
+<div id="outline-container-orgeb14af7" class="outline-2">
+<h2 id="orgeb14af7">Publish configuration</h2>
+<div class="outline-text-2" id="text-orgeb14af7">
+<p>
+Org Publish already has the two operations this site needs: export Org files to
+HTML and copy static files. The configuration combines both into one project
+named <code>blog</code>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><code>(setq org-publish-project-alist
+      '(("blog-pages"
+         :publishing-function org-html-publish-to-html)
+        ("blog-static"
+         :publishing-function org-publish-attachment)
+        ("blog"
+         :components ("blog-pages" "blog-static"))))
+</code></pre>
+</div>
+
+<p>
+The real configuration derives its directories from the location of
+<code>publish.el</code>. This keeps the build independent of the directory where Emacs
+starts. Org supplies a baseline stylesheet; the small site stylesheet loads
+after it and adjusts the reading width, links, and navigation.
+</p>
 </div>
 </div>
+<div id="outline-container-orge5b3838" class="outline-2">
+<h2 id="orge5b3838">Publishing from Emacs</h2>
+<div class="outline-text-2" id="text-orge5b3838">
+<p>
+My Doom Emacs configuration loads the project file:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><code>(load (expand-file-name "~/source/blog/publish.el") nil 'nomessage)
+</code></pre>
+</div>
+
+<p>
+That registers the publish projects and defines <code>vetr0s-blog-publish</code>. I run it
+with <code>M-x vetr0s-blog-publish</code>. A prefix argument forces Emacs to rebuild every
+file.
+</p>
+
+<p>
+The same project works in a clean Emacs session, without Doom:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh"><code>emacs --batch -Q --load ./publish.el --funcall vetr0s-blog-publish
+</code></pre>
+</div>
+
+<p>
+Batch builds always force a full rebuild. During interactive builds, Org keeps
+its incremental build cache in <code>.org-timestamps/</code>. If the optional <code>htmlize</code>
+package is present, source blocks get syntax colors; the site still builds
+without it.
+</p>
+</div>
+</div>
+<div id="outline-container-org31fdcd1" class="outline-2">
+<h2 id="org31fdcd1">Deployment</h2>
+<div class="outline-text-2" id="text-org31fdcd1">
+<p>
+The build produces plain files under <code>docs/</code>. GitHub Pages serves that directory
+from the repository's main branch at <a href="https://vetr0s.dev">vetr0s.dev</a>. There is no application
+server, database, JavaScript runtime, or generator-specific deployment service.
+</p>
+
+<p>
+Publishing means running the batch build, reviewing the generated files, and
+pushing them to <a href="https://github.com/vetr0s/vetr0s.dev">GitHub</a>. For a personal website, Emacs, Org, and a little CSS
+are enough.
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<a href="/">← All posts</a> · <a href="mailto:nate@vetr0s.dev">Email</a> · <a href="https://github.com/vetr0s">GitHub</a> · <a href="https://www.linkedin.com/in/ntebbs">LinkedIn</a> · <a href="/rss.xml">RSS</a>
 </div>
 </body>
 </html>

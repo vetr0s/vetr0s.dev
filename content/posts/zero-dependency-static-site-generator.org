@@ -1,0 +1,80 @@
+#+title: A zero-dependency static website generator
+#+date: 2026-09-16
+#+description: How Emacs and its built-in Org mode turn this site's Org files into a static blog.
+#+options: toc:nil num:nil
+
+If Emacs is already your primary editor, you have a static website generator.
+Org mode and its HTML publishing tools ship with Emacs, so there is no separate
+generator to install, package manager to maintain, or application to run in
+production. Compared with adding Hugo or another tool to my setup, this site is
+effectively a zero-dependency build.
+
+That does not mean the website depends on literally nothing. It means Emacs is
+the only build tool, and I already use it to write the source files.
+
+* Project layout
+
+The repository separates source files from generated files:
+
+#+begin_example
+content/    Org pages and posts
+static/     CSS and other files copied without changes
+docs/       generated site served by GitHub Pages
+publish.el  Org Publish configuration
+#+end_example
+
+The files in =docs/= are generated from =content/= and =static/=.
+
+* Publish configuration
+
+Org Publish already has the two operations this site needs: export Org files to
+HTML and copy static files. The configuration combines both into one project
+named =blog=.
+
+#+begin_src emacs-lisp
+(setq org-publish-project-alist
+      '(("blog-pages"
+         :publishing-function org-html-publish-to-html)
+        ("blog-static"
+         :publishing-function org-publish-attachment)
+        ("blog"
+         :components ("blog-pages" "blog-static"))))
+#+end_src
+
+The real configuration derives its directories from the location of
+=publish.el=. This keeps the build independent of the directory where Emacs
+starts. Org supplies a baseline stylesheet; the small site stylesheet loads
+after it and adjusts the reading width, links, and navigation.
+
+* Publishing from Emacs
+
+My Doom Emacs configuration loads the project file:
+
+#+begin_src emacs-lisp
+(load (expand-file-name "~/source/blog/publish.el") nil 'nomessage)
+#+end_src
+
+That registers the publish projects and defines =vetr0s-blog-publish=. I run it
+with =M-x vetr0s-blog-publish=. A prefix argument forces Emacs to rebuild every
+file.
+
+The same project works in a clean Emacs session, without Doom:
+
+#+begin_src sh
+emacs --batch -Q --load ./publish.el --funcall vetr0s-blog-publish
+#+end_src
+
+Batch builds always force a full rebuild. During interactive builds, Org keeps
+its incremental build cache in =.org-timestamps/=. If the optional =htmlize=
+package is present, source blocks get syntax colors; the site still builds
+without it.
+
+* Deployment
+
+The build produces plain files under =docs/=. GitHub Pages serves that directory
+from the repository's main branch at [[https://vetr0s.dev][vetr0s.dev]]. There is no application
+server, database, JavaScript runtime, or generator-specific deployment service.
+
+Publishing means running the batch build, reviewing the generated files, and
+pushing them to [[https://github.com/vetr0s/vetr0s.dev][GitHub]]. For a personal website, Emacs, Org, and a little CSS
+are enough.

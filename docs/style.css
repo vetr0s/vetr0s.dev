@@ -1,0 +1,98 @@
+:root {
+    color-scheme: dark;
+}
+
+body {
+    max-width: 72ch;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    font-family: system-ui, sans-serif;
+    color: #c9d1d9;
+    background: #181818;
+}
+
+a { color: #89a6ff; }
+a:visited { color: #f690ff; }
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+figure img {
+    width: 50%;
+}
+
+#content {
+    max-width: none;
+}
+
+h1.title {
+    margin-bottom: 0;
+}
+
+.home-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+}
+
+.profile {
+    width: 10rem;
+    height: auto;
+}
+
+.home-header h1 {
+    margin: 0;
+}
+
+.social-links {
+    margin-bottom: 0;
+}
+
+.posts {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+#preamble {
+    margin-bottom: 2rem;
+}
+
+#preamble h1 {
+    margin-bottom: 0;
+}
+
+.site-name {
+    font-weight: bold;
+}
+
+.published {
+    margin-top: 0.25rem;
+}
+
+#postamble {
+    margin-top: 3rem;
+    padding-top: 1rem;
+    border-top: 1px solid;
+}
+
+pre.src {
+    margin-right: 0;
+    margin-left: 0;
+}
+
+pre {
+    overflow-x: auto;
+    background: #1e1e1e;
+    border-color: gray;
+}
+
+.org-keyword, .org-builtin { color: #ff7b72; font-weight: bold; }
+.org-string { color: #a5d6ff; }
+.org-comment { color: #8b949e; }
+.org-function-name, .org-variable-name { color: #d2a8ff; }
+.org-type, .org-constant { color: #79c0ff; }

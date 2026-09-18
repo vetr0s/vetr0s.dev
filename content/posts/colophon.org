@@ -1,0 +1,17 @@
+#+title: Colophon
+#+date: 2026-09-18
+#+description: How this website is written and built.
+#+options: toc:nil num:nil
+
+This website is written by hand in [[https://orgmode.org/][Org mode]] and published to plain HTML by
+Emacs. A small CSS file handles the presentation, and the pages use system
+fonts. There is no client-side JavaScript.
+
+The source is split between Org files in =content/= and static assets in
+=static/=. Org Publish exports and copies them into the =docs/= directory served
+by GitHub Pages. I describe the setup in more detail in [[file:zero-dependency-static-site-generator.org][A zero-dependency static
+website generator]].
+
+The site intentionally has no analytics, tracking, comments, or cookie banner.
+You can follow new posts through [[https://vetr0s.dev/rss.xml][RSS]] or reach me at
+[[mailto:nate@vetr0s.dev][nate@vetr0s.dev]].

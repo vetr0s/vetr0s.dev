@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>About Me</title>
+<meta name="description" content="A little about my path as an engineer and developer so far." />
+<meta name="generator" content="Org Mode" />
+<style type="text/css">
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-c:before { content: 'C'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'JavaScript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { }
+</style>
+<link rel="stylesheet" href="/style.css">
+<link rel="alternate" type="application/rss+xml" title="Nathan Tebbs" href="/rss.xml">
+</head>
+<body>
+<div id="preamble" class="status">
+<a class="site-name" href="/">Home</a><hr><h1>About Me</h1><p class="published">2026-08-23</p>
+</div>
+<div id="content" class="content">
+<div id="outline-container-org2cf0b2d" class="outline-2">
+<h2 id="org2cf0b2d">Foundations</h2>
+<div class="outline-text-2" id="text-org2cf0b2d">
+<p>
+I grew up in Olympia, Washington. My first experience with programming was
+through Scratch block programming in a 7th-grade visual communications class.
+We were given an open-ended assignment where the objective was to create
+anything that interested us. I ended up creating a pretty simple Space Invaders
+clone with a couple of levels, a final boss, sprites, and a <b>very</b> rudimentary
+bullet-physics system. While most of the work was just learning from examples on
+Scratch's website, this first interaction with programming concepts made me
+want to keep exploring. My teacher was pretty impressed and invited me to join
+the 8th-grade robotics class. That class introduced me to competitive robotics,
+which became a major part of my high school experience.
+</p>
+
+<p>
+Around this time I also discovered "real" programming languages. I made the
+naive mistake of searching the internet for "What programming languages are
+used to make video games?" This sent me down a rabbit hole of trying to use C++
+without understanding OOP, C, or pretty much anything else that you would need
+to know to even start learning C++. The only reason I didn't give up instantly
+was that I was following a beginner tutorial and framework on YouTube.
+</p>
+
+<p>
+Shortly after, I had successfully set up Visual Studio 2017 and created a basic
+game. It opened a window, rendered individual <code>putPixel(x, y)</code> calls to form a
+crosshair, and polled keyboard arrow input to move the crosshair between set
+locations. However, I soon realized that I was in over my head, both
+academically and technically.
+</p>
+
+<p>
+This inspired me to research more entry-level paths to programming, which led
+me to learn the basics of HTML, CSS, JavaScript, and Python.
+</p>
+</div>
+</div>
+<div id="outline-container-org5364812" class="outline-2">
+<h2 id="org5364812">Education</h2>
+<div class="outline-text-2" id="text-org5364812">
+<p>
+I graduated from the University of Arizona in May 2026 with a B.S. in
+Computer Science. Before Arizona, I earned my associate's degree alongside my
+high school diploma through Washington state's Running Start program.
+</p>
+</div>
+<div id="outline-container-org8f3215b" class="outline-3">
+<h3 id="org8f3215b">High School Robotics</h3>
+<div class="outline-text-3" id="text-org8f3215b">
+<p>
+For four years, I was part of Olympia Robotics Federation 4450, an FRC
+robotics team. I joined as a freshman when the team was quite small; four of us
+became its dedicated core that season. By the time I graduated, the team had
+grown to nearly 50 members. During my final two years on the team, I served as
+Safety Captain and Build Team Lead. This gave me direct responsibility for
+shop, robot, and event operations and safety.
+</p>
+
+<p>
+FRC shaped how I think about engineering more than almost anything else I've
+done. I entered high school wanting to study computer science in college. I
+left knowing I wanted a career built around difficult technical problems, small
+teams, and building things that make a real impact.
+</p>
+</div>
+<div id="outline-container-orge9fc56d" class="outline-4">
+<h4 id="orge9fc56d">Egypt expedition</h4>
+<div class="outline-text-4" id="text-orge9fc56d">
+<p>
+During my third year, one of our mentors connected us with a mother whose son
+attended a STEM school in Cairo that used LEGO-based robotics. We decided to
+help bring metal-based competitive robotics to the school since FTC had yet to
+expand to the region.
+</p>
+
+<p>
+Over the next 10 months, our team raised around $60,000 through community
+outreach. The following summer, 17 of us traveled to Cairo with several FTC
+kits, a custom curriculum, and an accompanying end-of-week challenge that I
+helped design.
+</p>
+
+
+<figure id="org9bb3421">
+<img src="../img/cairo_kids.webp" alt="Two mentors and two students pose behind a small robot in Cairo">
+
+<figcaption><span class="figure-number">Figure 1: </span>Students and mentors with one of the FTC robots in Cairo.</figcaption>
+</figure>
+
+<p>
+The following season, our team also reached the FRC World Championship in
+Houston to compete for the Impact Award because of the team's outreach efforts
+in Egypt.
+</p>
+
+
+<figure id="org7f91311">
+<img src="../img/huston_pit.webp" alt="Olympia Robotics Federation and Cairo robotics students pose in their pit">
+
+<figcaption><span class="figure-number">Figure 2: </span>Our shared pit at the FRC World Championship in Houston.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org896622d" class="outline-2">
+<h2 id="org896622d">Work experience</h2>
+<div class="outline-text-2" id="text-org896622d">
+</div>
+<div id="outline-container-orgfa6bc2b" class="outline-3">
+<h3 id="orgfa6bc2b">Cloud Computing Preceptorship</h3>
+<div class="outline-text-3" id="text-orgfa6bc2b">
+<p>
+During spring 2026, I worked as a teaching assistant for CSc 346: Cloud
+Computing at the University of Arizona.
+</p>
+
+<p>
+Every week I held office hours where I helped students debug projects and
+development environments. The course covered cloud fundamentals through
+hands-on projects using services like AWS, EC2, S3, and Lambda.
+</p>
+
+<p>
+Helping teach the course was just as valuable as taking it myself, if not more
+so. Debugging with students taught me to explain problems clearly and improved
+my technical communication skills.
+</p>
+</div>
+</div>
+<div id="outline-container-orgd01a631" class="outline-3">
+<h3 id="orgd01a631">Sound Psychiatric Services</h3>
+<div class="outline-text-3" id="text-orgd01a631">
+<p>
+I have worked as a contract software engineer for Sound Psychiatric Services
+since January 2021. I met the business owner through community outreach I was a
+part of in my high school robotics program, and they asked me to build the
+practice's public website. The site directs existing patients to its electronic
+medical record, payment, and telehealth portals. It also gives prospective
+patients the information they need before a visit. The initial design and
+implementation loop took about a month, and then my role shifted toward
+occasional maintenance tasks.
+</p>
+
+<p>
+Once I started college, I wanted to do more than just front-end development for
+the practice. Initially, I identified that the practice was subscribed to a
+business web hosting package that was overkill for the simple static site. So I
+moved the website from the paid plan to free static hosting via Cloudflare
+Pages. More importantly, the transition was seamless for the business because
+the migration kept business-critical features such as domain and email services
+in place.
+</p>
+
+<p>
+I also support custom in-house software for the practice that deals with
+non-confidential data. For example, I built a tool that reads serial
+data from a medical scale, displaying live weight on the doctor's PC. I built
+this after the scale's original display failed.
+</p>
+
+<p>
+Work like this has taught me how to change small systems without disrupting the
+people who depend on them.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org1a3038d" class="outline-2">
+<h2 id="org1a3038d">HackAZ 2026</h2>
+<div class="outline-text-2" id="text-org1a3038d">
+<p>
+In April 2026, I spent 24 hours with three teammates building GridWise Energy
+at Hack Arizona, the University's flagship hackathon, for the AI Environmental
+Sustainability track.
+</p>
+
+<p>
+GridWise is a personal electricity carbon-footprint tracker for Arizona
+residents. Users log high-draw appliances such as HVAC systems, EV chargers,
+pool pumps, and dryers. The app estimates their emissions using their local
+grid's energy-source mix, tracks the grid's carbon intensity, and encourages
+users to shift heavy loads toward periods where solar and Palo Verde's nuclear
+generation are supplying more of the grid's energy.
+</p>
+
+<p>
+We shipped it at <a href="https://griddaddy.us">griddaddy.us</a>.
+</p>
+
+
+<figure id="org371dc53">
+<img src="../img/hackaz_team.webp" alt="Four GridWise teammates stand behind their project laptop at Hack Arizona">
+
+<figcaption><span class="figure-number">Figure 3: </span>The GridWise team at Hack Arizona 2026.</figcaption>
+</figure>
+
+<blockquote>
+<p>
+We chose a less serious name in an effort to compete for the most creative or
+funny name, so we took inspiration from Scrub Daddy.
+</p>
+</blockquote>
+
+<p>
+The stack included React, TypeScript, Vite, Tailwind CSS, shadcn/ui, Vercel
+serverless functions, Neon Postgres, and Auth0. For the AI portion, we used a
+Gemini-backed assistant for usage insights and trained a small ridge-regression
+model to forecast grid carbon intensity.
+</p>
+</div>
+</div>
+<div id="outline-container-org7100a06" class="outline-2">
+<h2 id="org7100a06">The name</h2>
+<div class="outline-text-2" id="text-org7100a06">
+<p>
+<b>vetr0s</b> comes from the Italian <i>vetri</i>, plural of <i>vetro</i>, meaning "glass" or
+"windowpane." I enjoy having an online alias for development-related things for
+a couple of reasons. Growing up playing Xbox, gamertags were an essential part
+of my introduction to the internet. When I got older, I found that a lot of
+programmers I look up to use Latin-inspired aliases, such as nothings and
+Tsoding. I also just think the domain looks better than something like
+nathantebbs.com.
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<a href="/">← All posts</a> · <a href="mailto:nate@vetr0s.dev">Email</a> · <a href="https://github.com/vetr0s">GitHub</a> · <a href="https://www.linkedin.com/in/ntebbs">LinkedIn</a> · <a href="/rss.xml">RSS</a>
+</div>
+</body>
+</html>
