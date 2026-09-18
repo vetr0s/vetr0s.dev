@@ -17,7 +17,6 @@
 #+ATTR_HTML: :class posts
 - 2026 Sep 18 - [[file:posts/colophon.org][Colophon]]
 - 2026 Sep 16 - [[file:posts/zero-dependency-static-site-generator.org][A zero-dependency static website generator]]
-- 2026 Sep 11 - [[file:posts/what-is-this-website-for-anyway.org][What is this website for anyway?]]
 - 2026 Aug 23 - [[file:posts/about-me.org][About Me]]
 
 * Projects
