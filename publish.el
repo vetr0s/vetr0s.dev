@@ -12,6 +12,11 @@
 
 (defconst vetr0s-blog-url "https://vetr0s.dev")
 
+(let ((htmlize-directory
+       (expand-file-name "~/.config/emacs/.local/straight/repos/htmlize/")))
+  (when (file-directory-p htmlize-directory)
+    (add-to-list 'load-path htmlize-directory)))
+
 (setq org-publish-timestamp-directory
       (expand-file-name ".org-timestamps/" vetr0s-blog-root)
       org-html-htmlize-output-type (and (require 'htmlize nil t) 'css))

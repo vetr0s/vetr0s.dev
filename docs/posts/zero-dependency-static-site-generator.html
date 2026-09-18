@@ -211,14 +211,14 @@ effectively a zero-dependency build.
 That does not mean the website depends on literally nothing. It means Emacs is
 the only build tool, and I already use it to write the source files.
 </p>
-<div id="outline-container-orga380200" class="outline-2">
-<h2 id="orga380200">Project layout</h2>
-<div class="outline-text-2" id="text-orga380200">
+<div id="outline-container-org6632897" class="outline-2">
+<h2 id="org6632897">Project layout</h2>
+<div class="outline-text-2" id="text-org6632897">
 <p>
 The repository separates source files from generated files:
 </p>
 
-<pre class="example" id="org1de6337">
+<pre class="example" id="org0872dba">
 content/    Org pages and posts
 static/     CSS and other files copied without changes
 docs/       generated site served by GitHub Pages
@@ -230,9 +230,9 @@ The files in <code>docs/</code> are generated from <code>content/</code> and <co
 </p>
 </div>
 </div>
-<div id="outline-container-orgeb14af7" class="outline-2">
-<h2 id="orgeb14af7">Publish configuration</h2>
-<div class="outline-text-2" id="text-orgeb14af7">
+<div id="outline-container-org0b5628b" class="outline-2">
+<h2 id="org0b5628b">Publish configuration</h2>
+<div class="outline-text-2" id="text-org0b5628b">
 <p>
 Org Publish already has the two operations this site needs: export Org files to
 HTML and copy static files. The configuration combines both into one project
@@ -240,13 +240,13 @@ named <code>blog</code>.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><code>(setq org-publish-project-alist
-      '(("blog-pages"
-         :publishing-function org-html-publish-to-html)
-        ("blog-static"
-         :publishing-function org-publish-attachment)
-        ("blog"
-         :components ("blog-pages" "blog-static"))))
+<pre class="src src-emacs-lisp"><code>(<span class="org-keyword">setq</span> org-publish-project-alist
+      '((<span class="org-string">"blog-pages"</span>
+         <span class="org-builtin">:publishing-function</span> org-html-publish-to-html)
+        (<span class="org-string">"blog-static"</span>
+         <span class="org-builtin">:publishing-function</span> org-publish-attachment)
+        (<span class="org-string">"blog"</span>
+         <span class="org-builtin">:components</span> (<span class="org-string">"blog-pages"</span> <span class="org-string">"blog-static"</span>))))
 </code></pre>
 </div>
 
@@ -258,15 +258,15 @@ after it and adjusts the reading width, links, and navigation.
 </p>
 </div>
 </div>
-<div id="outline-container-orge5b3838" class="outline-2">
-<h2 id="orge5b3838">Publishing from Emacs</h2>
-<div class="outline-text-2" id="text-orge5b3838">
+<div id="outline-container-orgabe6c25" class="outline-2">
+<h2 id="orgabe6c25">Publishing from Emacs</h2>
+<div class="outline-text-2" id="text-orgabe6c25">
 <p>
 My Doom Emacs configuration loads the project file:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp"><code>(load (expand-file-name "~/source/blog/publish.el") nil 'nomessage)
+<pre class="src src-emacs-lisp"><code>(load (expand-file-name <span class="org-string">"~/source/blog/publish.el"</span>) nil 'nomessage)
 </code></pre>
 </div>
 
@@ -293,9 +293,9 @@ without it.
 </p>
 </div>
 </div>
-<div id="outline-container-org31fdcd1" class="outline-2">
-<h2 id="org31fdcd1">Deployment</h2>
-<div class="outline-text-2" id="text-org31fdcd1">
+<div id="outline-container-orgcdd4897" class="outline-2">
+<h2 id="orgcdd4897">Deployment</h2>
+<div class="outline-text-2" id="text-orgcdd4897">
 <p>
 The build produces plain files under <code>docs/</code>. GitHub Pages serves that directory
 from the repository's main branch at <a href="https://vetr0s.dev">vetr0s.dev</a>. There is no application

@@ -32,9 +32,9 @@ academically and technically.
 This inspired me to research more entry-level paths to programming, which led
 me to learn the basics of HTML, CSS, JavaScript, and Python.
 
-** Work experience
+* Work experience
 
-*** Cloud Computing Preceptorship
+** Cloud Computing Preceptorship
 
 During spring 2026, I worked as a teaching assistant for CSc 346: Cloud
 Computing at the University of Arizona.
@@ -47,7 +47,7 @@ Helping teach the course was just as valuable as taking it myself, if not more
 so. Debugging with students taught me to explain problems clearly and improved
 my technical communication skills.
 
-*** Sound Psychiatric Services
+** Sound Psychiatric Services
 
 I have worked as a contract software engineer for Sound Psychiatric Services
 since January 2021. I met the business owner through community outreach I was a
