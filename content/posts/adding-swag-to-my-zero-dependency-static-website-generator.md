@@ -1,7 +1,7 @@
 ---
 title: Adding swag to my zero-dependency static website generator
 date: 2026-10-23
-updated: 2026-10-23 Added a section on the swag.nvim plugin.
+updated: 2026-10-23 23:27 Added a section on the swag.nvim plugin.
 description: Swapping Emacs for a small Go program, and counting what this site actually depends on.
 ---
 
