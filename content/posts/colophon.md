@@ -4,8 +4,8 @@ date: 2026-09-18
 description: How this website is written and built.
 ---
 
-This website is written by hand in [Org mode](https://orgmode.org/) and published to plain HTML by Emacs. A small CSS file handles the presentation, and the pages use system fonts. There is no client-side JavaScript.
+This website is written in Markdown in neovim and built into plain HTML by [swag](https://github.com/vetr0s/swag), a small static site generator I wrote in Go. Pandoc renders the Markdown and highlights the code. A small CSS file handles the presentation, and the pages use system fonts. There is no client-side JavaScript.
 
-The source is split between Org files in `content/` and static assets in `static/`. Org Publish exports and copies them into the `docs/` directory served by GitHub Pages. I describe the setup in more detail in [A zero-dependency static website generator](zero-dependency-static-site-generator.html).
+Posts and pages live in `content/`, the page templates in `layouts/`, and static assets in `static/`. swag writes the finished site to `docs/`, which GitHub Pages serves. I describe the setup in [Adding swag to my zero-dependency static website generator](adding-swag-to-my-zero-dependency-static-website-generator.html). The Emacs and Org setup it replaced is in [A zero-dependency static website generator](zero-dependency-static-site-generator.html).
 
 The site intentionally has no analytics, tracking, comments, or cookie banner. You can follow new posts through [RSS](https://vetr0s.dev/rss.xml) or reach me at <nate@vetr0s.dev>.

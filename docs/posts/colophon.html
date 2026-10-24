@@ -17,14 +17,18 @@
 <p class="published"><time datetime="2026-09-18">2026-09-18</time></p>
 </header>
 <main>
-<p>This website is written by hand in <a href="https://orgmode.org/">Org
-mode</a> and published to plain HTML by Emacs. A small CSS file handles
-the presentation, and the pages use system fonts. There is no
-client-side JavaScript.</p>
-<p>The source is split between Org files in <code>content/</code> and
-static assets in <code>static/</code>. Org Publish exports and copies
-them into the <code>docs/</code> directory served by GitHub Pages. I
-describe the setup in more detail in <a
+<p>This website is written in Markdown in neovim and built into plain
+HTML by <a href="https://github.com/vetr0s/swag">swag</a>, a small
+static site generator I wrote in Go. Pandoc renders the Markdown and
+highlights the code. A small CSS file handles the presentation, and the
+pages use system fonts. There is no client-side JavaScript.</p>
+<p>Posts and pages live in <code>content/</code>, the page templates in
+<code>layouts/</code>, and static assets in <code>static/</code>. swag
+writes the finished site to <code>docs/</code>, which GitHub Pages
+serves. I describe the setup in <a
+href="adding-swag-to-my-zero-dependency-static-website-generator.html">Adding
+swag to my zero-dependency static website generator</a>. The Emacs and
+Org setup it replaced is in <a
 href="zero-dependency-static-site-generator.html">A zero-dependency
 static website generator</a>.</p>
 <p>The site intentionally has no analytics, tracking, comments, or
