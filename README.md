@@ -1,9 +1,11 @@
 # vetr0s.dev
 
-My personal website, written in Org mode and published to plain HTML by Emacs.
+My personal website, written in Markdown and built to plain HTML by
+[swag](https://github.com/vetr0s/swag) with pandoc.
 
 ```sh
-emacs --batch -Q --load ./publish.el --funcall vetr0s-blog-publish
+swag build
 ```
 
-GitHub Pages serves the generated `docs/` directory.
+GitHub Pages serves the generated `docs/` directory. `swag serve` previews the
+site locally with live reload.

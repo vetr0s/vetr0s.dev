@@ -23,14 +23,6 @@ figure img {
     width: 50%;
 }
 
-#content {
-    max-width: none;
-}
-
-h1.title {
-    margin-bottom: 0;
-}
-
 .home-header {
     display: flex;
     flex-wrap: wrap;
@@ -52,17 +44,17 @@ h1.title {
     margin-bottom: 0;
 }
 
-.posts {
+.posts, .projects ul {
     margin: 0;
     padding: 0;
     list-style: none;
 }
 
-#preamble {
+body > header {
     margin-bottom: 2rem;
 }
 
-#preamble h1 {
+body > header h1 {
     margin-bottom: 0;
 }
 
@@ -71,28 +63,29 @@ h1.title {
 }
 
 .published {
-    margin-top: 0.25rem;
+    margin: 0.25rem 0.2em 0.2em;
+    font-size: 90%;
 }
 
-#postamble {
+body > footer {
     margin-top: 3rem;
     padding-top: 1rem;
     border-top: 1px solid;
 }
 
-pre.src {
-    margin-right: 0;
-    margin-left: 0;
-}
-
 pre {
+    margin: 1.2em 0;
+    padding: 8pt;
     overflow-x: auto;
+    font-family: monospace;
     background: #1e1e1e;
-    border-color: gray;
+    border: 1px solid gray;
+    border-radius: 3px;
 }
 
-.org-keyword, .org-builtin { color: #ff7b72; font-weight: bold; }
-.org-string { color: #a5d6ff; }
-.org-comment { color: #8b949e; }
-.org-function-name, .org-variable-name { color: #d2a8ff; }
-.org-type, .org-constant { color: #79c0ff; }
+/* pandoc's syntax highlighting classes */
+code span.kw, code span.cf, code span.bu { color: #ff7b72; font-weight: bold; }
+code span.st, code span.ss, code span.vs, code span.ch { color: #a5d6ff; }
+code span.co, code span.do, code span.cv { color: #8b949e; }
+code span.fu, code span.va { color: #d2a8ff; }
+code span.dt, code span.cn, code span.dv, code span.fl, code span.bn { color: #79c0ff; }

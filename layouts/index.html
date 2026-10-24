@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="{{.Site.Language}}">
+<head>
+{{template "head" .}}
+</head>
+<body>
+<header class="home-header">
+<img class="profile" src="img/gh_profile.jpg" alt="Nathan Tebbs">
+<div>
+<h1>{{.Site.Title}}</h1>
+<p>{{.Site.Description}}</p>
+<p class="social-links">{{template "links" .}}</p>
+</div>
+</header>
+<main>
+<h2>Posts</h2>
+<ul class="posts">
+{{- range .Site.Posts}}
+<li>{{date "2006 Jan 02" .Date}} - <a href="{{.URL}}">{{.Title}}</a></li>
+{{- end}}
+</ul>
+<section class="projects">
+{{.Page.Content}}
+</section>
+</main>
+</body>
+</html>
