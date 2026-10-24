@@ -9,6 +9,9 @@
 <hr>
 <h1>{{.Page.Title}}</h1>
 <p class="published"><time datetime="{{date "2006-01-02" .Page.Date}}">{{date "2006-01-02" .Page.Date}}</time></p>
+{{- if not .Page.Updated.IsZero}}
+<p class="published">Updated <time datetime="{{date "2006-01-02" .Page.Updated}}">{{date "2006-01-02" .Page.Updated}}</time>.{{with .Page.UpdateNote}} {{.}}{{end}}</p>
+{{- end}}
 </header>
 <main>
 {{.Page.Content}}

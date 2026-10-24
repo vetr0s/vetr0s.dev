@@ -1,6 +1,8 @@
 ---
 title: Colophon
 date: 2026-09-18
+updated: 2026-10-23
+update_note: Rewritten for the switch from Org Publish to swag.
 description: How this website is written and built.
 ---
 
