@@ -15,6 +15,7 @@
 <hr>
 <h1>Adding swag to my zero-dependency static website generator</h1>
 <p class="published"><time datetime="2026-10-23">2026-10-23</time></p>
+<p class="published">Updated <time datetime="2026-10-23">2026-10-23</time>. Added a section on the swag.nvim plugin.</p>
 </header>
 <main>
 <p>A month ago I wrote about building this site with nothing but Emacs
@@ -65,9 +66,9 @@ save.</li>
 <li>Output that stays byte-identical between builds, so
 <code>git diff docs/</code> shows only real changes.</li>
 </ul>
-<p>I did not want a framework. swag has no plugins, no themes, no tags
-and no pagination. It is about 2,000 lines of Go plus 1,100 lines of
-tests, and I can read the whole thing in an afternoon.</p>
+<p>I did not want a framework. swag has no plugin system, no themes, no
+tags and no pagination. It is about 2,200 lines of Go plus 1,400 lines
+of tests, and I can read the whole thing in an afternoon.</p>
 <h2 id="counting-dependencies-honestly">Counting dependencies
 honestly</h2>
 <p>"Zero dependency" was never literal. Here is how I count now.</p>
@@ -115,19 +116,53 @@ reloads the browser after each rebuild.</p>
 a broken link lands in the quickfix list:</p>
 <pre><code>content/posts/about-me.md:3: invalid date &quot;2026-13-01&quot;: use YYYY-MM-DD
 content/posts/colophon.md: broken link &quot;/posts/old.html&quot;</code></pre>
-<p>A full build of this site takes about 130 milliseconds. swag builds
-into a temporary directory and replaces <code>docs/</code> only after
-every step has passed. A broken post can't leave half a site behind.</p>
+<p>A full build of this site takes under a second. Nearly all of that is
+pandoc rendering this post, which is the longest one. swag builds into a
+temporary directory and replaces <code>docs/</code> only after every
+step has passed. A broken post can't leave half a site behind.</p>
 <p>Publishing did not change. I run <code>swag build</code>, commit
 <code>docs/</code> and push, and GitHub Pages serves the files.</p>
+<h2 id="the-neovim-plugin">The neovim plugin</h2>
+<p>Since writing this I added <a
+href="https://github.com/vetr0s/swag.nvim">swag.nvim</a>, a small plugin
+that runs swag from inside neovim. It replaces the <code>makeprg</code>
+setup above. It is about 150 lines of Lua and has no dependencies beyond
+swag itself.</p>
+<p>It adds four commands:</p>
+<pre><code>:SwagNew {title}    create a draft post and open it (:SwagNew! makes a page)
+:SwagBuild          build in the background; errors go to the quickfix list
+:SwagServe          start the preview server
+:SwagStop           stop it</code></pre>
+<p>While <code>:SwagServe</code> runs, every rebuild replaces the
+quickfix list with that rebuild's errors. A bad date shows up about a
+second after I save, and the list empties when I fix it. Broken links
+show up as warnings until I build for real. Every command runs swag from
+the current buffer's directory, so it finds the site from any file in
+it.</p>
+<p>Neovim 0.12 has a built-in package manager, so installing it is one
+line in my config:</p>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode lua"><code class="sourceCode lua"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">local</span> <span class="va">gh</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">repo</span><span class="op">)</span> <span class="cf">return</span> <span class="st">&#39;https://github.com/&#39;</span> <span class="op">..</span> <span class="va">repo</span> <span class="kw">end</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="va">vim</span><span class="op">.</span><span class="va">pack</span><span class="op">.</span>add<span class="op">({</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  gh<span class="op">(</span><span class="st">&#39;vetr0s/swag.nvim&#39;</span><span class="op">),</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="op">})</span></span></code></pre></div>
+<p>There is no <code>setup()</code> call. If you want keys for the
+commands, map them like any other:</p>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode lua"><code class="sourceCode lua"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="va">vim</span><span class="op">.</span><span class="va">keymap</span><span class="op">.</span>set<span class="op">(</span><span class="st">&#39;n&#39;</span><span class="op">,</span> <span class="st">&#39;&lt;leader&gt;wn&#39;</span><span class="op">,</span> <span class="st">&#39;:SwagNew &#39;</span><span class="op">,</span> <span class="op">{</span> <span class="va">desc</span> <span class="op">=</span> <span class="st">&#39;New post&#39;</span> <span class="op">})</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="va">vim</span><span class="op">.</span><span class="va">keymap</span><span class="op">.</span>set<span class="op">(</span><span class="st">&#39;n&#39;</span><span class="op">,</span> <span class="st">&#39;&lt;leader&gt;wb&#39;</span><span class="op">,</span> <span class="st">&#39;&lt;cmd&gt;SwagBuild&lt;CR&gt;&#39;</span><span class="op">,</span> <span class="op">{</span> <span class="va">desc</span> <span class="op">=</span> <span class="st">&#39;Build the site&#39;</span> <span class="op">})</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="va">vim</span><span class="op">.</span><span class="va">keymap</span><span class="op">.</span>set<span class="op">(</span><span class="st">&#39;n&#39;</span><span class="op">,</span> <span class="st">&#39;&lt;leader&gt;ws&#39;</span><span class="op">,</span> <span class="st">&#39;&lt;cmd&gt;SwagServe&lt;CR&gt;&#39;</span><span class="op">,</span> <span class="op">{</span> <span class="va">desc</span> <span class="op">=</span> <span class="st">&#39;Preview the site&#39;</span> <span class="op">})</span></span></code></pre></div>
 <h2 id="where-it-lives">Where it lives</h2>
 <p>swag is on GitHub at <a
 href="https://github.com/vetr0s/swag">vetr0s/swag</a> under the MIT
-license. The source for this site is at <a
+license. The plugin is at <a
+href="https://github.com/vetr0s/swag.nvim">vetr0s/swag.nvim</a>, and the
+source for this site is at <a
 href="https://github.com/vetr0s/vetr0s.dev">vetr0s/vetr0s.dev</a>. If
 you have Go installed, this gets you the same binary:</p>
-<div class="sourceCode" id="cb10"><pre
-class="sourceCode sh"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">go</span> install github.com/vetr0s/swag@latest</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode sh"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">go</span> install github.com/vetr0s/swag@latest</span></code></pre></div>
 <p>I built swag for one site and one maintainer. If it fits your site
 too, take it.</p>
 </main>

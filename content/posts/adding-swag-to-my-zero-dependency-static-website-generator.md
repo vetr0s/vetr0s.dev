@@ -1,6 +1,7 @@
 ---
 title: Adding swag to my zero-dependency static website generator
 date: 2026-10-23
+updated: 2026-10-23 Added a section on the swag.nvim plugin.
 description: Swapping Emacs for a small Go program, and counting what this site actually depends on.
 ---
 
@@ -52,7 +53,7 @@ I also wanted a few things Org Publish made awkward:
 - Errors that name a file and a line, so neovim can jump to them.
 - Output that stays byte-identical between builds, so `git diff docs/` shows only real changes.
 
-I did not want a framework. swag has no plugins, no themes, no tags and no pagination. It is about 2,000 lines of Go plus 1,100 lines of tests, and I can read the whole thing in an afternoon.
+I did not want a framework. swag has no plugin system, no themes, no tags and no pagination. It is about 2,200 lines of Go plus 1,400 lines of tests, and I can read the whole thing in an afternoon.
 
 ## Counting dependencies honestly
 
@@ -111,13 +112,46 @@ content/posts/about-me.md:3: invalid date "2026-13-01": use YYYY-MM-DD
 content/posts/colophon.md: broken link "/posts/old.html"
 ```
 
-A full build of this site takes about 130 milliseconds. swag builds into a temporary directory and replaces `docs/` only after every step has passed. A broken post can't leave half a site behind.
+A full build of this site takes under a second. Nearly all of that is pandoc rendering this post, which is the longest one. swag builds into a temporary directory and replaces `docs/` only after every step has passed. A broken post can't leave half a site behind.
 
 Publishing did not change. I run `swag build`, commit `docs/` and push, and GitHub Pages serves the files.
 
+## The neovim plugin
+
+Since writing this I added [swag.nvim](https://github.com/vetr0s/swag.nvim), a small plugin that runs swag from inside neovim. It replaces the `makeprg` setup above. It is about 150 lines of Lua and has no dependencies beyond swag itself.
+
+It adds four commands:
+
+```
+:SwagNew {title}    create a draft post and open it (:SwagNew! makes a page)
+:SwagBuild          build in the background; errors go to the quickfix list
+:SwagServe          start the preview server
+:SwagStop           stop it
+```
+
+While `:SwagServe` runs, every rebuild replaces the quickfix list with that rebuild's errors. A bad date shows up about a second after I save, and the list empties when I fix it. Broken links show up as warnings until I build for real. Every command runs swag from the current buffer's directory, so it finds the site from any file in it.
+
+Neovim 0.12 has a built-in package manager, so installing it is one line in my config:
+
+```lua
+local gh = function(repo) return 'https://github.com/' .. repo end
+
+vim.pack.add({
+  gh('vetr0s/swag.nvim'),
+})
+```
+
+There is no `setup()` call. If you want keys for the commands, map them like any other:
+
+```lua
+vim.keymap.set('n', '<leader>wn', ':SwagNew ', { desc = 'New post' })
+vim.keymap.set('n', '<leader>wb', '<cmd>SwagBuild<CR>', { desc = 'Build the site' })
+vim.keymap.set('n', '<leader>ws', '<cmd>SwagServe<CR>', { desc = 'Preview the site' })
+```
+
 ## Where it lives
 
-swag is on GitHub at [vetr0s/swag](https://github.com/vetr0s/swag) under the MIT license. The source for this site is at [vetr0s/vetr0s.dev](https://github.com/vetr0s/vetr0s.dev). If you have Go installed, this gets you the same binary:
+swag is on GitHub at [vetr0s/swag](https://github.com/vetr0s/swag) under the MIT license. The plugin is at [vetr0s/swag.nvim](https://github.com/vetr0s/swag.nvim), and the source for this site is at [vetr0s/vetr0s.dev](https://github.com/vetr0s/vetr0s.dev). If you have Go installed, this gets you the same binary:
 
 ```sh
 go install github.com/vetr0s/swag@latest
