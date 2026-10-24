@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://vetr0s.dev/</loc>
+  </url>
+  <url>
+    <loc>https://vetr0s.dev/posts/about-me.html</loc>
+    <lastmod>2026-08-23</lastmod>
+  </url>
+  <url>
+    <loc>https://vetr0s.dev/posts/adding-swag-to-my-zero-dependency-static-website-generator.html</loc>
+    <lastmod>2026-10-23</lastmod>
+  </url>
+  <url>
+    <loc>https://vetr0s.dev/posts/colophon.html</loc>
+    <lastmod>2026-09-18</lastmod>
+  </url>
+  <url>
+    <loc>https://vetr0s.dev/posts/zero-dependency-static-site-generator.html</loc>
+    <lastmod>2026-09-16</lastmod>
+  </url>
+</urlset>
