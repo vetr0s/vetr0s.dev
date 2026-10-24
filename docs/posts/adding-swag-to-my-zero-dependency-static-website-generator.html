@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Adding swag to my zero-dependency static website generator - Nathan Tebbs</title>
+<meta name="description" content="Swapping Emacs for a small Go program, and counting what this site actually depends on.">
+<meta name="generator" content="swag">
+<link rel="stylesheet" href="/style.css">
+<link rel="alternate" type="application/rss+xml" title="Nathan Tebbs" href="/rss.xml">
+</head>
+<body>
+<header>
+<a class="site-name" href="/">Home</a>
+<hr>
+<h1>Adding swag to my zero-dependency static website generator</h1>
+<p class="published"><time datetime="2026-10-23">2026-10-23</time></p>
+</header>
+<main>
+<p>A month ago I wrote about building this site with nothing but Emacs
+and Org mode. I called it a <a
+href="zero-dependency-static-site-generator.html">zero-dependency static
+website generator</a>. This site now builds with a tool I wrote instead.
+It is called swag, short for Static Website Assembler and Generator. The
+switch made me count what the site really depends on, and the old count
+was wrong.</p>
+<h2 id="what-changed">What changed</h2>
+<p>The posts are now Markdown files, and I write them in neovim. A
+single Go binary called <code>swag</code> turns the
+<code>content/</code> directory into the <code>docs/</code> directory
+that GitHub Pages serves. Every URL from the Org version still works, so
+old links and the RSS feed did not move.</p>
+<p>The repository looks like this now:</p>
+<pre><code>content/    Markdown pages and posts
+layouts/    HTML templates that wrap each page
+static/     CSS, images and CNAME, copied as is
+docs/       generated site served by GitHub Pages
+swag.conf   site title, URL and description</code></pre>
+<p>The config is a plain <code>key = value</code> file:</p>
+<pre><code>site.title        = Nathan Tebbs
+site.url          = https://vetr0s.dev
+site.description  = Notes on software and the things I learn while building.
+params.stylesheet = /style.css</code></pre>
+<p>Every post starts with a front matter block:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> Adding swag to my zero-dependency static website generator</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> 2026-10-23</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="an">description:</span><span class="co"> Swapping Emacs for a small Go program.</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span></code></pre></div>
+<p>That is not YAML. Each line is a key, a colon and a value. swag has
+no YAML parser, and it doesn't need one.</p>
+<h2 id="why-i-left-org-publish">Why I left Org Publish</h2>
+<p>My editor changed. I moved my day-to-day work from Emacs to neovim,
+and the build had to move out of the editor with it. The Org setup only
+ran inside Emacs, either through <code>M-x</code> or through a batch
+Emacs process. Keeping Emacs installed just to publish a blog felt
+backwards.</p>
+<p>I also wanted a few things Org Publish made awkward:</p>
+<ul>
+<li>A preview server that rebuilds and reloads the browser when I
+save.</li>
+<li>A build that fails on a broken internal link.</li>
+<li>Errors that name a file and a line, so neovim can jump to them.</li>
+<li>Output that stays byte-identical between builds, so
+<code>git diff docs/</code> shows only real changes.</li>
+</ul>
+<p>I did not want a framework. swag has no plugins, no themes, no tags
+and no pagination. It is about 2,000 lines of Go plus 1,100 lines of
+tests, and I can read the whole thing in an afternoon.</p>
+<h2 id="counting-dependencies-honestly">Counting dependencies
+honestly</h2>
+<p>"Zero dependency" was never literal. Here is how I count now.</p>
+<p>Level 0 is the platform the generator runs on. Every option needs
+one. Before, the platform was Emacs. Org mode ships with Emacs, so I
+counted Org Publish as free. That was only true because Emacs was
+already my editor. Syntax highlighting also needed <code>htmlize</code>,
+which is a third-party package. Doom Emacs happened to install it for
+me, so I never noticed.</p>
+<p>Now the platform is Go. Go compiles swag, and swag uses only the
+standard library. Its <code>go.mod</code> has no <code>require</code>
+lines:</p>
+<pre><code>module github.com/vetr0s/swag
+
+go 1.27.3</code></pre>
+<p>A test fails if that ever changes. The compiled result is one 13 MB
+binary, and running it needs no Go toolchain.</p>
+<p>That leaves one real addition, which is pandoc. swag contains no
+Markdown parser. For every <code>.md</code> file it runs a command from
+the config, writes the post body to that command's stdin, and reads HTML
+back from its stdout. The default command is pandoc:</p>
+<pre><code>render.md = pandoc --from=gfm --to=html5</code></pre>
+<p>Pandoc also does the syntax highlighting, so <code>htmlize</code> is
+gone. A site written in plain <code>.html</code> files would not need
+pandoc at all.</p>
+<p>So the honest before and after:</p>
+<pre><code>before:  Emacs (platform) + Org (bundled) + htmlize
+after:   Go (platform)    + pandoc</code></pre>
+<p>I swapped one platform for another and traded <code>htmlize</code>
+for pandoc. The count did not drop to zero. It stayed at one, and this
+time I can name it.</p>
+<h2 id="how-i-use-it">How I use it</h2>
+<p>Writing a post starts with <code>swag new</code>. It prints only the
+path of the file it creates, so it composes with the editor:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nvim</span> <span class="st">&quot;</span><span class="va">$(</span><span class="ex">swag</span> new <span class="st">&#39;Adding swag to my zero-dependency static website generator&#39;</span><span class="va">)</span><span class="st">&quot;</span></span></code></pre></div>
+<p>The new file starts as a draft. While I write,
+<code>swag serve</code> runs in another terminal. It builds into a
+temporary directory, never into <code>docs/</code>, and serves the
+result on localhost. It checks for changes every 500 milliseconds and
+reloads the browser after each rebuild.</p>
+<p>Inside neovim, <code>swag build</code> works as a make program:</p>
+<pre class="vim"><code>:set makeprg=swag\ build
+:make</code></pre>
+<p>Errors come out as <code>path:line: message</code>, so a bad date or
+a broken link lands in the quickfix list:</p>
+<pre><code>content/posts/about-me.md:3: invalid date &quot;2026-13-01&quot;: use YYYY-MM-DD
+content/posts/colophon.md: broken link &quot;/posts/old.html&quot;</code></pre>
+<p>A full build of this site takes about 130 milliseconds. swag builds
+into a temporary directory and replaces <code>docs/</code> only after
+every step has passed. A broken post can't leave half a site behind.</p>
+<p>Publishing did not change. I run <code>swag build</code>, commit
+<code>docs/</code> and push, and GitHub Pages serves the files.</p>
+<h2 id="where-it-lives">Where it lives</h2>
+<p>swag is on GitHub at <a
+href="https://github.com/vetr0s/swag">vetr0s/swag</a> under the MIT
+license. The source for this site is at <a
+href="https://github.com/vetr0s/vetr0s.dev">vetr0s/vetr0s.dev</a>. If
+you have Go installed, this gets you the same binary:</p>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode sh"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">go</span> install github.com/vetr0s/swag@latest</span></code></pre></div>
+<p>I built swag for one site and one maintainer. If it fits your site
+too, take it.</p>
+</main>
+<footer>
+<a href="/">← All posts</a> · <a href="mailto:nate@vetr0s.dev">Email</a> · <a href="https://github.com/vetr0s">GitHub</a> · <a href="https://www.linkedin.com/in/ntebbs">LinkedIn</a> · <a href="/rss.xml">RSS</a>
+</footer>
+</body>
+</html>
